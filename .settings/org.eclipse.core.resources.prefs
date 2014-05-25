@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+encoding//src/es/uca/recicloid/activities/SolicitudEnseresActivity.java=UTF-8
+encoding//src/es/uca/recicloid/activities/UbicacionRecogidaActivity.java=UTF-8
+encoding//src/es/uca/recicloid/adapters/ListAdaptor.java=UTF-8
+encoding//src/es/uca/recicloid/dialogs/DialogAlert.java=UTF-8
+encoding//src/es/uca/recicloid/dialogs/DialogSelecLocationType.java=UTF-8
+encoding//src/es/uca/recicloid/map/AddressTracker.java=UTF-8
+encoding//src/es/uca/recicloid/map/GetAddressTask.java=UTF-8
+encoding//src/es/uca/recicloid/map/Zone.java=UTF-8

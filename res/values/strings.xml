@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Recicloid</string>
+    <string name="action_settings">Opciones</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="address">Dirección</string>
+    <string name="title_recogida_activity">Punto de recogida</string>
+
+    <!-- Main Menu -->
+    <string name="title_solicitud">Solicitar recogida</string>
+    <string name="descr_solicitud">Realice una petición para que acudamos a recoger muebles y enseres voluminosos en caso de que no pueda acudir al punto limpio.</string>
+    <string name="title_activity_solicitud_enseres">SolicitudEnseresActivity</string>
+
+    <!-- Solicitud de recogida de enseres -->
+    <string name="title_menu_enseres">Tipos de muebles y enseres</string>
+
+    <!-- Categorias para el Spinner -->
+    <string-array name="categorias_enseresa">
+        <item>Baño</item>
+        <item>Cocina</item>
+        <item>Dormitorio</item>
+        <item>Exteriores</item>
+        <item>Salon</item>
+        <item>Otros</item>
+    </string-array>
+
+    <!-- Muebles y enseres -->
+    <string name="item_bed">cama individual</string>
+    <string name="item_doublebed">cama de matrimonio</string>
+    <string name="item_bathtub">bañera</string>
+    <string name="item_wc">váter</string>
+    <string name="item_bidet">bidet</string>
+    <string name="item_desk">esctitorio</string>
+    <string name="item_shelf">estanteria</string>
+    <string name="item_sink">lavabo</string>
+    <string name="item_furniture">mueble de baño</string>
+    <string name="title_activity_ubicacion_recogida">Establece tu ubicación</string>
+
+    <!-- Dialogs -->
+    <string name="dialog_title_4items">Atención</string>
+    <string name="dialog_descr_4items">La recogida de muebles y enseres en un servicio gratuito proporcionado por 
+        el ayuntamiento de su localidad. El número máximo de elementos que serán recogidos por un usuario es de 
+        cuatro al día. Si desea solicitar la recogida de más de 4 elementos su solicitud se realizará en varias 
+        jornadas recogiendose 4 elementos en cada una de estas.</string>
+    <string name="dialog_ok">Aceptar</string>
+    <string name="dialog_selectlocacion_title">Establecer punto de recogida</string>
+    <string name="dialog_selectlocation_auto">Por ubicación actual del móvil</string>
+    <string name="dialog_selectlocation_manual">Establecer manualmente</string>
+    <string name="dialog_title_location_not_valid">Localización no válida</string>
+    <string name="dialog_descr_location_not_valid">Lamentamos comunicarlo que la localizacion seleccionado no se corresponde
+        con el área al que damos servicio actualmente. Le rogamos que escoja otra o bien se ponga en contacto con nosotros
+        telefónicamente.</string>
+    <string name="title_activity_datos_contacto">DatosContactoActivity</string>
+
+    <!-- Menú datos de contacto -->
+    <string name="menu_datos_contacto_title">Datos de contacto</string>
+    <string name="menu_datos_nombre">Nombre</string>
+    <string name="menu_datos_contacto_telefono">Teléfono de contacto</string>
+    <string name="title_activity_confirmar_fechas">ConfirmarFechasActivity</string>
+
+    <!-- Menú condiciones de uso -->
+    <string name="menu_condiciones_uso_title">Condiciones de uso</string>
+    <string name="condiciones_uso">Debido a anteriores actos vandálicos se ruega al usuario que deposite los enseres en
+        el punto de recogida a horas posteriores a la medianoche, o en la madrugada. Así mismo se recuerda al usuario que
+        es responsabilidad del mismo lo que pueda acontecer causado por dichos objetos. La recogida se hará  a la mañana siguiente
+        de su depósito. \n Los datos aportados de nombre y teléfono se almacenarán en el sistema del ayuntamiento y serán utilizados 
+        únicamente para contacar con el usuario en caso de que haya alguna incidencia en el proceso de recogida. Su almacenamiento
+        y tratamiento se realizará tal y como exige la ley orgánica 15/1999 o ley de protección de datos. \n
+        El aceptar los términos anteriormente especificados dan conformidad de que ud se responsabiliza de los enseres depositados
+        hasta su recogida, y de que da su conformidad para que contactemos con usted en caso de que se produzca alguna incidencia
+        en el proceso de recogida.</string>
+    <string name="accept_conditions">Acepto las condiciones</string>
+    
+    <!-- Menu confirmar fecha -->
+    <string name="menu_confirmar_fecha_title">Confirmar fecha de recogida</string>
+    <string name="title_activity_condiciones_uso">Condiciones de Uso</string>
+
+</resources>
