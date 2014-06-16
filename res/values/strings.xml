@@ -48,11 +48,24 @@
     <string name="dialog_selectlocation_auto">Por ubicación actual del móvil</string>
     <string name="dialog_selectlocation_manual">Establecer manualmente</string>
     <string name="dialog_title_location_not_valid">Localización no válida</string>
-    <string name="dialog_descr_location_not_valid">Lamentamos comunicarlo que la localizacion seleccionado no se corresponde
-        con el área al que damos servicio actualmente. Le rogamos que escoja otra o bien se ponga en contacto con nosotros
+    <string name="dialog_descr_location_not_valid">Lamentamos comunicarlo que la 
+        localizacion seleccionado no se corresponde
+        con el área al que damos servicio actualmente. Le rogamos que escoja otra 
+        o bien se ponga en contacto con nosotros
         telefónicamente.</string>
+    <string name="dialog_err_location_gpsint3d_disabled">
+    GPS y acceso a vía internet deshabilitados
+    </string>
+    <string name="dialog_err_dir_exception">Error al obtener la dirección</string>
+    <string name="dialog_descr_error_dir_exception">No fue posible obtener la ubicación correspondiente
+        a dicha dirección.</string>
+    <string name="dialog_err_location_exception">Se produjo un error al obtener
+        la ubicación actual.</string>
     <string name="title_activity_datos_contacto">DatosContactoActivity</string>
 
+    <!-- Map -->
+    <string name="dialog_obtains_dir">Obteniendo dirección</string>
+    
     <!-- Menú datos de contacto -->
     <string name="menu_datos_contacto_title">Datos de contacto</string>
     <string name="menu_datos_nombre">Nombre</string>

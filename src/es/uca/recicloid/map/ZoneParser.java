@@ -8,7 +8,6 @@ import java.util.List;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import android.util.Log;
 import android.util.Xml;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -24,8 +23,7 @@ public class ZoneParser{
             parser.setInput(in, null);
             parser.nextTag();
             return readZone(parser);
-        } finally {
-        	Log.w("Error","No parsea");
+        } finally {;
             in.close();
         }
     }

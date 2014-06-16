@@ -17,9 +17,12 @@ import android.support.v4.app.DialogFragment;
 	 
 	        AlertDialog.Builder builder =
 	        		new AlertDialog.Builder(getActivity());
-	        items[0] = getResources().getString(R.string.dialog_selectlocation_auto);
-	        items[1] = getResources().getString(R.string.dialog_selectlocation_manual);
-	        builder.setTitle(getResources().getString(R.string.dialog_selectlocacion_title))
+	        items[0] = getResources().getString(
+	        		R.string.dialog_selectlocation_auto);
+	        items[1] = getResources().getString(
+	        		R.string.dialog_selectlocation_manual);
+	        builder.setTitle(getResources().getString(
+	        		R.string.dialog_selectlocacion_title))
 	           .setItems(items, new DialogInterface.OnClickListener() {
 	        	   
 	                public void onClick(DialogInterface dialog, int item) {

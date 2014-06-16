@@ -1,8 +1,11 @@
 package es.uca.recicloid.activities;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
+
+import org.xmlpull.v1.XmlPullParserException;
 
 import es.uca.recicloid.R;
 import es.uca.recicloid.clases.Furniture;
@@ -35,6 +38,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class UbicacionRecogidaActivity extends FragmentActivity {
 	private boolean mLocalizado;
@@ -48,7 +52,7 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	
 
 	//private String dirección;
-	private final LatLng PUERTO_REAL = 
+	private final LatLng LOCAL = 
 			new LatLng(36.530375900000000000, -6.194416899999965000);
 	AddressTracker localizador;
 	private Zone urban , municipal;
@@ -65,15 +69,12 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 		btnNextStep = (Button) findViewById(R.id.buttonContinuar);
 		
 		try {
-			ZoneParser parser = new ZoneParser();
-			InputStream in = getAssets().open("urban-zone.xml");
-			urban = new Zone(parser.parse(in));
-			in = getAssets().open("municipal-area.xml");
-			municipal = new Zone(parser.parse(in));
+			urban = parserZone("urban-zone.xml");
+			municipal = parserZone("municipal-area.xml");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			Log.e("Error",e.toString());
+			Log.e("UbicacionRecogidaActivity","Cannot parser xml file ("+e.toString()+")");
 		}
 		
 		
@@ -109,6 +110,21 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 		setListeners();
 	}
 	
+	/**
+	 * Dado el nombre de un fichero xml genera una zona correspondiente a un
+	 * área de la localidad
+	 * @param xmlFileName
+	 * @return
+	 * @throws IOException
+	 * @throws XmlPullParserException
+	 */
+	private Zone parserZone(String xmlFileName) throws IOException,
+		XmlPullParserException{
+		ZoneParser parser = new ZoneParser();
+		InputStream in = getAssets().open(xmlFileName);
+		Zone zone = new Zone(parser.parse(in));
+		return zone;
+	}
 	
 	/**
 	 * Creates Listener for Map and EditText 
@@ -123,7 +139,8 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	         * If the user clicks on a map position is marked and stored 
 	         * in the text field the street and number.
 	         */
-	        public void onMapClick(LatLng point) { 
+	        public void onMapClick(LatLng point) {
+	        	Log.i("UbicacionRecogidaActivity","On click in point "+point.toString());
 				checkLocation(convertLagIntToLocation(point));
 	        }
 	    });		
@@ -157,7 +174,7 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	 */
 	private void showsGenericView(){
 		CameraPosition camPos = new CameraPosition.Builder()
-        .target(PUERTO_REAL)  
+        .target(LOCAL)  
         .zoom(14)         
         .build();
 		CameraUpdate camUpd = CameraUpdateFactory.newCameraPosition(camPos);
@@ -165,14 +182,14 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	}
 	
 	/**
-	 * 
+	 * Muestra un punto seleccionado en el mapa de la localidad
 	 * @param point
 	 */
 	private void showChosenPointInMap(LatLng point){
 		CameraPosition camPos = new CameraPosition.Builder()
-        .target(point)  
-        .zoom(18)         
-        .build();
+        	.target(point)  
+        	.zoom(18)         
+        	.build();
 		CameraUpdate camUpd = CameraUpdateFactory.newCameraPosition(camPos);
 		map.moveCamera(camUpd);
 	}
@@ -188,13 +205,18 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	 */
 	public void checkLocation(Location point){
 		try {
+			if(point == null){
+				throw new Exception("checkLocation function receives null param");
+			}
 			if(municipal.isInside(point)){
+				Log.i("UbicacionRecogidaActivity","location in urban area");
 				mLatitud = point.getLatitude();
 				mLongitud = point.getLongitude();
 				addMarkToPosition(convertLocationToLagLog(point));
 				showChosenPointInMap(convertLocationToLagLog(point));
 				if(isRuralPoint(convertLocationToLagLog(point)) && 
 						!mShowedRuralProcAdvice){
+					Log.i("UbicacionRecogidaActivity","location in invalid area");
 					mShowedRuralProcAdvice = true;
 					FragmentManager fm = getSupportFragmentManager();
 					DialogAlert newFragment = DialogAlert.newInstance(
@@ -202,17 +224,9 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 							R.string.dialog_descr_location_not_valid);
 					newFragment.show(fm, "tagAvisoLocNotValid");
 				}
-				GetAddressTask add = new GetAddressTask(this);
-				add.execute(point);
-				Address address = add.get();
-				if(address != null){
-					editText.setText(address.getAddressLine(0));
-				}
-				else{
-					Log.w("NullPointer","address");
-				}	
 			}
 			else{
+				Log.i("UbicacionRecogidaActivity","location in rural area");
 				// point could not be located in the service area
 				mLocalizado = false;
 				btnNextStep.setEnabled(false);
@@ -224,8 +238,18 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 						R.string.dialog_descr_location_not_valid);
 				newFragment.show(fm, "tagAvisoLocNotValid");
 			}
+			GetAddressTask add = new GetAddressTask(this);
+			Address address = add.obtainsAddress(point);
+			if(address != null){
+				Log.w("UbicacionRecogidaActivity","adress is: "+address.getAddressLine(0));
+				editText.setText(address.getAddressLine(0));
+			}
+			else{
+				Log.w("UbicacionRecogidaActivity","cannot obtain address");
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.e("UnbicacionRecogidaActity","Exception in checkLocation function: "
+					+e.toString());
 		}
 	}
 	
@@ -236,7 +260,18 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	public void getLocationByMobilePhone() throws Exception {
 		LocationTracker locTracker = new LocationTracker(this);
 		Location currentLocation = locTracker.getLocation();
-		checkLocation(currentLocation);
+		if(currentLocation == null){
+			Toast msjError = Toast.makeText(getApplicationContext(),
+    				getResources().getString(
+    		        		R.string.dialog_err_location_exception), 
+					Toast.LENGTH_SHORT);
+			msjError.show();
+			Log.e("UbicacionRecogidaActivity", 
+					"LocationTracker cannot obtains current location");
+		}
+		else{
+			checkLocation(currentLocation);
+		}
     }
 	
 	/**
@@ -244,10 +279,10 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	 * @param localizacion
 	 */
 	private void addMarkToPosition(LatLng localizacion){
-		map.clear();
-		mLocalizado = true;
-		btnNextStep.setEnabled(true);
-		map.addMarker(new MarkerOptions()
+		this.map.clear();
+		this.mLocalizado = true;
+		this.btnNextStep.setEnabled(true);
+		this.map.addMarker(new MarkerOptions()
         	.position(localizacion)
         	.title("Ubicación")
         	.icon(BitmapDescriptorFactory.defaultMarker(

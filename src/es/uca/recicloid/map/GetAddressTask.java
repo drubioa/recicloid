@@ -4,41 +4,36 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import es.uca.recicloid.R;
+import es.uca.recicloid.activities.UbicacionRecogidaActivity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.util.Log;
 
-public class GetAddressTask extends
-	AsyncTask<Location, Void, Address> {
-	Context mContext;
+public class GetAddressTask{
+	public UbicacionRecogidaActivity activity;
+	private Context mContext;
 	private ProgressDialog progressDialog;
-
+	
 	public GetAddressTask(Context context){
-		super();
 		mContext = context;
 	}
 	
-	protected Dialog onCreateDialog() {
+	private Dialog onCreateDialog() {
 	    progressDialog = new ProgressDialog(mContext);
-	    progressDialog.setMessage("Obteniendo dirección");
+	    progressDialog.setMessage(mContext.getString(R.string.dialog_obtains_dir));
 	    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 	    progressDialog.setCancelable(false);
 	    progressDialog.show();
+	    Log.i("GetAddressTask","Show dialog");
 	    return progressDialog;
 	}
-	
 
-	
-	@Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        onCreateDialog();
-    }
 	
 	/**
 	* Get a Geocoder instance, get the latitude and longitude
@@ -49,13 +44,11 @@ public class GetAddressTask extends
 	* location, or an empty string if no address can be found,
 	* or an error message
 	*/
-	@Override
-	protected Address doInBackground(Location... params) {
+	public Address obtainsAddress(Location loc) {
 		Geocoder geocoder =
 	        new Geocoder(mContext, Locale.getDefault());
 		
-		// Get the current location from the input parameter list
-		Location loc = params[0];
+		onCreateDialog();
 		// Create a list to contain the result address
 		List<Address> addresses = null;
 		try {
@@ -65,22 +58,30 @@ public class GetAddressTask extends
 		    addresses = geocoder.getFromLocation(loc.getLatitude(),
 		            loc.getLongitude(), 1);
 		} catch (IOException e1) {
-			Log.e("LocationSampleActivity",
-			        "IO Exception in getFromLocation()");
-			e1.printStackTrace();
-			return  null;
+			Log.e("GetAddressTask",
+					e1.toString());
 		} catch (IllegalArgumentException e2) {
-			e2.printStackTrace();
-			return null;
+			Log.e("GetAddressTask",e2.toString());
+			AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+			builder.setMessage(R.string.dialog_err_dir_exception)
+		       .setTitle(R.string.dialog_err_dir_exception);
+			builder.create();
 		}
 		// If the reverse geocode returned an address
 		if (addresses != null && addresses.size() > 0) {
 		    // Get the first address
 		    Address address = addresses.get(0);
+		    Log.i("GetAddressTask","return valid address; "+address.toString());
 		    progressDialog.dismiss();
 		    // Return the text
 		    return address;
-		} else {
+		} else if(addresses.size() > 0){
+			Log.w("GetAddressTask","Multiples address");
+			progressDialog.dismiss();
+			return null;
+		}
+		else{
+			Log.w("GetAddressTask","Cannot obtains address");
 			progressDialog.dismiss();
 			return null;
 		}
