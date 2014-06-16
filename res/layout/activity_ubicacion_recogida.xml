@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginRight="10dp"
-    android:layout_marginLeft="10dp">
+    android:layout_marginRight="5dp"
+    android:layout_marginLeft="5dp">
 
     <LinearLayout
         android1:layout_width="match_parent"
-        android1:layout_height="wrap_content"
-        android:layout_weight="7"
-        android:orientation="vertical"
+        android1:layout_height="match_parent"
+        android:layout_weight="8"
+        android:orientation="horizontal"
         android:gravity="center_horizontal" 
         android:padding="20dp">
     
@@ -19,7 +19,6 @@
 	        android:id="@+id/map"
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
-	        android:layout_marginTop="5dp"
 	        class="com.google.android.gms.maps.SupportMapFragment" />
     
 	</LinearLayout>    
@@ -28,29 +27,28 @@
         android1:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:padding="10dp">
     
    		<LinearLayout
-        android1:layout_width="match_parent"
-        android1:layout_height="wrap_content"
-        android:layout_weight="1"
+        android1:layout_width="wrap_content"
+        android1:layout_height="match_parent"
         android:orientation="horizontal"
-        android:gravity="center_horizontal">
+        android:gravity="center"
+        android:layout_weight="6">
      
 		    <TextView
 	        android:id="@+id/textViewDireccion"
 	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
+	        android:layout_height="match_parent"
+	        android:gravity="bottom"
 	        android:text="@string/address"
 	        android:textAppearance="?android:attr/textAppearanceSmall"  />
 		
 		    <EditText
 		        android1:id="@+id/editText1"
-		        android1:layout_width="wrap_content"
-		        android1:layout_height="wrap_content"
-		        android:layout_weight="2"
+		        android1:layout_width="match_parent"
+		        android1:layout_height="match_parent"
 		        android1:ems="10"
 		        android1:inputType="textPostalAddress"  
 		        > <requestFocus />
@@ -62,8 +60,8 @@
 		    android:id="@+id/buttonContinuar"
 		   	android:layout_width="wrap_content" 
 		    android:layout_height="wrap_content"
-		    android:layout_weight="1"
-		    android:text="@string/title_solicitud" />
+		    android:text="@string/title_solicitud"
+		    android:layout_weight="1" />
 	    	    
 	</LinearLayout>
 	
