@@ -25,7 +25,9 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		ArrayList<TitleWithImg> options = new ArrayList<TitleWithImg>();
-		options.add(new TitleWithImg(R.drawable.tuck,getResources().getString(R.string.title_solicitud),getResources().getString(R.string.descr_solicitud)));
+		options.add(new TitleWithImg(R.drawable.tuck,getResources()
+				.getString(R.string.title_solicitud),getResources()
+				.getString(R.string.descr_solicitud)));
 		mainMenu = (ListView) findViewById(R.id.listViewMainMenu);
 		
 		mainMenu.setAdapter(new ListAdaptor(this,R.layout.list_item_image,options){

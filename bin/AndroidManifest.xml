@@ -32,14 +32,17 @@
             android:value="AIzaSyCpMtC-hzelJmFb08eQfdS6dZmCkD4-lo0" />
 
         <activity
-            android:name="es.uca.recicloid.activities.MainActivity"
+            android:name="es.uca.recicloid.activities.SplashScreenActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+          <activity
+            android:name="es.uca.recicloid.activities.MainActivity"
+            android:label="@string/title_activity_solicitud_enseres" >
+        </activity>      
         <activity
             android:name="es.uca.recicloid.activities.SolicitudEnseresActivity"
             android:label="@string/title_activity_solicitud_enseres" >

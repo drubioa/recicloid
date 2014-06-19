@@ -53,9 +53,7 @@
         con el área al que damos servicio actualmente. Le rogamos que escoja otra 
         o bien se ponga en contacto con nosotros
         telefónicamente.</string>
-    <string name="dialog_err_location_gpsint3d_disabled">
-    GPS y acceso a vía internet deshabilitados
-    </string>
+    <string name="dialog_err_location_gpsint3d_disabled">    GPS y acceso a vía internet deshabilitados</string>
     <string name="dialog_err_dir_exception">Error al obtener la dirección</string>
     <string name="dialog_descr_error_dir_exception">No fue posible obtener la ubicación correspondiente
         a dicha dirección.</string>
@@ -65,7 +63,7 @@
 
     <!-- Map -->
     <string name="dialog_obtains_dir">Obteniendo dirección</string>
-    
+
     <!-- Menú datos de contacto -->
     <string name="menu_datos_contacto_title">Datos de contacto</string>
     <string name="menu_datos_nombre">Nombre</string>
@@ -84,9 +82,15 @@
         hasta su recogida, y de que da su conformidad para que contactemos con usted en caso de que se produzca alguna incidencia
         en el proceso de recogida.</string>
     <string name="accept_conditions">Acepto las condiciones</string>
-    
+
     <!-- Menu confirmar fecha -->
     <string name="menu_confirmar_fecha_title">Confirmar fecha de recogida</string>
     <string name="title_activity_condiciones_uso">Condiciones de Uso</string>
+
+    <!-- Esquemas de colores -->
+    <!-- Splash menu con el logo del ayuntamiento -->
+    <color name="purple">#A3207E</color>
+
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
 
 </resources>

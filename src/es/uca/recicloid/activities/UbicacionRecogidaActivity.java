@@ -50,7 +50,6 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	private EditText editText;
 	private Button btnNextStep;
 	
-
 	//private String dirección;
 	private final LatLng LOCAL = 
 			new LatLng(36.530375900000000000, -6.194416899999965000);
@@ -60,30 +59,35 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		setContentView(R.layout.activity_ubicacion_recogida);		
+		setContentView(R.layout.activity_ubicacion_recogida);
 		map = ((SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map)).getMap();
 		map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+		Log.i("UbicacionRecogidaActivity", "found and set GoogleMap.");
 		editText = (EditText) findViewById(R.id.editText1);
 		btnNextStep = (Button) findViewById(R.id.buttonContinuar);
 		
 		try {
+			Log.i("UbicacionRecogidaActivity", "xml were parser.");
 			urban = parserZone("urban-zone.xml");
 			municipal = parserZone("municipal-area.xml");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			Log.e("UbicacionRecogidaActivity","Cannot parser xml file ("+e.toString()+")");
+			Log.e("UbicacionRecogidaActivity","Cannot parser xml file ("
+					+e.toString()+")");
 		}
 		
 		
 		if(savedInstanceState == null){
 			editText.setText("Dirección de recogida, num");
 			showsGenericView();
+			Log.i("UbicacionRecogidaActivity", "Showed generic view.");
 			Intent intent = getIntent();
 			furnitures = intent.getParcelableArrayListExtra("itemsSelected");
 			mLocalizado = false;
+			Log.i("UbicacionRecogidaActivity", 
+					"Se procede a mostrar ventana inicial..");
 			showInitialDialog();
 			mShowedRuralProcAdvice = false;
 			btnNextStep.setEnabled(false);
@@ -96,6 +100,7 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 					getBoolean("ShowedRuralProcAdvice");
 			
 			if(mLocalizado){
+				Log.i("UbicacionRecogidaActivity", "Se ha localizado correctamente.");
 				LatLng point = new LatLng(mLatitud,mLongitud);
 				addMarkToPosition(point);
 				showChosenPointInMap(point);
@@ -103,6 +108,8 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 			}
 			else{
 				// By default shows the general city view
+				Log.i("UbicacionRecogidaActivity", "No se ha localizado.Se procede"
+						+ "a mostrar una vista generica de la localidad en el mapa.");
 				showsGenericView();
 				btnNextStep.setEnabled(false);
 			}
@@ -149,6 +156,7 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 		btnNextStep.setOnClickListener(new View.OnClickListener() {
             
 			public void onClick(View v) {
+				Log.i("UbicacionRecogidaActivity", "Se pulsa en el boton de Solicitud.");
 				Intent intent = new Intent(UbicacionRecogidaActivity
 						.this,DatosContactoActivity.class);
 				startActivity(intent);   
@@ -192,6 +200,7 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
         	.build();
 		CameraUpdate camUpd = CameraUpdateFactory.newCameraPosition(camPos);
 		map.moveCamera(camUpd);
+		Log.i("UbicacionRecogidaActivity", "Se muestra posicion escogida en el mapa.");
 	}
 
 	public void checkLocation(LatLng point){
