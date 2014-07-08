@@ -1,4 +1,4 @@
-package es.uca.recicloid.activities;
+	package es.uca.recicloid.activities;
 
 import es.uca.recicloid.R;
 import android.os.Bundle;

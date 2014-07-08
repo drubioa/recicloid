@@ -49,6 +49,7 @@
 		        android1:id="@+id/editText1"
 		        android1:layout_width="match_parent"
 		        android1:layout_height="match_parent"
+		        android:maxLength="20"
 		        android1:ems="10"
 		        android1:inputType="textPostalAddress"  
 		        > <requestFocus />

@@ -87,9 +87,11 @@
     <string name="menu_confirmar_fecha_title">Confirmar fecha de recogida</string>
     <string name="title_activity_condiciones_uso">Condiciones de Uso</string>
 
-    <!-- Esquemas de colores -->
     <!-- Splash menu con el logo del ayuntamiento -->
+    <string name="title_splash">Ayuntamiento de</string>
+    <string name="subtitle_splash">Puerto Real</string>
     <color name="purple">#A3207E</color>
+    <color name="gold">#EFCC02</color>
 
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
 

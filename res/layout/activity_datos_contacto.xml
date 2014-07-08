@@ -2,13 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".DatosContactoActivity" 
-	android:orientation="vertical" 
-	android:gravity="center_horizontal" >
+    tools:context=".DatosContactoActivity" >
 
     <TextView
         android:id="@+id/textViewTitle"
@@ -33,6 +33,7 @@
 	        android:id="@+id/editTextPhone"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
+	        android:maxLength="20"
 	        android:ems="10"
 	        android:inputType="phone" >   </EditText> <requestFocus />
         
@@ -44,7 +45,7 @@
         android:orientation="horizontal" >
 	
     	<TextView
-	        android:id="@+id/textViewDname"
+	        android:id="@+id/textViewNameOfContact"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="@string/menu_datos_nombre"
@@ -54,8 +55,9 @@
         	android:id="@+id/editTextNameOfContact"
         	android:layout_width="match_parent"
         	android:layout_height="wrap_content"
+        	android:maxLength="9"
        		android:ems="10"
-       		android:inputType="phone"> </EditText> <requestFocus />	      
+       		android:inputType="text"> </EditText> <requestFocus />	      
     	     
         
     </LinearLayout>
@@ -64,6 +66,7 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/title_solicitud" />
+        android:text="@string/title_solicitud" 
+        android:enabled="false"/>
     
 </LinearLayout>

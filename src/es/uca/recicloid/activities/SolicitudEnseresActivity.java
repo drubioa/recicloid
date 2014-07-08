@@ -23,7 +23,10 @@ import android.widget.Spinner;
 /**
  * 
  * @author Diego Rubio Abujas
- *
+ * @version 1.0
+ * Actividad que gestiona la seleccion de los enseres que se desean
+ * entregar para su posterior recogida para reciclar. Se mostrarán
+ * los enseres organizados por categorías.
  */
 public class SolicitudEnseresActivity extends FragmentActivity {
 	private static final int CAT_BATHROOM = 0;
