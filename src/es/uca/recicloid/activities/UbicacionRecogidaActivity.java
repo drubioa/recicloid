@@ -17,6 +17,8 @@ import es.uca.recicloid.map.LocationTracker;
 import es.uca.recicloid.map.Zone;
 import es.uca.recicloid.map.ZoneParser;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -55,11 +57,14 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 			new LatLng(36.530375900000000000, -6.194416899999965000);
 	AddressTracker localizador;
 	private Zone urban , municipal;
-	
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ubicacion_recogida);
+		if(!checkPlayServices()){
+			Log.e("UbicacionRecogidaActivity","Play Services unviable");
+		}
 		map = ((SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map)).getMap();
 		map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -328,6 +333,25 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	 */
 	private boolean isRuralPoint(LatLng point){
 		return municipal.isInside(point) && !urban.isInside(point);
+	}
+	
+	/**
+	 * Comprueba si el Play Service de Google esta disponible en el terminal movil.
+	 * @return
+	 */
+	private boolean checkPlayServices() {
+		int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+		if (status != ConnectionResult.SUCCESS) {
+			if (GooglePlayServicesUtil.isUserRecoverableError(status)) {
+				return false;
+		    } else {
+		      Toast.makeText(this, "This device is not supported.", 
+		          Toast.LENGTH_LONG).show();
+		      finish();
+		    }
+		    return false;
+		  }
+		  return true;
 	}
 	
 	
