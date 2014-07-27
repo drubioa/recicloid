@@ -59,6 +59,11 @@
         a dicha dirección.</string>
     <string name="dialog_err_location_exception">Se produjo un error al obtener
         la ubicación actual.</string>
+    <string name="dialog_err_google_play_title">Debes actualizar Google Play</string>
+    <string name="dialog_err_google_play_descr">Es necesario que registres tu movil en Google Play, y actualices a la 
+        última versión para poder utilizar esta aplicación.</string>   
+    
+    
     <string name="title_activity_datos_contacto">DatosContactoActivity</string>
 
     <!-- Map -->

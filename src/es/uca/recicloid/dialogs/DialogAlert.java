@@ -9,11 +9,10 @@ import android.support.v4.app.DialogFragment;
 
 public class DialogAlert extends DialogFragment {
 
-	public static DialogAlert newInstance (int title,int description){
+	public static final String TAG = "DialogAlert";
+	
+	public static DialogAlert newInstance (Bundle args){
 		DialogAlert f = new DialogAlert();
-		Bundle args = new Bundle();
-        args.putInt("title", title);
-        args.putInt("description", description);
         f.setArguments(args);
         return f;
 	}
@@ -28,8 +27,9 @@ public class DialogAlert extends DialogFragment {
             .setTitle(title)
             .setPositiveButton(getResources().getString(R.string.dialog_ok), 
             		   new DialogInterface.OnClickListener() {
+            	
                    public void onClick(DialogInterface dialog, int id) {
-                       dialog.cancel();
+                       dialog.dismiss();
                    }
                })
 			.create();

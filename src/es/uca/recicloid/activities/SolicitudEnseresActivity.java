@@ -103,8 +103,10 @@ public class SolicitudEnseresActivity extends FragmentActivity {
 				item.setmAumentarEnUno();
 				if(countFurnitures(furnituresToRecic) == 4 && !mensaje4items){
 					FragmentManager fm = getSupportFragmentManager();
-					DialogAlert newFragment = DialogAlert.newInstance(
-							R.string.dialog_title_4items,R.string.dialog_descr_4items);
+					Bundle args = new Bundle();
+					args.putInt("title", R.string.dialog_title_4items);
+					args.putInt("description",R.string.dialog_descr_4items);
+					DialogAlert newFragment = DialogAlert.newInstance(args);
 					newFragment.show(fm, "tagAviso4Items");
 			        mensaje4items = true;
 				}

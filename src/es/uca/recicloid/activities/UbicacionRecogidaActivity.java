@@ -62,64 +62,74 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ubicacion_recogida);
+		
 		if(!checkPlayServices()){
+			FragmentManager fragmentManager = getSupportFragmentManager();
 			Log.e("UbicacionRecogidaActivity","Play Services unviable");
+			Bundle args = new Bundle();
+			args.putInt("title", R.string.dialog_err_google_play_title);
+			args.putInt("description",R.string.dialog_err_google_play_descr);
+			DialogAlert newFragment = DialogAlert.newInstance(args);
+			newFragment.show(fragmentManager, "tagAvisoLocNotValid");
 		}
-		map = ((SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map)).getMap();
-		map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-		Log.i("UbicacionRecogidaActivity", "found and set GoogleMap.");
-		editText = (EditText) findViewById(R.id.editText1);
-		btnNextStep = (Button) findViewById(R.id.buttonContinuar);
-		
-		try {
-			Log.i("UbicacionRecogidaActivity", "xml were parser.");
-			urban = parserZone("urban-zone.xml");
-			municipal = parserZone("municipal-area.xml");
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			Log.e("UbicacionRecogidaActivity","Cannot parser xml file ("
-					+e.toString()+")");
-		}
-		
-		
-		if(savedInstanceState == null){
-			editText.setText("Dirección de recogida, num");
-			showsGenericView();
-			Log.i("UbicacionRecogidaActivity", "Showed generic view.");
-			Intent intent = getIntent();
-			furnitures = intent.getParcelableArrayListExtra("itemsSelected");
-			mLocalizado = false;
-			Log.i("UbicacionRecogidaActivity", 
-					"Se procede a mostrar ventana inicial..");
-			showInitialDialog();
-			mShowedRuralProcAdvice = false;
-			btnNextStep.setEnabled(false);
-		}		
 		else{
-			mLocalizado = savedInstanceState.getBoolean("mLocalizado");
-			mLatitud = savedInstanceState.getDouble("mLatitud");
-			mLongitud = savedInstanceState.getDouble("mLongitud");
-			mShowedRuralProcAdvice = savedInstanceState.
-					getBoolean("ShowedRuralProcAdvice");
+			map = ((SupportMapFragment) getSupportFragmentManager()
+	                .findFragmentById(R.id.map)).getMap();
+			map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+			Log.i("UbicacionRecogidaActivity", "found and set GoogleMap.");
+			editText = (EditText) findViewById(R.id.editText1);
+			btnNextStep = (Button) findViewById(R.id.buttonContinuar);
 			
-			if(mLocalizado){
-				Log.i("UbicacionRecogidaActivity", "Se ha localizado correctamente.");
-				LatLng point = new LatLng(mLatitud,mLongitud);
-				addMarkToPosition(point);
-				showChosenPointInMap(point);
-				btnNextStep.setEnabled(true);
+			try {
+				Log.i("UbicacionRecogidaActivity", "xml were parser.");
+				urban = parserZone("urban-zone.xml");
+				municipal = parserZone("municipal-area.xml");
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.e("UbicacionRecogidaActivity","Cannot parser xml file ("
+						+e.toString()+")");
 			}
-			else{
-				// By default shows the general city view
-				Log.i("UbicacionRecogidaActivity", "No se ha localizado.Se procede"
-						+ "a mostrar una vista generica de la localidad en el mapa.");
+			
+			
+			if(savedInstanceState == null){
+				editText.setText("Dirección de recogida, num");
 				showsGenericView();
+				Log.i("UbicacionRecogidaActivity", "Showed generic view.");
+				Intent intent = getIntent();
+				furnitures = intent.getParcelableArrayListExtra("itemsSelected");
+				mLocalizado = false;
+				Log.i("UbicacionRecogidaActivity", 
+						"Se procede a mostrar ventana inicial..");
+				showInitialDialog();
+				mShowedRuralProcAdvice = false;
 				btnNextStep.setEnabled(false);
+			}		
+			else{
+				mLocalizado = savedInstanceState.getBoolean("mLocalizado");
+				mLatitud = savedInstanceState.getDouble("mLatitud");
+				mLongitud = savedInstanceState.getDouble("mLongitud");
+				mShowedRuralProcAdvice = savedInstanceState.
+						getBoolean("ShowedRuralProcAdvice");
+				
+				if(mLocalizado){
+					Log.i("UbicacionRecogidaActivity", "Se ha localizado correctamente.");
+					LatLng point = new LatLng(mLatitud,mLongitud);
+					addMarkToPosition(point);
+					showChosenPointInMap(point);
+					btnNextStep.setEnabled(true);
+				}
+				else{
+					// By default shows the general city view
+					Log.i("UbicacionRecogidaActivity", "No se ha localizado.Se procede"
+							+ "a mostrar una vista generica de la localidad en el mapa.");
+					showsGenericView();
+					btnNextStep.setEnabled(false);
+				}
 			}
+			setListeners();
 		}
-		setListeners();
+		
 	}
 	
 	/**
@@ -233,9 +243,10 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 					Log.i("UbicacionRecogidaActivity","location in invalid area");
 					mShowedRuralProcAdvice = true;
 					FragmentManager fm = getSupportFragmentManager();
-					DialogAlert newFragment = DialogAlert.newInstance(
-							R.string.dialog_title_location_not_valid,
-							R.string.dialog_descr_location_not_valid);
+					Bundle args = new Bundle();
+					args.putInt("title", R.string.dialog_title_location_not_valid);
+					args.putInt("description",R.string.dialog_descr_location_not_valid);
+					DialogAlert newFragment = DialogAlert.newInstance(args);
 					newFragment.show(fm, "tagAvisoLocNotValid");
 				}
 			}
@@ -247,9 +258,10 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 				editText.setText("");
 				showsGenericView();
 				FragmentManager fm = getSupportFragmentManager();
-				DialogAlert newFragment = DialogAlert.newInstance(
-						R.string.dialog_title_location_not_valid,
-						R.string.dialog_descr_location_not_valid);
+				Bundle args = new Bundle();
+				args.putInt("title", R.string.dialog_title_location_not_valid);
+				args.putInt("description",R.string.dialog_descr_location_not_valid);
+				DialogAlert newFragment = DialogAlert.newInstance(args);
 				newFragment.show(fm, "tagAvisoLocNotValid");
 			}
 			GetAddressTask add = new GetAddressTask(this);
