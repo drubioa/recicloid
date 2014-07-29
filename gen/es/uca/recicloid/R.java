@@ -489,7 +489,7 @@ containing a value of this type.
         public static final int ubicacion_recogida=0x7f0b0006;
     }
     public static final class string {
-        public static final int accept_conditions=0x7f050049;
+        public static final int accept_conditions=0x7f05004c;
         public static final int action_settings=0x7f050021;
         public static final int address=0x7f050023;
         public static final int app_name=0x7f050020;
@@ -588,7 +588,7 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f05001e;
-        public static final int condiciones_uso=0x7f050048;
+        public static final int condiciones_uso=0x7f05004b;
         public static final int descr_solicitud=0x7f050026;
         public static final int dialog_descr_4items=0x7f050034;
         public static final int dialog_descr_error_dir_exception=0x7f05003d;
@@ -598,9 +598,14 @@ containing a value of this type.
         public static final int dialog_err_google_play_title=0x7f05003f;
         public static final int dialog_err_location_exception=0x7f05003e;
         public static final int dialog_err_location_gpsint3d_disabled=0x7f05003b;
+        public static final int dialog_more_funitures_add=0x7f050042;
+        public static final int dialog_more_furnitures_reset=0x7f050043;
+        /**  Dialogo se escoge mas de un mueble o enser 
+         */
+        public static final int dialog_more_furnitures_title=0x7f050041;
         /**  Map 
          */
-        public static final int dialog_obtains_dir=0x7f050042;
+        public static final int dialog_obtains_dir=0x7f050045;
         public static final int dialog_ok=0x7f050035;
         public static final int dialog_selectlocacion_title=0x7f050036;
         public static final int dialog_selectlocation_auto=0x7f050037;
@@ -623,21 +628,21 @@ containing a value of this type.
         public static final int item_wc=0x7f05002c;
         /**  Menú condiciones de uso 
          */
-        public static final int menu_condiciones_uso_title=0x7f050047;
+        public static final int menu_condiciones_uso_title=0x7f05004a;
         /**  Menu confirmar fecha 
          */
-        public static final int menu_confirmar_fecha_title=0x7f05004a;
-        public static final int menu_datos_contacto_telefono=0x7f050045;
+        public static final int menu_confirmar_fecha_title=0x7f05004d;
+        public static final int menu_datos_contacto_telefono=0x7f050048;
         /**  Menú datos de contacto 
          */
-        public static final int menu_datos_contacto_title=0x7f050043;
-        public static final int menu_datos_nombre=0x7f050044;
-        public static final int subtitle_splash=0x7f05004d;
-        public static final int title_activity_condiciones_uso=0x7f05004b;
-        public static final int title_activity_confirmar_fechas=0x7f050046;
-        public static final int title_activity_datos_contacto=0x7f050041;
+        public static final int menu_datos_contacto_title=0x7f050046;
+        public static final int menu_datos_nombre=0x7f050047;
+        public static final int subtitle_splash=0x7f050050;
+        public static final int title_activity_condiciones_uso=0x7f05004e;
+        public static final int title_activity_confirmar_fechas=0x7f050049;
+        public static final int title_activity_datos_contacto=0x7f050044;
         public static final int title_activity_solicitud_enseres=0x7f050027;
-        public static final int title_activity_splash_screen=0x7f05004e;
+        public static final int title_activity_splash_screen=0x7f050051;
         public static final int title_activity_ubicacion_recogida=0x7f050032;
         /**  Solicitud de recogida de enseres 
          */
@@ -648,7 +653,7 @@ containing a value of this type.
         public static final int title_solicitud=0x7f050025;
         /**  Splash menu con el logo del ayuntamiento 
          */
-        public static final int title_splash=0x7f05004c;
+        public static final int title_splash=0x7f05004f;
         /**  Text on a placeholder buy button when Google Play services is not
          available or up-to-date 
          */

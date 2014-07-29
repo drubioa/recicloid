@@ -63,6 +63,10 @@
     <string name="dialog_err_google_play_descr">Es necesario que registres tu movil en Google Play, y actualices a la 
         última versión para poder utilizar esta aplicación.</string>   
     
+    <!-- Dialogo se escoge mas de un mueble o enser -->
+    <string name="dialog_more_furnitures_title">Elige una opción</string>
+    <string name="dialog_more_funitures_add">Añadir un elemento mas</string>
+    <string name="dialog_more_furnitures_reset">Descartar todos los elementos seleccionados</string>
     
     <string name="title_activity_datos_contacto">DatosContactoActivity</string>
 
@@ -87,7 +91,7 @@
         hasta su recogida, y de que da su conformidad para que contactemos con usted en caso de que se produzca alguna incidencia
         en el proceso de recogida.</string>
     <string name="accept_conditions">Acepto las condiciones</string>
-
+    
     <!-- Menu confirmar fecha -->
     <string name="menu_confirmar_fecha_title">Confirmar fecha de recogida</string>
     <string name="title_activity_condiciones_uso">Condiciones de Uso</string>
@@ -97,7 +101,6 @@
     <string name="subtitle_splash">Puerto Real</string>
     <color name="purple">#A3207E</color>
     <color name="gold">#EFCC02</color>
-
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
 
 </resources>
