@@ -12,20 +12,18 @@
     <Spinner 
         android:id="@+id/spinner_items"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_height="wrap_content" />
 
      <!-- 
      	GridViewo con los items seleccionables
      -->
     <GridView
         android:id="@+id/GridView_items"
-        android:layout_width="match_parent"
-        android:numColumns="4"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content" 
+        android:layout_height="match_parent"
+        android:numColumns="3"
         android:verticalSpacing="5dp"
-        android:horizontalSpacing="5dp"
-        android:layout_weight="1"></GridView>
+        android:horizontalSpacing="5dp"></GridView>
 	
     <!--
     Botón para continuar con el proceso de Solicitud de Recogida
@@ -33,10 +31,9 @@
 	<Button
 	    android:id="@+id/buttonContinuar"
 	   	android:layout_width="wrap_content" 
-	    android:layout_height="wrap_content"
-	    android:gravity="center_vertical" 
+	    android:layout_height="match_parent"
+	    android:gravity="center_horizontal"
 	    android:layout_gravity="center_horizontal|center"    	
-	    android:text="@string/title_solicitud"
-	    android:layout_weight="1" />
+	    android:text="@string/title_solicitud"/>
 
 </LinearLayout>

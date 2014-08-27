@@ -1,19 +1,23 @@
-	package es.recicloid.activities;
+	package es.recicloid.activities.servrecog;
 
 import es.uca.recicloid.R;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.widget.CalendarView;
+import android.widget.TextView;
 
 public class ConfirmarFechasActivity extends Activity {
 	 CalendarView calendarView; 
+	 TextView itemsToCollection;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		calendarView = (CalendarView) findViewById(R.id.calendar);
+		calendarView = (CalendarView) findViewById(R.id.collectioncalendar);
 		setContentView(R.layout.activity_confirmar_fechas);
+		itemsToCollection = (TextView) findViewById(R.id.listfurniturestocollect);
+		itemsToCollection.setEnabled(false);
 	}
 
 	@Override

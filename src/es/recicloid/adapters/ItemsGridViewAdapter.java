@@ -6,6 +6,7 @@ import es.recicloid.clases.Furniture;
 import es.uca.recicloid.R;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,10 +44,14 @@ public class ItemsGridViewAdapter extends ArrayAdapter<Furniture>{
 		Furniture item = data.get(position);
 		holder.imageItem.setImageResource(item.getIdImg());
 		if(item.getmNum() > 0){
-			holder.textTitle.setText(getContext().getString(item.getIdText())+"("+item.getmNum()+")");
+			holder.textTitle.setText(getContext()
+					.getString(item.getIdText())+"("+item.getmNum()+")");
+			holder.textTitle.setTypeface(null, Typeface.BOLD);
 		}
 		else{
-			holder.textTitle.setText(item.getIdText());
+			holder.textTitle.setText(getContext()
+					.getString(item.getIdText()));
+			holder.textTitle.setTypeface(null, Typeface.NORMAL);
 		}
 
 		return row;

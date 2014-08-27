@@ -1,15 +1,19 @@
-package es.recicloid.activities;
+package es.recicloid.activities.servrecog;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.http.ParseException;
+import org.json.JSONException;
 import org.xmlpull.v1.XmlPullParserException;
 
+import es.recicloid.clases.CollectionPoint;
 import es.recicloid.clases.Furniture;
 import es.recicloid.dialogs.DialogAlert;
 import es.recicloid.dialogs.DialogSelecLocationType;
+import es.recicloid.logic.conections.ConectorToServices;
 import es.recicloid.logic.map.AddressTracker;
 import es.recicloid.logic.map.GetAddressTask;
 import es.recicloid.logic.map.LocationTracker;
@@ -32,6 +36,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -45,26 +50,29 @@ import android.widget.Toast;
 public class UbicacionRecogidaActivity extends FragmentActivity {
 	private boolean mLocalizado;
 	private boolean mShowedRuralProcAdvice;
+	private boolean mIsRuralPoint;
 	private double mLongitud;
 	private double mLatitud;
 	private ArrayList<Furniture> furnitures;
 	private GoogleMap map;	
 	private EditText editText;
 	private Button btnNextStep; 
+	private ConectorToServices conector;
 	
-	//private String direcci??n;
+	//private String direccion;
 	private final LatLng LOCAL = 
 			new LatLng(36.530375900000000000, -6.194416899999965000);
 	AddressTracker localizador;
-	private Zone urban , municipal;
+	private Zone urban , terminoMunicipal;
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ubicacion_recogida);
 		btnNextStep = (Button) findViewById(R.id.buttonContinuar);
+		conector = new ConectorToServices();
 		
-		if(!checkPlayServices()){
+		if(!checkPlayServicesIsInstalled()){
 			btnNextStep.setEnabled(false);
 			FragmentManager fragmentManager = getSupportFragmentManager();
 			Log.e("UbicacionRecogidaActivity","Play Services unviable");
@@ -84,7 +92,7 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 			try {
 				Log.i("UbicacionRecogidaActivity", "xml were parser.");
 				urban = parserZone("urban-zone.xml");
-				municipal = parserZone("municipal-area.xml");
+				terminoMunicipal = parserZone("municipal-area.xml");
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -95,14 +103,14 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 			
 			if(savedInstanceState == null){
 				editText.setText("Direcci??n de recogida, num");
-				showsGenericView();
+				showsGenericViewOfCity();
 				Log.i("UbicacionRecogidaActivity", "Showed generic view.");
 				Intent intent = getIntent();
 				furnitures = intent.getParcelableArrayListExtra("itemsSelected");
 				mLocalizado = false;
 				Log.i("UbicacionRecogidaActivity", 
 						"Se procede a mostrar ventana inicial..");
-				showInitialDialog();
+				showLocationAutoOrManualDialog();
 				mShowedRuralProcAdvice = false;
 				btnNextStep.setEnabled(false);
 			}		
@@ -112,9 +120,11 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 				mLongitud = savedInstanceState.getDouble("mLongitud");
 				mShowedRuralProcAdvice = savedInstanceState.
 						getBoolean("ShowedRuralProcAdvice");
+				mIsRuralPoint = savedInstanceState.getBoolean("isRuralPoint");
 				
 				if(mLocalizado){
-					Log.i("UbicacionRecogidaActivity", "Se ha localizado correctamente.");
+					Log.i("UbicacionRecogidaActivity", 
+							"Se ha localizado correctamente.");
 					LatLng point = new LatLng(mLatitud,mLongitud);
 					addMarkToPosition(point);
 					showChosenPointInMap(point);
@@ -122,9 +132,10 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 				}
 				else{
 					// By default shows the general city view
-					Log.i("UbicacionRecogidaActivity", "No se ha localizado.Se procede"
+					Log.i("UbicacionRecogidaActivity",
+							"No se ha localizado.Se procede"
 							+ "a mostrar una vista generica de la localidad en el mapa.");
-					showsGenericView();
+					showsGenericViewOfCity();
 					btnNextStep.setEnabled(false);
 				}
 			}
@@ -135,7 +146,7 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	
 	/**
 	 * Dado el nombre de un fichero xml genera una zona correspondiente a un
-	 * ??rea de la localidad
+	 * area de la localidad
 	 * @param xmlFileName
 	 * @return
 	 * @throws IOException
@@ -163,8 +174,9 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	         * in the text field the street and number.
 	         */
 	        public void onMapClick(LatLng point) {
-	        	Log.i("UbicacionRecogidaActivity","On click in point "+point.toString());
-				checkLocation(convertLagIntToLocation(point));
+	        	Log.i("UbicacionRecogidaActivity","On click in point "
+	        +point.toString());
+				markCollectionPoint(convertLagIntToLocation(point));
 	        }
 	    });		
 		
@@ -172,7 +184,8 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 		btnNextStep.setOnClickListener(new View.OnClickListener() {
             
 			public void onClick(View v) {
-				Log.i("UbicacionRecogidaActivity", "Se pulsa en el boton de Solicitud.");
+				Log.i("UbicacionRecogidaActivity", 
+						"Se pulsa en el boton de Solicitud.");
 				Intent intent = new Intent(UbicacionRecogidaActivity
 						.this,DatosContactoActivity.class);
 				startActivity(intent);   
@@ -180,7 +193,10 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
         });
 	}
 
-	public void showInitialDialog(){
+	/**
+	 * Se muestra un dialogo en el que se consulta que tipo
+	 */
+	public void showLocationAutoOrManualDialog(){
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		DialogSelecLocationType dialog = new DialogSelecLocationType();
 		dialog.show(fragmentManager, "tagLocalizManOrAut");		
@@ -196,7 +212,7 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	/**
 	 * Show general view in map of the city
 	 */
-	private void showsGenericView(){
+	private void showsGenericViewOfCity(){
 		CameraPosition camPos = new CameraPosition.Builder()
         .target(LOCAL)  
         .zoom(14)         
@@ -216,11 +232,37 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
         	.build();
 		CameraUpdate camUpd = CameraUpdateFactory.newCameraPosition(camPos);
 		map.moveCamera(camUpd);
-		Log.i("UbicacionRecogidaActivity", "Se muestra posicion escogida en el mapa.");
+		Log.i("UbicacionRecogidaActivity", 
+				"Se muestra posicion escogida en el mapa.");
 	}
 
 	public void checkLocation(LatLng point){
-		this.checkLocation(convertLagIntToLocation(point));
+		markCollectionPoint(convertLagIntToLocation(point));
+	}
+	
+	/**
+	 * Conecta con el servicio y obiene el punto de localización mas cercano
+	 * @param point
+	 * @return
+	 */
+	public CollectionPoint findNearestCollectionPoint(Location point){
+		CollectionPoint p = null;
+		try {
+			p = conector.getNearestCollectionPoint(point, mIsRuralPoint);
+		} catch (ParseException e) {
+			Log.e("findNearestCollectionPoint",
+					"Error internos al parsear el fichero xml");
+			e.printStackTrace();
+		} catch (JSONException e) {
+			Log.e("findNearestCollectionPoint",
+					"Error en el tratamiento del fichero JSON");
+			e.printStackTrace();
+		} catch (IOException e) {
+			Log.e("findNearestCollectionPoint",
+					e.toString());
+			e.printStackTrace();
+		}
+		return p;
 	}
 	
 	/**
@@ -228,57 +270,98 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	 * Shows dialogs if it fail and advice if it is rural zone.
 	 * @param point
 	 */
-	public void checkLocation(Location point){
+	public void markCollectionPoint(Location point){
+		// To resolve resolve NetworkOnMainThreadException
+		StrictMode.ThreadPolicy policy 
+			= new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		StrictMode.setThreadPolicy(policy); 
 		try {
 			if(point == null){
-				throw new Exception("checkLocation function receives null param");
+				Log.e("markCollectionPoint","point param is null");
+				throw new Exception("markCollectionPoint function receives null param");
 			}
-			if(municipal.isInside(point)){
-				Log.i("UbicacionRecogidaActivity","location in urban area");
-				mLatitud = point.getLatitude();
-				mLongitud = point.getLongitude();
-				addMarkToPosition(convertLocationToLagLog(point));
-				showChosenPointInMap(convertLocationToLagLog(point));
-				if(isRuralPoint(convertLocationToLagLog(point)) && 
-						!mShowedRuralProcAdvice){
-					Log.i("UbicacionRecogidaActivity","location in invalid area");
-					mShowedRuralProcAdvice = true;
-					FragmentManager fm = getSupportFragmentManager();
-					Bundle args = new Bundle();
-					args.putInt("title", R.string.dialog_title_location_not_valid);
-					args.putInt("description",R.string.dialog_descr_location_not_valid);
-					DialogAlert newFragment = DialogAlert.newInstance(args);
-					newFragment.show(fm, "tagAvisoLocNotValid");
+			if(terminoMunicipal.isInside(point)){
+				mIsRuralPoint = (isRuralPoint(point));
+				Log.i("markCollectionPoint","location dentro del termino municipal");
+				CollectionPoint nearestPoint = 
+						conector.getNearestCollectionPoint(point, mIsRuralPoint);
+				if(nearestPoint == null){
+					Log.w("markCollectionPoint","no hay ningun punto de recogida cercano");
+				}
+				else{
+					mLatitud = nearestPoint.getLat();
+					mLongitud = nearestPoint.getLng();
+					LatLng p = new LatLng(mLatitud,mLongitud);
+					Log.i("markCollectionPoint",
+							"Se obtiene el punto ("+mLatitud+","+mLongitud+").");
+					addMarkToPosition(p);
+					showChosenPointInMap(p);
+					if(mIsRuralPoint && !mShowedRuralProcAdvice){
+						showRuralProcessToCollectMessage();
+					}
+					obtainAddress(point);
 				}
 			}
 			else{
-				Log.i("UbicacionRecogidaActivity","location in rural area");
-				// point could not be located in the service area
-				mLocalizado = false;
-				btnNextStep.setEnabled(false);
-				editText.setText("");
-				showsGenericView();
-				FragmentManager fm = getSupportFragmentManager();
-				Bundle args = new Bundle();
-				args.putInt("title", R.string.dialog_title_location_not_valid);
-				args.putInt("description",R.string.dialog_descr_location_not_valid);
-				DialogAlert newFragment = DialogAlert.newInstance(args);
-				newFragment.show(fm, "tagAvisoLocNotValid");
+				showErrorCannotLocalize();
 			}
-			GetAddressTask add = new GetAddressTask(this);
-			Address address = add.obtainsAddress(point);
-			if(address != null){
-				Log.w("UbicacionRecogidaActivity","adress is: "
-			+address.getAddressLine(0));
-				editText.setText(address.getAddressLine(0));
-			}
-			else{
-				Log.w("UbicacionRecogidaActivity","cannot obtain address");
-			}
-		} catch (Exception e) {
-			Log.e("UnbicacionRecogidaActity","Exception in checkLocation function: "
-					+e.toString());
+			
 		}
+		catch (Exception e) {
+			Log.e("markCollectionPoint",e.toString());
+		}
+	}
+	
+	/**
+	 * Se muestra un mensaje informando al usuario del proceso que se sigue
+	 * para la recogida de enseres en areas rurales.
+	 */
+	private void showRuralProcessToCollectMessage(){
+		Log.i("UbicacionRecogidaActivity","location in invalid area");
+		mShowedRuralProcAdvice = true;
+		FragmentManager fm = getSupportFragmentManager();
+		Bundle args = new Bundle();
+		args.putInt("title", R.string.dialog_title_location_not_valid);
+		args.putInt("description",R.string
+				.dialog_descr_location_not_valid);
+		DialogAlert newFragment = DialogAlert.newInstance(args);
+		newFragment.show(fm, "tagAvisoLocNotValid");		
+	}
+	
+	/**
+	 * Se muestra un mensaje de error debido a que no se ha indiado
+	 * una localización dentro del término municipal.
+	 */
+	private void showErrorCannotLocalize(){
+		Log.i("UbicacionRecogidaActivity",
+				"No se puso marcar el punto ya que la localizacion no es valida");
+		mLocalizado = false;
+		btnNextStep.setEnabled(false);
+		editText.setText("");
+		showsGenericViewOfCity();
+		FragmentManager fm = getSupportFragmentManager();
+		Bundle args = new Bundle();
+		args.putInt("title", R.string.dialog_title_location_not_valid);
+		args.putInt("description",R.string.dialog_descr_location_not_valid);
+		DialogAlert newFragment = DialogAlert.newInstance(args);
+		newFragment.show(fm, "tagAvisoLocNotValid");		
+	}
+	
+	/**
+	 * Obtiene la direccion en formato texto y lo rellena en el campo editText
+	 * @param point
+	 */
+	private void obtainAddress(Location point){
+		GetAddressTask add = new GetAddressTask(this);
+		Address address = add.obtainsAddress(point);
+		if(address != null){
+			Log.w("UbicacionRecogidaActivity","adress is: "
+		+address.getAddressLine(0));
+			editText.setText(address.getAddressLine(0));
+		}
+		else{
+			Log.w("UbicacionRecogidaActivity","cannot obtain address");
+		}	
 	}
 	
 	/**
@@ -298,7 +381,7 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 					"LocationTracker cannot obtains current location");
 		}
 		else{
-			checkLocation(currentLocation);
+			markCollectionPoint(currentLocation);
 		}
     }
 	
@@ -307,6 +390,9 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	 * @param localizacion
 	 */
 	private void addMarkToPosition(LatLng localizacion){
+		Log.i("addMarkToPosition",
+				"Se marca la posicion ("+localizacion.latitude+"," +
+						""+localizacion.longitude+").");
 		this.map.clear();
 		this.mLocalizado = true;
 		this.btnNextStep.setEnabled(true);
@@ -332,28 +418,20 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	}
 	
 	/**
-	 * Transforms a LatLng to Location
-	 * @param point
-	 * @return Location correspondents to point dispatched
-	 */
-	private LatLng convertLocationToLagLog(Location point){
-		  return new LatLng(point.getLatitude(),point.getLongitude());
-	}
-	
-	/**
 	 * 
 	 * @param point
 	 * @return true if the point is in a rural area
 	 */
-	private boolean isRuralPoint(LatLng point){
-		return municipal.isInside(point) && !urban.isInside(point);
+	private boolean isRuralPoint(Location point){
+		return terminoMunicipal.isInside(point) && !urban.isInside(point);
 	}
 	
 	/**
 	 * Comprueba si el Play Service de Google esta disponible en el terminal movil.
+	 * En caso de que no este disponible muestra un mensaje de error
 	 * @return
 	 */
-	private boolean checkPlayServices() {
+	private boolean checkPlayServicesIsInstalled() {
 		int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
 		if (status != ConnectionResult.SUCCESS) {
 			if (GooglePlayServicesUtil.isUserRecoverableError(status)) {
@@ -376,6 +454,7 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	   outState.putDouble("mLatitud", mLatitud);
 	   outState.putParcelableArrayList("itemsSelected", furnitures);
 	   outState.putBoolean("ShowedRuralProcAdvice", mShowedRuralProcAdvice);
+	   outState.putBoolean("isRuralPoint", mIsRuralPoint);
        super.onSaveInstanceState(outState);
 	}	
 }

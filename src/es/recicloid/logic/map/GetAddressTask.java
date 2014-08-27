@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-import es.recicloid.activities.UbicacionRecogidaActivity;
+import es.recicloid.activities.servrecog.UbicacionRecogidaActivity;
 import es.uca.recicloid.R;
 import android.app.AlertDialog;
 import android.app.Dialog;

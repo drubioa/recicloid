@@ -5,64 +5,82 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="10"
+        android:minSdkVersion="9"
         android:targetSdkVersion="20" />
 
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<permission android:name="com.example.maptest.permission.MAPS_RECEIVE" 
+	    android:protectionLevel="signature"/>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="com.example.maptest.permission.MAPS_RECEIVE"/>
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name=
+	    "com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyCpMtC-hzelJmFb08eQfdS6dZmCkD4-lo0" />
-
+        
+        <uses-library android:name="com.google.android.maps" />
+        
         <activity
             android:name="es.recicloid.activities.SplashScreenActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-          <activity
-            android:name="es.recicloid.activities.MainActivity"
-            android:label="@string/title_activity_solicitud_enseres" >
-        </activity>      
         <activity
-            android:name="es.recicloid.activities.SolicitudEnseresActivity"
+            android:name="es.recicloid.activities.MainActivity"
             android:label="@string/title_activity_solicitud_enseres" >
         </activity>
         <activity
-            android:name="es.recicloid.activities.UbicacionRecogidaActivity"
+            android:name="es.recicloid.activities.servrecog.SolicitudEnseresActivity"
+            android:label="@string/title_activity_solicitud_enseres" >
+        </activity>
+        <activity
+            android:name="es.recicloid.activities.servrecog.UbicacionRecogidaActivity"
             android:label="@string/title_activity_ubicacion_recogida" >
         </activity>
         <activity
-            android:name="es.recicloid.activities.DatosContactoActivity"
+            android:name="es.recicloid.activities.servrecog.DatosContactoActivity"
             android:label="@string/title_activity_datos_contacto" >
         </activity>
         <activity
-            android:name="es.recicloid.activities.ConfirmarFechasActivity"
-            android:label="@string/title_activity_confirmar_fechas" >
+           android:name="es.recicloid.activities.servrecog.ConfirmarFechasActivity"
+           android:label="@string/title_activity_confirmar_fechas" >
         </activity>
         <activity
-            android:name="es.recicloid.activities.CondicionesUsoActivity"
+      		android:name="es.recicloid.activities.servrecog.CondicionesUsoActivity"
             android:label="@string/title_activity_condiciones_uso" >
         </activity>
+        <activity
+            android:name="es.recicloid.activities.ReciclopediaActivity"
+            android:label="@string/title_activity_reciclopedia" >
+        </activity>
+        <activity
+            android:name="es.recicloid.activities.InformacionReciclajeActivity"
+            android:label="@string/title_activity_informacion_reciclaje" >
+        </activity>
+        
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyDCtvGAkVO5eDT0zJU1vxPXh87hzInnOCY" />
+        
     </application>
 
 </manifest>

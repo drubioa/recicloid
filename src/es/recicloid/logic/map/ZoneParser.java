@@ -16,7 +16,8 @@ public class ZoneParser{
 	public String filename;
 	private static final String ns = null;
 	
-	public List<LatLng> parse(InputStream in) throws XmlPullParserException, IOException {
+	public List<LatLng> parse(InputStream in)
+			throws XmlPullParserException, IOException {
         try {
             XmlPullParser parser = Xml.newPullParser();
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
@@ -28,7 +29,8 @@ public class ZoneParser{
         }
     }
 	
-	public List<LatLng> readZone(XmlPullParser parser) throws XmlPullParserException, IOException {
+	public List<LatLng> readZone(XmlPullParser parser) 
+			throws XmlPullParserException, IOException {
 		List<LatLng> points = new ArrayList<LatLng>();
 
 	    parser.require(XmlPullParser.START_TAG, ns, "zone");

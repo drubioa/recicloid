@@ -1,4 +1,4 @@
-package es.recicloid.activities;
+package es.recicloid.activities.servrecog;
 
 import es.uca.recicloid.R;
 import android.os.Bundle;

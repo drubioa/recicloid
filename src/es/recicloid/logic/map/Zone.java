@@ -10,6 +10,7 @@ import com.google.android.gms.maps.model.LatLng ;
 
 public class Zone {
 	private List<LatLng> mPuntos;
+	
 	/**
 	 * Parse file xml and obtains de list with the zone??s points
 	 * @param context
@@ -36,7 +37,8 @@ public class Zone {
 	 * @return
 	 */
 	public boolean isInside(Location loc){
-		return isPointInPolygon(new LatLng(loc.getLatitude(),loc.getLongitude()),mPuntos);
+		return isPointInPolygon(new LatLng(loc.getLatitude(),
+				loc.getLongitude()),mPuntos);
 	}
 
 	private boolean isPointInPolygon(LatLng tap, List<LatLng> vertices) {
@@ -70,9 +72,4 @@ public class Zone {
 
 	    return x > pX;
 	}
-
-	
-	
-	
-	
 }

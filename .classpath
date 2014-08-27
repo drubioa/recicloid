@@ -6,5 +6,6 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="lib" path="/Users/diegorubio/adt-bundle-mac-x86_64-20140702/sdk/extras/google/google_play_services/libproject/google-play-services_lib"/>
+	<classpathentry kind="lib" path="/Users/diegorubio/adt-bundle-mac-x86_64-20140702/librerias/javax.ws.rs.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
