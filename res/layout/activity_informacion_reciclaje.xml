@@ -9,7 +9,7 @@
     tools:context="es.recicloid.activities.InformacionReciclajeActivity" >
 
     <ListView
-        android:id="@+id/listViewMainMenu"
+        android:id="@+id/listViewInfoReciclaje"
     	android:layout_width="match_parent"
     	android:layout_height="match_parent">
     </ListView>

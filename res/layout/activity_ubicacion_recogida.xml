@@ -8,11 +8,13 @@
     android:layout_marginLeft="5dp">
 
 	<fragment
-	       	class="com.google.android.gms.maps.SupportMapFragment"
-	        android:id="@+id/map"
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:layout_weight="6"/>
+	    android:id="@+id/map"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_weight="10"
+	    android1:layout_marginBottom="30dp"
+	    class="com.google.android.gms.maps.SupportMapFragment"
+	    android:scaleType="fitXY" />
 	
 	<LinearLayout android1:layout_width="match_parent"
         android1:layout_height="wrap_content"
@@ -22,10 +24,10 @@
         android:padding="10dp">
     
    		<LinearLayout
-        android1:layout_width="wrap_content"
+        android1:layout_width="match_parent"
         android1:layout_height="match_parent"
         android:orientation="horizontal"
-        android:layout_weight="3"
+        android:layout_weight="1"
         android:gravity="center">
      
 		    <TextView

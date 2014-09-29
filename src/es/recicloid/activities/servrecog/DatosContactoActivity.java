@@ -1,11 +1,18 @@
 package es.recicloid.activities.servrecog;
 
+import java.io.IOException;
+
+import org.apache.http.client.ClientProtocolException;
+import org.json.JSONException;
+
+import es.recicloid.logic.conections.ConectorToServices;
 import es.uca.recicloid.R;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,11 +28,13 @@ import android.widget.EditText;
 public class DatosContactoActivity extends Activity {
 	private boolean mEditTextNameValid;
 	private boolean mEditTextTelValid;
+	private ConectorToServices conector; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_datos_contacto);
+		conector = new ConectorToServices();
 		
 		if(savedInstanceState == null){
 			mEditTextNameValid = false;
@@ -49,16 +58,30 @@ public class DatosContactoActivity extends Activity {
 	}
 	
 	/**
-	 * Se a??ade un Listener que permita continuar al boton de
+	 * Se añade un Listener que permita continuar al boton de
 	 * continuar con solicitud de recogida.
 	 * @param btn_continue
 	 */
 	private void addListenerToBtnContinue(Button btn_continue){
 		btn_continue.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				Intent intent = new Intent(DatosContactoActivity
-						.this,CondicionesUsoActivity.class);
-				startActivity(intent);   
+				try {
+					conector.postNewUser(getUserName(), getUserPhone());
+					Intent intent = new Intent(DatosContactoActivity
+							.this,CondicionesUsoActivity.class);
+					intent.putExtra("user_name", getUserName());
+					intent.putExtra("user_phone", getUserPhone());
+					startActivity(intent);   
+				} catch (ClientProtocolException e) {
+					Log.e("addNewUser",e.toString());
+					e.printStackTrace();
+				} catch (IOException e) {
+					Log.e("addNewUser",e.toString());
+					e.printStackTrace();
+				} catch (JSONException e) {
+					Log.e("addNewUser",e.toString());
+					e.printStackTrace();
+				}
             }
         });	
 	}
@@ -139,6 +162,24 @@ public class DatosContactoActivity extends Activity {
 	    });	
 	}
 	
+	private String getUserPhone(){
+		EditText editTextName = 
+				(EditText)  findViewById(R.id.editTextPhone);
+		return editTextName
+				.getText().toString();			
+	}
+	
+	/**
+	 * 
+	 * @return nombre introducido por el usuario
+	 */
+	private String getUserName(){
+		EditText editTextName = 
+				(EditText)  findViewById(R.id.editTextNameOfContact);
+		return editTextName
+				.getText().toString();	
+	}
+	
 	private void isValidTextActiveBtn(){
 		Button btn_continue = (Button) findViewById(R.id.button);
 		if(mEditTextNameValid && mEditTextTelValid){
@@ -156,5 +197,4 @@ public class DatosContactoActivity extends Activity {
 	   outState.putBoolean("editTextTelValid", mEditTextTelValid);
        super.onSaveInstanceState(outState);
 	}	
-
 }

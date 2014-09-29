@@ -81,7 +81,7 @@
   
     
     
-    <string name="title_activity_ubicacion_recogida">Establece tu ubicación</string>
+    <string name="title_activity_ubicacion_recogida">Establece tu ubicacion</string>
 
     <!-- DIÁLOGOS -->
     <string name="dialog_title_4items">Atención</string>
@@ -122,7 +122,7 @@
     <string name="menu_datos_contacto_title">Datos de contacto</string>
     <string name="menu_datos_nombre">Nombre</string>
     <string name="menu_datos_contacto_telefono">Teléfono de contacto</string>
-    <string name="title_activity_confirmar_fechas">ConfirmarFechasActivity</string>
+    <string name="title_activity_confirmar_fechas">Fecha de recogida disponible</string>
 
     <!-- MENU condiciones de uso -->
     <string name="menu_condiciones_uso_title">Condiciones de uso</string>
@@ -140,7 +140,8 @@
     <!-- Menu confirmar fecha -->
     <string name="menu_confirmar_fecha_title">Confirmar fecha de recogida</string>
     <string name="title_activity_condiciones_uso">Condiciones de Uso</string>
-
+	<string name="btn_siguiente">Siguiente</string>
+    
     <!-- Splash menu con el logo del ayuntamiento -->
     <string name="title_splash">Ayuntamiento de</string>
     <string name="subtitle_splash">Puerto Real</string>

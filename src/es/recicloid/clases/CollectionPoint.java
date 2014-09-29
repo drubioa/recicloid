@@ -1,6 +1,9 @@
 package es.recicloid.clases;
 
-public class CollectionPoint {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class CollectionPoint implements Parcelable{
 	double mLng,mLat;
 	
 	public CollectionPoint(double lng,double lat){
@@ -14,6 +17,17 @@ public class CollectionPoint {
 	
 	public double getLat(){
 		return mLat;
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeDouble(mLng);
+		dest.writeDouble(mLat);
 	}
 	
 }

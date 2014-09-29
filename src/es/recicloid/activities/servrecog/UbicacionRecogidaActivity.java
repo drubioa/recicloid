@@ -188,6 +188,8 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 						"Se pulsa en el boton de Solicitud.");
 				Intent intent = new Intent(UbicacionRecogidaActivity
 						.this,DatosContactoActivity.class);
+				intent.putExtra("punto_recogida", 
+						new CollectionPoint(mLongitud,mLatitud));
 				startActivity(intent);   
             }
         });
@@ -365,7 +367,7 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	}
 	
 	/**
-	 * Obtains location by client??s mobile technology
+	 * Obtains location by clients mobile technology
 	 * @throws Exception 
 	 */
 	public void getLocationByMobilePhone() throws Exception {
@@ -427,7 +429,8 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	}
 	
 	/**
-	 * Comprueba si el Play Service de Google esta disponible en el terminal movil.
+	 * Comprueba si el Play Service de Google esta disponible en 
+	 * el terminal movil.
 	 * En caso de que no este disponible muestra un mensaje de error
 	 * @return
 	 */
@@ -437,8 +440,7 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 			if (GooglePlayServicesUtil.isUserRecoverableError(status)) {
 				return false;
 		    } else {
-		      Toast.makeText(this, "This device is not supported.", 
-		          Toast.LENGTH_LONG).show();
+		      errorPlaySevicesNotInstalled();
 		      finish();
 		    }
 		    return false;
@@ -446,6 +448,20 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 		  return true;
 	}
 	
+	/**
+	 * Se muestra un mensaje de error debido a que no se ha indiado
+	 * una localización dentro del término municipal.
+	 */
+	private void errorPlaySevicesNotInstalled(){
+		Log.i("UbicacionRecogidaActivity",
+				"Google Plays Services not installed");
+		FragmentManager fm = getSupportFragmentManager();
+		Bundle args = new Bundle();
+		args.putInt("title", R.string.dialog_err_google_play_title);
+		args.putInt("description",R.string.dialog_err_google_play_descr	);
+		DialogAlert newFragment = DialogAlert.newInstance(args);
+		newFragment.show(fm, "tagAvisoLocNotValid");		
+	}
 	
 	@Override
     protected void onSaveInstanceState(Bundle outState) {

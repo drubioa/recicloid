@@ -7,7 +7,6 @@ import java.util.Locale;
 import es.recicloid.activities.servrecog.UbicacionRecogidaActivity;
 import es.uca.recicloid.R;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.location.Address;
@@ -24,14 +23,13 @@ public class GetAddressTask{
 		mContext = context;
 	}
 	
-	private Dialog onCreateDialog() {
+	private void onCreateDialog() {
 	    progressDialog = new ProgressDialog(mContext);
 	    progressDialog.setMessage(mContext.getString(R.string.dialog_obtains_dir));
 	    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 	    progressDialog.setCancelable(false);
 	    progressDialog.show();
 	    Log.i("GetAddressTask","Show dialog");
-	    return progressDialog;
 	}
 
 	
@@ -60,12 +58,14 @@ public class GetAddressTask{
 		} catch (IOException e1) {
 			Log.e("GetAddressTask",
 					e1.toString());
+			progressDialog.cancel();
 		} catch (IllegalArgumentException e2) {
 			Log.e("GetAddressTask",e2.toString());
 			AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 			builder.setMessage(R.string.dialog_err_dir_exception)
 		       .setTitle(R.string.dialog_err_dir_exception);
 			builder.create();
+			progressDialog.cancel();
 		}
 		// If the reverse geocode returned an address
 		if (addresses != null && addresses.size() > 0) {

@@ -2,33 +2,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
+    android:gravity="center_horizontal|right"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ConfirmarFechasActivity" >
-
-   <TextView
-       android:id="@+id/textViewTitle"
-       android:layout_width="wrap_content"
-       android:layout_height="match_parent"
-       android:layout_weight="5"
-       android:text="@string/menu_confirmar_fecha_title"
-       android:textAppearance="?android:attr/textAppearanceLarge" />
     
    <CalendarView
        android:id="@+id/collectioncalendar"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:layout_weight="3"
+       android:focusable="false"
        tools:ignore="NewApi" />
-   
-    <ListView
-        android:id="@+id/listfurniturestocollect"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="3" />
-    
+
+   <ListView
+       android:id="@+id/listViewFurnituresPerDay"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_weight="3">
+
+   </ListView>
+
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="match_parent"
+       android:layout_weight="5" >
+       
+        <Button
+       android:id="@+id/buttonNext"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="@string/btn_siguiente"/>
+        
+   </LinearLayout>
 </LinearLayout>

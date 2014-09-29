@@ -25,13 +25,13 @@ import es.recicloid.clases.CollectionPoint;
  * @author Diego Rubio Abujas
  *
  */
-public class ConectorToServices {
+public class ConectorToServices{
 	HttpHost target;
 	DefaultHttpClient httpclient;
 	JSONConverter jsonConverter;
 	// Provisionalmente en modo local
-	final static String HOST = "192.168.1.16";
-	final static int PORT = 8080;
+	final String HOST = "192.168.1.13";
+	final int PORT = 8080;
 	
 	public ConectorToServices(){
 		httpclient = new DefaultHttpClient();
