@@ -5,20 +5,21 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 
-import org.apache.http.ParseException;
+import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 import org.xmlpull.v1.XmlPullParserException;
 
 import es.recicloid.clases.CollectionPoint;
 import es.recicloid.clases.Furniture;
+import es.recicloid.clases.Zone;
 import es.recicloid.dialogs.DialogAlert;
 import es.recicloid.dialogs.DialogSelecLocationType;
-import es.recicloid.logic.conections.ConectorToServices;
+import es.recicloid.logic.conections.ConectorToCollectionPointService;
+import es.recicloid.logic.conections.ConectorToCollectionPointServiceImp;
 import es.recicloid.logic.map.AddressTracker;
 import es.recicloid.logic.map.GetAddressTask;
 import es.recicloid.logic.map.LocationTracker;
-import es.recicloid.logic.map.Zone;
-import es.recicloid.logic.map.ZoneParser;
+import es.recicloid.parser.ZoneParser;
 import es.uca.recicloid.R;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -36,7 +37,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -44,7 +47,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class UbicacionRecogidaActivity extends FragmentActivity {
@@ -55,9 +58,10 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	private double mLatitud;
 	private ArrayList<Furniture> furnitures;
 	private GoogleMap map;	
-	private EditText editText;
+	private TextView mAddress;
 	private Button btnNextStep; 
-	private ConectorToServices conector;
+	private ConectorToCollectionPointService conector;
+	private String mAddressText;
 	
 	//private String direccion;
 	private final LatLng LOCAL = 
@@ -70,8 +74,15 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ubicacion_recogida);
 		btnNextStep = (Button) findViewById(R.id.buttonContinuar);
-		conector = new ConectorToServices();
+		try {
+			conector = new ConectorToCollectionPointServiceImp(this);
+		} catch (IOException e1) {
+			Log.e("UbicacionRecogidaActivity.onCreate",
+					"Cannot read file to config connection");
+			e1.printStackTrace();
+		}
 		
+		// Si el usuario no dispone de Play Services unviable se muestra mensaje de error.
 		if(!checkPlayServicesIsInstalled()){
 			btnNextStep.setEnabled(false);
 			FragmentManager fragmentManager = getSupportFragmentManager();
@@ -87,7 +98,7 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	                .findFragmentById(R.id.map)).getMap();
 			map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 			Log.i("UbicacionRecogidaActivity", "found and set GoogleMap.");
-			editText = (EditText) findViewById(R.id.editText1);
+			mAddress = (TextView) findViewById(R.id.textViewDireccionAddress);
 			
 			try {
 				Log.i("UbicacionRecogidaActivity", "xml were parser.");
@@ -102,7 +113,6 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 			
 			
 			if(savedInstanceState == null){
-				editText.setText("Direcci??n de recogida, num");
 				showsGenericViewOfCity();
 				Log.i("UbicacionRecogidaActivity", "Showed generic view.");
 				Intent intent = getIntent();
@@ -113,6 +123,7 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 				showLocationAutoOrManualDialog();
 				mShowedRuralProcAdvice = false;
 				btnNextStep.setEnabled(false);
+				mAddressText = "";
 			}		
 			else{
 				mLocalizado = savedInstanceState.getBoolean("mLocalizado");
@@ -121,6 +132,7 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 				mShowedRuralProcAdvice = savedInstanceState.
 						getBoolean("ShowedRuralProcAdvice");
 				mIsRuralPoint = savedInstanceState.getBoolean("isRuralPoint");
+				mAddressText =  savedInstanceState.getString("mAddressText");
 				
 				if(mLocalizado){
 					Log.i("UbicacionRecogidaActivity", 
@@ -173,10 +185,19 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	         * If the user clicks on a map position is marked and stored 
 	         * in the text field the street and number.
 	         */
-	        public void onMapClick(LatLng point) {
-	        	Log.i("UbicacionRecogidaActivity","On click in point "
-	        +point.toString());
-				markCollectionPoint(convertLagIntToLocation(point));
+	        public void onMapClick(final LatLng point) {
+				// Se muestra barra de progreso mientras se establece conección con el servidor.
+				final ProgressDialog dialog = ProgressDialog.show(UbicacionRecogidaActivity.this,
+						"",getResources().getString(R.string.nearestPoint_message) , true); 
+				Handler handler = new Handler();
+				handler.postDelayed(new Runnable() {
+				    public void run() {
+				    	markCollectionPoint(convertLagIntToLocation(point));
+				                dialog.dismiss();
+				    }   
+				}, 3000);  // 3000 milliseconds
+				Log.i("UbicacionRecogidaActivity","On click in point "
+	        			+point.toString());
 	        }
 	    });		
 		
@@ -196,7 +217,8 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	}
 
 	/**
-	 * Se muestra un dialogo en el que se consulta que tipo
+	 * Se muestra un dialogo en el que se consulta que tipo de medio se empleara para 
+	 * establecer la localización.
 	 */
 	public void showLocationAutoOrManualDialog(){
 		FragmentManager fragmentManager = getSupportFragmentManager();
@@ -210,6 +232,109 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 		getMenuInflater().inflate(R.menu.ubicacion_recogida, menu);
 		return true;
 	}
+
+	public void checkLocation(LatLng point){
+		markCollectionPoint(convertLagIntToLocation(point));
+	}
+
+	/**
+	 * Checks if point belong a valid zone, and if it is urban or rural zone.
+	 * Shows dialogs if it fail and advice if it is rural zone.
+	 * @param point
+	 */
+	public void markCollectionPoint(Location point){
+		// To resolve resolve NetworkOnMainThreadException
+		StrictMode.ThreadPolicy policy 
+			= new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		StrictMode.setThreadPolicy(policy); 
+		try {
+			if(point == null){
+				Log.e("markCollectionPoint","point param is null");
+				throw new NullPointerException("markCollectionPoint function receives null param");
+			}
+			if(terminoMunicipal.isInside(point)){
+				mIsRuralPoint = (isRuralPoint(point));
+				Log.i("markCollectionPoint","location dentro del termino municipal");
+				CollectionPoint nearestPoint = 
+							conector.getNearestCollectionPoint(point, mIsRuralPoint);
+				if(nearestPoint == null){
+					// Si no se ha localizado se muestra un mensaje de error.
+					Log.w("markCollectionPoint","no hay ningun punto de recogida " +
+							"cercano");
+					showDialogAlert(R.string.dialog_title_location_not_valid,
+							R.string.dialog_descr_location_not_valid,
+							"tagAvisoLocNotValid");			
+				}
+				else{
+					mLatitud = nearestPoint.getLat();
+					mLongitud = nearestPoint.getLng();
+					LatLng p = new LatLng(mLatitud,mLongitud);
+					Log.i("markCollectionPoint",
+							"Se obtiene el punto ("+mLatitud+","+mLongitud+").");
+					addMarkToPosition(p);
+					showChosenPointInMap(p);
+					if(mIsRuralPoint && !mShowedRuralProcAdvice){
+						showRuralProcessToCollectMessage();
+					}
+					obtainAddress(point);
+				}
+			}
+			else{
+				Log.w("UbicacionRecogidaActivity",
+						"No se puso marcar el punto ya que la localizacion " +
+						"no es valida ("+point.toString()+")");
+				mLocalizado = false;
+				btnNextStep.setEnabled(false);
+				mAddress.setText(mAddressText);
+				showsGenericViewOfCity();
+				showDialogAlert(R.string.dialog_title_location_not_valid,
+						R.string.dialog_descr_location_not_valid,
+						"tagAvisoLocNotValid");
+			}
+			
+		}
+		catch (ClientProtocolException e) {
+			Log.e("markCollectionPoint.ClientProtocolException",e.toString());
+			showDialogAlert(R.string.dialog_err_dir_exception,
+					R.string.dialog_err_dir_conection_descr,"tagErrorConection");
+		} catch (IOException e) {
+			showDialogAlert(R.string.dialog_err_dir_exception,
+				R.string.dialog_err_dir_conection_descr,"tagErrorConection");			
+			Log.e("markCollectionPoint.IOException",e.toString());
+		} catch (JSONException e) {
+			Log.e("markCollectionPoint.JSONException",e.toString());
+		}
+		catch(RuntimeException ex){
+			// No hay ningun punto de recogida cercano del punto seleccionado.
+			if(ex.getMessage().contains("HTTP error code : 400")){
+				showDialogAlert(R.string.dialog_title_location_not_valid,
+						R.string.dialog_err_location_error_not_exist_nearest,
+						"tagAvisoLocNotValid");
+			}
+		}
+	}
+
+	/**
+	 * Obtains location by clients mobile technology
+	 * @throws Exception 
+	 */
+	public void getLocationByMobilePhone() throws Exception {
+		LocationTracker locTracker = new LocationTracker(this);
+		Location currentLocation = locTracker.getLocation();
+		if(currentLocation == null){
+			Toast msjError = Toast.makeText(getApplicationContext(),
+					getResources().getString(
+			        		R.string.dialog_err_location_exception), 
+					Toast.LENGTH_SHORT);
+			msjError.show();
+			Log.e("UbicacionRecogidaActivity", 
+					"LocationTracker cannot obtains current location");
+		}
+		else{
+			markCollectionPoint(currentLocation);
+		}
+	}
+
 
 	/**
 	 * Show general view in map of the city
@@ -237,82 +362,6 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 		Log.i("UbicacionRecogidaActivity", 
 				"Se muestra posicion escogida en el mapa.");
 	}
-
-	public void checkLocation(LatLng point){
-		markCollectionPoint(convertLagIntToLocation(point));
-	}
-	
-	/**
-	 * Conecta con el servicio y obiene el punto de localización mas cercano
-	 * @param point
-	 * @return
-	 */
-	public CollectionPoint findNearestCollectionPoint(Location point){
-		CollectionPoint p = null;
-		try {
-			p = conector.getNearestCollectionPoint(point, mIsRuralPoint);
-		} catch (ParseException e) {
-			Log.e("findNearestCollectionPoint",
-					"Error internos al parsear el fichero xml");
-			e.printStackTrace();
-		} catch (JSONException e) {
-			Log.e("findNearestCollectionPoint",
-					"Error en el tratamiento del fichero JSON");
-			e.printStackTrace();
-		} catch (IOException e) {
-			Log.e("findNearestCollectionPoint",
-					e.toString());
-			e.printStackTrace();
-		}
-		return p;
-	}
-	
-	/**
-	 * Checks if point belong a valid zone, and if it is urban or rural zone.
-	 * Shows dialogs if it fail and advice if it is rural zone.
-	 * @param point
-	 */
-	public void markCollectionPoint(Location point){
-		// To resolve resolve NetworkOnMainThreadException
-		StrictMode.ThreadPolicy policy 
-			= new StrictMode.ThreadPolicy.Builder().permitAll().build();
-		StrictMode.setThreadPolicy(policy); 
-		try {
-			if(point == null){
-				Log.e("markCollectionPoint","point param is null");
-				throw new Exception("markCollectionPoint function receives null param");
-			}
-			if(terminoMunicipal.isInside(point)){
-				mIsRuralPoint = (isRuralPoint(point));
-				Log.i("markCollectionPoint","location dentro del termino municipal");
-				CollectionPoint nearestPoint = 
-						conector.getNearestCollectionPoint(point, mIsRuralPoint);
-				if(nearestPoint == null){
-					Log.w("markCollectionPoint","no hay ningun punto de recogida cercano");
-				}
-				else{
-					mLatitud = nearestPoint.getLat();
-					mLongitud = nearestPoint.getLng();
-					LatLng p = new LatLng(mLatitud,mLongitud);
-					Log.i("markCollectionPoint",
-							"Se obtiene el punto ("+mLatitud+","+mLongitud+").");
-					addMarkToPosition(p);
-					showChosenPointInMap(p);
-					if(mIsRuralPoint && !mShowedRuralProcAdvice){
-						showRuralProcessToCollectMessage();
-					}
-					obtainAddress(point);
-				}
-			}
-			else{
-				showErrorCannotLocalize();
-			}
-			
-		}
-		catch (Exception e) {
-			Log.e("markCollectionPoint",e.toString());
-		}
-	}
 	
 	/**
 	 * Se muestra un mensaje informando al usuario del proceso que se sigue
@@ -334,19 +383,13 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	 * Se muestra un mensaje de error debido a que no se ha indiado
 	 * una localización dentro del término municipal.
 	 */
-	private void showErrorCannotLocalize(){
-		Log.i("UbicacionRecogidaActivity",
-				"No se puso marcar el punto ya que la localizacion no es valida");
-		mLocalizado = false;
-		btnNextStep.setEnabled(false);
-		editText.setText("");
-		showsGenericViewOfCity();
+	private void showDialogAlert(int titleStr,int  descriptionStr,String tagName){
 		FragmentManager fm = getSupportFragmentManager();
 		Bundle args = new Bundle();
-		args.putInt("title", R.string.dialog_title_location_not_valid);
-		args.putInt("description",R.string.dialog_descr_location_not_valid);
+		args.putInt("title",titleStr);
+		args.putInt("description",descriptionStr);
 		DialogAlert newFragment = DialogAlert.newInstance(args);
-		newFragment.show(fm, "tagAvisoLocNotValid");		
+		newFragment.show(fm, tagName);		
 	}
 	
 	/**
@@ -359,33 +402,13 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 		if(address != null){
 			Log.w("UbicacionRecogidaActivity","adress is: "
 		+address.getAddressLine(0));
-			editText.setText(address.getAddressLine(0));
+			mAddress.setText(address.getAddressLine(0));
+			mAddressText = address.getAddressLine(0);
 		}
 		else{
 			Log.w("UbicacionRecogidaActivity","cannot obtain address");
 		}	
 	}
-	
-	/**
-	 * Obtains location by clients mobile technology
-	 * @throws Exception 
-	 */
-	public void getLocationByMobilePhone() throws Exception {
-		LocationTracker locTracker = new LocationTracker(this);
-		Location currentLocation = locTracker.getLocation();
-		if(currentLocation == null){
-			Toast msjError = Toast.makeText(getApplicationContext(),
-    				getResources().getString(
-    		        		R.string.dialog_err_location_exception), 
-					Toast.LENGTH_SHORT);
-			msjError.show();
-			Log.e("UbicacionRecogidaActivity", 
-					"LocationTracker cannot obtains current location");
-		}
-		else{
-			markCollectionPoint(currentLocation);
-		}
-    }
 	
 	/**
 	 * Draw q mark in a map with location point
@@ -461,16 +484,18 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 		args.putInt("description",R.string.dialog_err_google_play_descr	);
 		DialogAlert newFragment = DialogAlert.newInstance(args);
 		newFragment.show(fm, "tagAvisoLocNotValid");		
-	}
+	}	
 	
+
 	@Override
-    protected void onSaveInstanceState(Bundle outState) {
+	protected void onSaveInstanceState(Bundle outState) {
 	   outState.putBoolean("mLocalizado", mLocalizado);
 	   outState.putDouble("mLongitud", mLongitud);
 	   outState.putDouble("mLatitud", mLatitud);
 	   outState.putParcelableArrayList("itemsSelected", furnitures);
 	   outState.putBoolean("ShowedRuralProcAdvice", mShowedRuralProcAdvice);
 	   outState.putBoolean("isRuralPoint", mIsRuralPoint);
-       super.onSaveInstanceState(outState);
-	}	
+	   outState.putString("mAddressText", mAddressText);
+	   super.onSaveInstanceState(outState);
+	}
 }

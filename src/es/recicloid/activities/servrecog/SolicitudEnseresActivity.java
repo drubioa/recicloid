@@ -1,5 +1,6 @@
 package es.recicloid.activities.servrecog;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,6 +9,7 @@ import es.recicloid.adapters.ItemsGridViewAdapter;
 import es.recicloid.clases.Furniture;
 import es.recicloid.dialogs.DialogAlert;
 import es.recicloid.dialogs.DialogMultiplesFurnitures;
+import es.recicloid.parser.ItemsParser;
 import es.uca.recicloid.R;
 import android.content.Intent;
 import android.os.Bundle;
@@ -46,13 +48,13 @@ public class SolicitudEnseresActivity extends FragmentActivity {
     	mCategory_outside,
     	mCategory_living,
     	mCategory_general;
-    private ArrayList<Furniture> furnituresToRecic;
+    public ArrayList<Furniture> furnituresToRecic;
     private ItemsGridViewAdapter mGridViewAdapter;
     private GridView mGridViewCategorY;
     private int mOpcionActual;
     private List<String> OpcionesSpinner;
     private boolean botonActivo,mensaje4items;
-    private Button btn_continue;
+    public Button btn_continue;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,16 +66,19 @@ public class SolicitudEnseresActivity extends FragmentActivity {
 		
 		// Creacion del Spinner de categorias
 		createSpinnerCategorias();
+		Log.i("SolicitudEnseresActivity", "The Spinner Menu was created.");
+
 		
 		// Creacion de los GridViews
-		mGridViewCategorY = (GridView) findViewById(R.id.GridView_items);
-				
+		mGridViewCategorY = (GridView) findViewById(R.id.GridView_items);		
+		
 		if(savedInstanceState == null){
 			furnituresToRecic = new ArrayList<Furniture>();
 			prepareCategories();
 			botonActivo = false;
 			mensaje4items = false;
 			mOpcionActual = CAT_BATHROOM;
+			showInitialMessage();
 		}
 		else{
 			furnituresToRecic = savedInstanceState.getParcelableArrayList("itemsSelected");
@@ -88,19 +93,19 @@ public class SolicitudEnseresActivity extends FragmentActivity {
 			mensaje4items = savedInstanceState.getBoolean("mensaje4items");
 		}
 		mGridViewAdapter = new ItemsGridViewAdapter(this, R.layout.grid_item, mCategory_bath);
+		mGridViewCategorY.setAdapter(mGridViewAdapter);		
+		Log.i("SolicitudEnseresActivity", "The GridView was created.");
 
 		
-     	// Adaptar GridView
-		mGridViewCategorY.setAdapter(mGridViewAdapter);		
 		// Boton continuar
 		btn_continue = (Button) findViewById (R.id.buttonContinuar);
-		
 		if(!botonActivo){
 			btn_continue.setEnabled(false);
 		}
 		else{
 			btn_continue.setEnabled(true);
 		}
+		Log.i("SolicitudEnseresActivity", "The Boton to conitnue was created.");
 		
 		// Listener para los GridView
 		mGridViewCategorY.setOnItemClickListener(new OnItemClickListener(){
@@ -122,7 +127,11 @@ public class SolicitudEnseresActivity extends FragmentActivity {
 					showMessage4Items();
 				}
 			}
-
+			
+			/**
+			 * If 4 items were chosen, the App must show a message informing
+			 *  the user of the use  conditions.
+			 */
 			private void showMessage4Items() {
 				FragmentManager fm = getSupportFragmentManager();
 				Bundle args = new Bundle();
@@ -166,13 +175,66 @@ public class SolicitudEnseresActivity extends FragmentActivity {
 
 	}
 	
+	private void showInitialMessage() {
+		FragmentManager fm = getSupportFragmentManager();
+		Bundle args = new Bundle();
+		args.putInt("title", R.string.dialog_info_solicitud_enseres);
+		args.putInt("description",R.string.dialog_descr_info_solicitud_enseres);
+		DialogAlert newFragment = DialogAlert.newInstance(args);
+		newFragment.show(fm, "tagMensajeInicialSolicitudEnseres");	
+	}
+
 	private void prepareCategories() {
-		mCategory_bath = prepareCategory(CAT_BATHROOM);
-		mCategory_kitchen = prepareCategory(CAT_KITCHEN);
-		mCategory_bedroom = prepareCategory(CAT_BEDROOM);
-		mCategory_outside = prepareCategory(CAT_OUTSIDE);
-		mCategory_living = prepareCategory(CAT_LIVING);
-		mCategory_general = prepareCategory(CAT_GENERAL);
+		try {
+			mCategory_bath = prepareCategory(CAT_BATHROOM);
+			mCategory_kitchen = prepareCategory(CAT_KITCHEN);
+			mCategory_bedroom = prepareCategory(CAT_BEDROOM);
+			mCategory_outside = prepareCategory(CAT_OUTSIDE);
+			mCategory_living = prepareCategory(CAT_LIVING);
+			mCategory_general = prepareCategory(CAT_GENERAL);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @param category Number extracted by the string array resource.
+	 * @return ArrayList with all the elemtns of a categoryNumber
+	 * @throws Exception 
+	 */
+	private ArrayList<Furniture> prepareCategory(int categoryNumber) throws Exception{
+		String xmlFileName;
+		switch(categoryNumber){
+		case CAT_BATHROOM:
+			xmlFileName = "items-bathroom.xml";
+			break;
+		case CAT_KITCHEN:
+			xmlFileName = "items-kitchen.xml";
+			break;
+		case CAT_BEDROOM:
+			xmlFileName = "items-bedroom.xml";
+			break;
+		case CAT_OUTSIDE:
+			xmlFileName = "items-outside.xml";
+			break;
+		case CAT_LIVING:
+			xmlFileName = "items-living.xml";
+			break;
+		case CAT_GENERAL:
+			xmlFileName = "items-general.xml";
+			break;
+		default:
+			throw new Exception("Invalid category introduced");
+	}
+		InputStream in = getAssets().open(xmlFileName);
+		Log.i("SolicitudEnseresActivity", "xml file '"+xmlFileName+"' opened.");
+		ItemsParser  parser = new ItemsParser(categoryNumber);
+		parser.filename = xmlFileName;
+		ArrayList<Furniture> furnitures =  (ArrayList<Furniture>) parser.parse(in);	
+		Log.i("SolicitudEnseresActivity", "xml file '"+xmlFileName+"' were parser.");
+		in.close();
+		Log.i("SolicitudEnseresActivity", "closed conection with '"+xmlFileName+"'.");
+		return furnitures;
 	}
 
 	private void cambiarGridView(String opcionElegida,AdapterView<?> parent){
@@ -225,64 +287,6 @@ public class SolicitudEnseresActivity extends FragmentActivity {
 		adapter.setDropDownViewResource(
 				android.R.layout.simple_spinner_dropdown_item);
 		mSpinnerCategories.setAdapter(adapter);		
-	}
-	
-	/**
-	 * @param category Number extracted by the string array resource.
-	 * @return ArrayList with all the elemtns of a categoryNumber
- 	 */
-	private ArrayList<Furniture> prepareCategory(int categoryNumber){
-		ArrayList<Furniture> categoria = new ArrayList<Furniture>();
-		switch(categoryNumber){
-			case CAT_BATHROOM:{
-				addItemsToCatBathroom(categoria);	
-				break;
-			}
-			case CAT_KITCHEN:{
-				categoria.add(new Furniture("desk",categoryNumber,
-						R.string.item_desk,R.drawable.tuck));
-				categoria.add(new Furniture("bed",categoryNumber,
-						R.string.item_bed,R.drawable.tuck));
-				break;
-			}
-			case CAT_BEDROOM:{
-				categoria.add(new Furniture("sink",categoryNumber,
-						R.string.item_sink,R.drawable.tuck));
-				break;
-			}
-			case CAT_OUTSIDE:{
-				break;
-			}
-			case CAT_LIVING:{
-				break;
-			}
-			case CAT_GENERAL:{
-				break;
-			}
-		}
-		return categoria;
-	}
-	
-	/**
-	 * Se añaden todos los items correspondientes a bathroom
-	 * @param categorias
-	 */
-	private void addItemsToCatBathroom(ArrayList<Furniture> categorias){
-		int categoryNumber = CAT_BATHROOM;
-		categorias.add(new Furniture("bathtub",categoryNumber,
-				R.string.item_bathtub,R.drawable.tuck));
-		categorias.add(new Furniture("sink",categoryNumber,
-				R.string.item_sink,R.drawable.tuck));
-		categorias.add(new Furniture("bidet",categoryNumber,
-				R.string.item_bidet,R.drawable.tuck));
-		categorias.add(new Furniture("bath_furniture",categoryNumber,
-				R.string.item_bath_furniture,R.drawable.tuck));
-		categorias.add(new Furniture("shower_plate",categoryNumber,
-				R.string.item_shower_plate,R.drawable.tuck));
-		categorias.add(new Furniture("bath_self",categoryNumber,
-				R.string.item_bath_self,R.drawable.tuck));
-		categorias.add(new Furniture("wc",categoryNumber,
-				R.string.item_wc,R.drawable.tuck));
 	}
 	
 	/**

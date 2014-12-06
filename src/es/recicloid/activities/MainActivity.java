@@ -2,6 +2,7 @@ package es.recicloid.activities;
 
 import java.util.ArrayList;
 
+
 import es.recicloid.activities.inforeciclaje.InformacionReciclajeActivity;
 import es.recicloid.activities.servrecog.SolicitudEnseresActivity;
 import es.recicloid.adapters.*;
@@ -10,7 +11,6 @@ import es.uca.recicloid.R;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -28,15 +28,15 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		ArrayList<TitleWithImg> options = new ArrayList<TitleWithImg>();
 		// Solicitar Recogida
-		options.add(new TitleWithImg(R.drawable.tuck,getResources()
+		options.add(new TitleWithImg(R.drawable.ic_truck,getResources()
 				.getString(R.string.title_solicitud),getResources()
 				.getString(R.string.descr_solicitud)));
 		// Información de Reciclaje
-		options.add(new TitleWithImg(R.drawable.tuck,getResources()
+		options.add(new TitleWithImg(R.drawable.ic_papelera,getResources()
 				.getString(R.string.title_info_reciclaje),getResources()
 				.getString(R.string.descr_info_reciclaje)));		
 		// Consultar Historial
-		options.add(new TitleWithImg(R.drawable.tuck,getResources()
+		options.add(new TitleWithImg(R.drawable.ic_historial,getResources()
 				.getString(R.string.title_historial),getResources()
 				.getString(R.string.descr_historial)));
 		
@@ -91,12 +91,5 @@ public class MainActivity extends Activity {
         });
 
     }		
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
 
 }

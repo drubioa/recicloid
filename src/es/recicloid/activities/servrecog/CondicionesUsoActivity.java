@@ -47,7 +47,7 @@ public class CondicionesUsoActivity extends Activity {
 		btn_continue.setOnClickListener(new View.OnClickListener() {
             
 			public void onClick(View v) {
-				Intent intent = new Intent(CondicionesUsoActivity.this,ConfirmarFechasActivity.class);
+				Intent intent = new Intent(CondicionesUsoActivity.this,Confirmar1FechaActivity.class);
 				startActivity(intent);   
             }
         });

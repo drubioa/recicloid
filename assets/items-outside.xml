@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Furnitures for outside -->
+<furnitures>
+    <item>
+        <title>garden_table</title>
+        <idText>item_garden_table</idText>
+        <idImg>tuck</idImg>
+    </item>
+    <item>
+        <title>barbacue</title>
+        <idText>item_barbacue</idText>
+        <idImg>tuck</idImg>
+    </item>
+    <item>
+        <title>garden_chair</title>
+        <idText>item_garden_chair</idText>
+        <idImg>tuck</idImg>
+    </item>
+</furnitures>

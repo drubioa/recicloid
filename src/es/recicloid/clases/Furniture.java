@@ -5,22 +5,22 @@ import android.os.Parcelable;
 
 
 public class Furniture implements Parcelable{
-	private int idImg,idText;
+	private String idImg,idText;
 	private int mNum;
 	private String mName;
 	private int category;
 	
-	public Furniture(String name,int category,int idText,int idImg){
+	public Furniture(String name,int category,String idText2,String idImg2){
 		this.mName = name;
 		this.category = category;
-		this.setIdImg(idImg);
-		this.setIdText(idText);
+		this.setIdImg(idImg2);
+		this.setIdText(idText2);
 		this.mNum = 0;
 	}
 
 	public Furniture(Parcel in){
-		idImg = in.readInt();	
-		idText = in.readInt();
+		idImg = in.readString();	
+		idText = in.readString();
 		mNum = in.readInt();
 		mName = in.readString();
 		category = in.readInt();
@@ -35,26 +35,26 @@ public class Furniture implements Parcelable{
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeInt(idImg);
-		dest.writeInt(idText);
+		dest.writeString(idImg);
+		dest.writeString(idText);
 		dest.writeInt(mNum);
 		dest.writeString(mName);
 		dest.writeInt(category);
 	}
 	
-	public int getIdImg() {
+	public String getIdImg() {
 		return idImg;
 	}
 
-	public void setIdImg(int idImg) {
-		this.idImg = idImg;
+	public void setIdImg(String idImg2) {
+		this.idImg = idImg2;
 	}
 
 	public String getName() {
 		return mName;
 	}
 	
-	public int getIdText() {
+	public String getIdText() {
 		return idText;
 	}
 
@@ -62,8 +62,8 @@ public class Furniture implements Parcelable{
 		return category;
 	}
 	
-	public void setIdText(int idText) {
-		this.idText = idText;
+	public void setIdText(String idText2) {
+		this.idText = idText2;
 	}
 
 	public int getmNum() {

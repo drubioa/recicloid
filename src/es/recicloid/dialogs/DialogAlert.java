@@ -27,7 +27,6 @@ public class DialogAlert extends DialogFragment {
             .setTitle(title)
             .setPositiveButton(getResources().getString(R.string.dialog_ok), 
             		   new DialogInterface.OnClickListener() {
-            	
                    public void onClick(DialogInterface dialog, int id) {
                        dialog.dismiss();
                    }

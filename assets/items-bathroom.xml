@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Furnitures for bathroom -->
+<furnitures>
+    <item>
+        <title>bathtub</title>
+        <idText>item_bathtub</idText>
+        <idImg>tuck</idImg>
+    </item>
+    <item>
+        <title>sink</title>
+        <idText>item_sink</idText>
+        <idImg>tuck</idImg>        
+    </item>
+    <item>
+        <title>bidet</title>
+        <idText>item_bidet</idText>
+        <idImg>tuck</idImg>        
+    </item>
+    <item>
+        <title>bath_furniture</title>
+        <idText>item_bath_furniture</idText>
+        <idImg>tuck</idImg>        
+    </item>
+    <item>
+        <title>shower_plate</title>
+        <idText>item_shower_plate</idText>
+        <idImg>tuck</idImg>        
+    </item>
+    <item>
+        <title>bath_self</title>
+        <idText>item_bath_self</idText>
+        <idImg>tuck</idImg>        
+    </item>
+    <item>
+        <title>wc</title>
+        <idText>item_wc</idText>
+        <idImg>tuck</idImg>        
+    </item>
+</furnitures>

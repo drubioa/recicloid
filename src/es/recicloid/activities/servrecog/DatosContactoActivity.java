@@ -2,14 +2,16 @@ package es.recicloid.activities.servrecog;
 
 import java.io.IOException;
 
-import org.apache.http.client.ClientProtocolException;
-import org.json.JSONException;
-
-import es.recicloid.logic.conections.ConectorToServices;
+import es.recicloid.dialogs.DialogAlert;
+import es.recicloid.logic.conections.ConectorToUserService;
+import es.recicloid.logic.conections.ConectorToUserServiceImp;
 import es.uca.recicloid.R;
 import android.os.Bundle;
-import android.app.Activity;
+import android.os.Handler;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -25,16 +27,20 @@ import android.widget.EditText;
  * Esta actividad forma parte del proceso de solicitud de recogida
  * de muebles y enseres.
  */
-public class DatosContactoActivity extends Activity {
+public class DatosContactoActivity extends FragmentActivity {
 	private boolean mEditTextNameValid;
 	private boolean mEditTextTelValid;
-	private ConectorToServices conector; 
+	private ConectorToUserService conector; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_datos_contacto);
-		conector = new ConectorToServices();
+		try {
+			conector = new ConectorToUserServiceImp(this);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		if(savedInstanceState == null){
 			mEditTextNameValid = false;
@@ -65,23 +71,32 @@ public class DatosContactoActivity extends Activity {
 	private void addListenerToBtnContinue(Button btn_continue){
 		btn_continue.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				try {
-					conector.postNewUser(getUserName(), getUserPhone());
-					Intent intent = new Intent(DatosContactoActivity
-							.this,CondicionesUsoActivity.class);
-					intent.putExtra("user_name", getUserName());
-					intent.putExtra("user_phone", getUserPhone());
-					startActivity(intent);   
-				} catch (ClientProtocolException e) {
-					Log.e("addNewUser",e.toString());
-					e.printStackTrace();
-				} catch (IOException e) {
-					Log.e("addNewUser",e.toString());
-					e.printStackTrace();
-				} catch (JSONException e) {
-					Log.e("addNewUser",e.toString());
-					e.printStackTrace();
-				}
+				final ProgressDialog dialog = ProgressDialog
+						.show(DatosContactoActivity.this,
+						"",getResources().getString(R.string.message_registrer_user) , true); 
+				Handler handler = new Handler();
+				handler.postDelayed(new Runnable() {
+				    public void run() {
+						try {
+							conector.postNewUser(getUserName(), getUserPhone());
+							Log.i("DatosContactoActivity",
+									"registrado nuevos datos de contacto");
+							dialog.dismiss();
+							Intent intent = new Intent(DatosContactoActivity
+										.this,CondicionesUsoActivity.class);
+							intent.putExtra("user_name", getUserName());
+							intent.putExtra("user_phone", getUserPhone());
+							startActivity(intent); 
+						} catch (Exception e) {
+							Log.w("DatosContactoActivity",e.getMessage());
+							dialog.dismiss();
+							if(e.getMessage().contains("HTTP error code : 500")){
+								showDialogAlert(R.string.dialog_title_not_valid_user,
+										R.string.dialog_title_not_valid_user_descr,"tagDialError");
+							}
+							e.printStackTrace();
+						}
+				    }}, 3000);  // 3000 milliseconds
             }
         });	
 	}
@@ -124,8 +139,8 @@ public class DatosContactoActivity extends Activity {
 	}
 	
 	/**
-	 * Se comprueba que el n??mero de tel??fono de contacto es un tel??fono
-	 * v??lido.
+	 * Se comprueba que el numero de telefono de contacto es un telefono
+	 * valido.
 	 * @param phone
 	 */
 	private void addListenerToEditTextPhone(EditText phone){
@@ -160,6 +175,19 @@ public class DatosContactoActivity extends Activity {
 				isValidTextActiveBtn();
 			}
 	    });	
+	}
+	
+	/**
+	 * Se muestra un mensaje de error debido a que no se ha indiado
+	 * una localización dentro del término municipal.
+	 */
+	private void showDialogAlert(int titleStr,int  descriptionStr,String tagName){
+		FragmentManager fm = getSupportFragmentManager();
+		Bundle args = new Bundle();
+		args.putInt("title", titleStr);
+		args.putInt("description",descriptionStr);
+		DialogAlert newFragment = DialogAlert.newInstance(args);
+		newFragment.show(fm, tagName);		
 	}
 	
 	private String getUserPhone(){

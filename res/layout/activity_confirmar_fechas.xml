@@ -8,34 +8,38 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ConfirmarFechasActivity" >
+    tools:context=".Confirmar1FechaActivity" >
+
+    <TextView
+        android:id="@+id/info_fecha_recogida"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="5"/>
     
    <CalendarView
        android:id="@+id/collectioncalendar"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:layout_weight="3"
+       android:clickable="false"
        android:focusable="false"
+       android:longClickable="false"
        tools:ignore="NewApi" />
 
    <ListView
        android:id="@+id/listViewFurnituresPerDay"
        android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_weight="3">
+       android:layout_height="match_parent"
+       android:layout_weight="3.5">
 
    </ListView>
 
-   <LinearLayout
-       android:layout_width="wrap_content"
-       android:layout_height="match_parent"
-       android:layout_weight="5" >
-       
-        <Button
+   <Button
        android:id="@+id/buttonNext"
        android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="@string/btn_siguiente"/>
+       android:layout_height="match_parent"
+       android:text="@string/btn_siguiente"
+       android:layout_weight="5"/>
         
-   </LinearLayout>
+
 </LinearLayout>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Furnitures for kitchen -->
+<furnitures>
+    <item>
+        <title>sink</title>
+        <idText>item_kitchen_sink</idText>
+        <idImg>tuck</idImg>
+    </item>
+    <item>
+        <title>worktop</title>
+        <idText>item_worktop</idText>
+        <idImg>tuck</idImg>
+    </item>
+    <item>
+        <title>kitchen_table</title>
+        <idText>item_kitchen_table</idText>
+        <idImg>tuck</idImg>
+    </item>
+    <item>
+        <title>fridge</title>
+        <idText>item_fridge</idText>
+        <idImg>tuck</idImg>
+    </item> 
+    <item>
+        <title>kitchen_self</title>
+        <idText>item_kitchen_self</idText>
+        <idImg>tuck</idImg>
+    </item>
+    <item>
+        <title>oven</title>
+        <idText>item_oven</idText>
+        <idImg>tuck</idImg>
+    </item>
+    <item>
+        <title>microwave</title>
+        <idText>item_microwave</idText>
+        <idImg>tuck</idImg>
+    </item> 
+    <item>
+        <title>dishwasher</title>
+        <idText>item_dishwasher</idText>
+        <idImg>tuck</idImg>
+    </item> 
+    <item>
+        <title>kitchen_closet</title>
+        <idText>item_kitchen_closet</idText>
+        <idImg>tuck</idImg>
+    </item>
+    <item>
+        <title>kitchen_fire</title>
+        <idText>item_kitchen_fire</idText>
+        <idImg>tuck</idImg>
+    </item>    <item>
+        <title>kitchen_gas</title>
+        <idText>item_kitchen_gas</idText>
+        <idImg>tuck</idImg>
+    </item>       
+</furnitures>

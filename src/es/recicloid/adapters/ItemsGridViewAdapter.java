@@ -1,6 +1,7 @@
 package es.recicloid.adapters;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import es.recicloid.clases.Furniture;
 import es.uca.recicloid.R;
@@ -17,13 +18,14 @@ import android.widget.TextView;
 public class ItemsGridViewAdapter extends ArrayAdapter<Furniture>{
 	private Context context;
 	private int layoutResourceId;
-	private ArrayList<Furniture> data = new ArrayList<Furniture>();
+	private List<Furniture> data = new ArrayList<Furniture>();
 	
-	public ItemsGridViewAdapter(Context context,int layoutResourceId, ArrayList<Furniture> objects) {
-		super(context, layoutResourceId, objects);
+	public ItemsGridViewAdapter(Context context,int layoutResourceId, 
+			List<Furniture> mCategory_bath) {
+		super(context, layoutResourceId, mCategory_bath);
 		this.layoutResourceId = layoutResourceId;
 		this.context = context;
-		this.data = objects;
+		this.data = mCategory_bath;
 	}
 	
 	public View getView(int position, View convertView, ViewGroup parent){
@@ -42,15 +44,19 @@ public class ItemsGridViewAdapter extends ArrayAdapter<Furniture>{
 		}
 		row.setTag(holder);
 		Furniture item = data.get(position);
-		holder.imageItem.setImageResource(item.getIdImg());
+		int image = context.getResources().getIdentifier((item.getIdImg()), 
+				"drawable", context.getPackageName());	
+		holder.imageItem.setImageResource(image);
 		if(item.getmNum() > 0){
-			holder.textTitle.setText(getContext()
-					.getString(item.getIdText())+"("+item.getmNum()+")");
+			int text = context.getResources()
+					.getIdentifier(item.getIdText(),"string", context.getPackageName());	
+			holder.textTitle.setText(context.getText(text)+"\n("+item.getmNum()+")");
 			holder.textTitle.setTypeface(null, Typeface.BOLD);
 		}
 		else{
-			holder.textTitle.setText(getContext()
-					.getString(item.getIdText()));
+			int text = context.getResources()
+					.getIdentifier(item.getIdText(),"string", context.getPackageName());	
+			holder.textTitle.setText(text);
 			holder.textTitle.setTypeface(null, Typeface.NORMAL);
 		}
 

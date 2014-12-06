@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Furnitures for outside -->
+<furnitures>
+    <item>
+        <title>desk</title>
+        <idText>item_desk</idText>
+        <idImg>tuck</idImg>
+    </item>
+    <item>
+        <title>door</title>
+        <idText>item_door</idText>
+        <idImg>tuck</idImg>
+    </item>
+    <item>
+        <title>heater</title>
+        <idText>item_heater</idText>
+        <idImg>tuck</idImg>
+    </item>
+</furnitures>

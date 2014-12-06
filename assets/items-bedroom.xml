@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Furnitures for bedroom -->
+<furnitures>
+    <item>
+        <title>bed</title>
+        <idText>item_bed</idText>
+        <idImg>tuck</idImg>
+    </item>
+    <item>
+        <title>doublebed</title>
+        <idText>item_doublebed</idText>
+        <idImg>tuck</idImg>
+    </item>
+    <item>
+        <title>bedroom_table</title>
+        <idText>item_bedroom_table</idText>
+        <idImg>tuck</idImg>
+    </item>
+    <item>
+        <title>bedroom_table</title>
+        <idText>item_bedroom_table</idText>
+        <idImg>tuck</idImg>
+    </item> 
+    <item>
+        <title>bedside_table</title>
+        <idText>item_bedside_table</idText>
+        <idImg>tuck</idImg>
+    </item>
+    <item>
+        <title>bedroom_chair</title>
+        <idText>item_bedroom_chair</idText>
+        <idImg>tuck</idImg>
+    </item>
+</furnitures>

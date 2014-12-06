@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Furnitures for living room -->
+<furnitures>
+    <item>
+        <title>sofa</title>
+        <idText>item_sofa</idText>
+        <idImg>tuck</idImg>
+    </item>
+    <item>
+        <title>living_chair</title>
+        <idText>item_living_chair</idText>
+        <idImg>tuck</idImg>
+    </item>
+    <item>
+        <title>living_table</title>
+        <idText>item_living_table</idText>
+        <idImg>tuck</idImg>
+    </item>
+    <item>
+        <title>armchair</title>
+        <idText>item_armchair</idText>
+        <idImg>tuck</idImg>
+    </item>
+    <item>
+        <title>living_furniture</title>
+        <idText>item_living_furniture</idText>
+        <idImg>tuck</idImg>
+    </item>
+    <item>
+        <title>living_shelf</title>
+        <idText>item_living_shelf</idText>
+        <idImg>tuck</idImg>
+    </item>
+</furnitures>

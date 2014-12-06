@@ -13,7 +13,7 @@ import android.view.Window;
 public class SplashScreenActivity extends Activity {
 	 
     // Set the duration of the splash screen
-    private static final long SPLASH_SCREEN_DELAY = 1000; 
+    private static final long SPLASH_SCREEN_DELAY = 3500; // 3.5 seconds
  
     @Override
     protected void onCreate(Bundle savedInstanceState) {

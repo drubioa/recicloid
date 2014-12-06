@@ -24,11 +24,6 @@ public class Appointment implements Parcelable{
 		return 0;
 	}
 	
-	private void readFromParcel(Parcel in) {
-		mCollectionDate	= (java.util.Date) in.readSerializable();
-		//mFurnitues = in.readArrayList(Furniture.class.);
-	}
-	
 	@Override
 	public void writeToParcel(Parcel in, int args) {
 		in.writeSerializable(mCollectionDate);
