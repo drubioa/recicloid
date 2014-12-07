@@ -2,6 +2,9 @@ package es.recicloid.activities.servrecog;
 
 import java.io.IOException;
 
+import roboguice.activity.RoboFragmentActivity;
+import roboguice.inject.ContentView;
+
 import es.recicloid.dialogs.DialogAlert;
 import es.recicloid.logic.conections.ConectorToUserService;
 import es.recicloid.logic.conections.ConectorToUserServiceImp;
@@ -27,7 +30,8 @@ import android.widget.EditText;
  * Esta actividad forma parte del proceso de solicitud de recogida
  * de muebles y enseres.
  */
-public class DatosContactoActivity extends FragmentActivity {
+@ContentView(R.layout.activity_datos_contacto)
+public class DatosContactoActivity extends RoboFragmentActivity {
 	private boolean mEditTextNameValid;
 	private boolean mEditTextTelValid;
 	private ConectorToUserService conector; 
@@ -35,7 +39,6 @@ public class DatosContactoActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_datos_contacto);
 		try {
 			conector = new ConectorToUserServiceImp(this);
 		} catch (IOException e) {

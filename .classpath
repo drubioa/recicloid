@@ -11,5 +11,7 @@
 	<classpathentry kind="lib" path="libs/jsr305-1.3.9.jar"/>
 	<classpathentry kind="lib" path="libs/guice-2.0-no_aop.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/google-play-services_lib"/>
+	<classpathentry kind="lib" path="/Users/diegorubio/adt-bundle-mac-x86_64-20140702/librerias/guice-3.0-no_aop.jar"/>
+	<classpathentry kind="lib" path="/Users/diegorubio/adt-bundle-mac-x86_64-20140702/librerias/javax.inject-1.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

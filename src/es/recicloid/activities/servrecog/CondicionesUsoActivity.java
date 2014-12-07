@@ -1,8 +1,10 @@
 package es.recicloid.activities.servrecog;
 
+import roboguice.activity.RoboActivity;
+import roboguice.inject.ContentView;
+import roboguice.inject.InjectView;
 import es.uca.recicloid.R;
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
@@ -10,15 +12,14 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
-public class CondicionesUsoActivity extends Activity {
+@ContentView(R.layout.activity_condiciones_uso)
+public class CondicionesUsoActivity extends RoboActivity {
 	boolean mAcepted;
-	Button btn_continue;
+	@InjectView(R.id.button1) Button btn_continue;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_condiciones_uso);
-		btn_continue = (Button) findViewById(R.id.button1);
 		if(savedInstanceState == null){
 			mAcepted = false;
 		}
@@ -47,7 +48,8 @@ public class CondicionesUsoActivity extends Activity {
 		btn_continue.setOnClickListener(new View.OnClickListener() {
             
 			public void onClick(View v) {
-				Intent intent = new Intent(CondicionesUsoActivity.this,Confirmar1FechaActivity.class);
+				Intent intent = new Intent(CondicionesUsoActivity.this,
+						ConfirmarFechaActivity.class);
 				startActivity(intent);   
             }
         });

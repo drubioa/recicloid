@@ -1,12 +1,13 @@
 package es.recicloid.logic.conections;
 
 import java.io.IOException;
-
 import javax.ws.rs.core.MediaType;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
@@ -19,8 +20,7 @@ implements ConectorToUserService{
 	}
 
 	public HttpResponse postNewUser(String userName,String phoneNumber) 
-			throws Exception{
-		try{
+			throws JSONException, ClientProtocolException, IOException{
 			HttpPost postRestues = new
 					HttpPost("/FurnitureCollectionService/resources/users");
 			postRestues.setHeader("content-type", MediaType.APPLICATION_JSON);
@@ -34,10 +34,6 @@ implements ConectorToUserService{
 				 + resp.getStatusLine().getStatusCode());
 			}
 			return resp;	
-		}
-		catch(Exception e){
-			throw e;
-		}
 	}
 
 }

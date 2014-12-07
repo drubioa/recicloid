@@ -2,6 +2,10 @@ package es.recicloid.activities;
 
 import java.util.ArrayList;
 
+import roboguice.activity.RoboActivity;
+import roboguice.inject.ContentView;
+import roboguice.inject.InjectView;
+
 
 import es.recicloid.activities.inforeciclaje.InformacionReciclajeActivity;
 import es.recicloid.activities.servrecog.SolicitudEnseresActivity;
@@ -9,7 +13,6 @@ import es.recicloid.adapters.*;
 import es.uca.recicloid.R;
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,14 +21,14 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
+@ContentView(R.layout.activity_main)
+public class MainActivity extends RoboActivity {
 
-	private ListView mainMenu;
+	@InjectView(R.id.listViewMainMenu) private ListView mainMenu;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
 		ArrayList<TitleWithImg> options = new ArrayList<TitleWithImg>();
 		// Solicitar Recogida
 		options.add(new TitleWithImg(R.drawable.ic_truck,getResources()
@@ -39,9 +42,6 @@ public class MainActivity extends Activity {
 		options.add(new TitleWithImg(R.drawable.ic_historial,getResources()
 				.getString(R.string.title_historial),getResources()
 				.getString(R.string.descr_historial)));
-		
-		mainMenu = (ListView) findViewById(R.id.listViewMainMenu);
-		
 		mainMenu.setAdapter(new ListAdaptor(this,
 				R.layout.list_item_image,options){
 			

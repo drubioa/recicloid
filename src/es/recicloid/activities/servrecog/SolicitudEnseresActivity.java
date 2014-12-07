@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import roboguice.activity.RoboFragmentActivity;
+import roboguice.inject.ContentView;
+import roboguice.inject.InjectView;
+
 import es.recicloid.adapters.ItemsGridViewAdapter;
 import es.recicloid.clases.Furniture;
 import es.recicloid.dialogs.DialogAlert;
@@ -14,7 +18,6 @@ import es.uca.recicloid.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
@@ -32,14 +35,17 @@ import android.widget.Spinner;
  * entregar para su posterior recogida para reciclar. Se mostrar??n
  * los enseres organizados por categor??as.
  */
-public class SolicitudEnseresActivity extends FragmentActivity {
+@ContentView(R.layout.activity_solicitud_enseres)
+public class SolicitudEnseresActivity extends RoboFragmentActivity {
 	private static final int CAT_BATHROOM = 0;
 	private static final int CAT_KITCHEN = 1;
 	private static final int CAT_BEDROOM = 2;
 	private static final int CAT_OUTSIDE = 3;
 	private static final int CAT_LIVING = 4;
 	private static final int CAT_GENERAL = 5;
-	
+
+    @InjectView(R.id.GridView_items) private GridView mGridViewCategorY;
+    @InjectView(R.id.buttonContinuar) public Button btn_continue;
     private Spinner mSpinnerCategories;
     private ArrayList<Furniture> 
     	mCategory_bath,
@@ -50,27 +56,21 @@ public class SolicitudEnseresActivity extends FragmentActivity {
     	mCategory_general;
     public ArrayList<Furniture> furnituresToRecic;
     private ItemsGridViewAdapter mGridViewAdapter;
-    private GridView mGridViewCategorY;
     private int mOpcionActual;
     private List<String> OpcionesSpinner;
     private boolean botonActivo,mensaje4items;
-    public Button btn_continue;
+   
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_solicitud_enseres);
 
 		OpcionesSpinner = Arrays.asList(getResources()
 				.getStringArray(R.array.categorias_enseresa));
 		
 		// Creacion del Spinner de categorias
 		createSpinnerCategorias();
-		Log.i("SolicitudEnseresActivity", "The Spinner Menu was created.");
-
-		
-		// Creacion de los GridViews
-		mGridViewCategorY = (GridView) findViewById(R.id.GridView_items);		
+		Log.i("SolicitudEnseresActivity", "The Spinner Menu was created.");	
 		
 		if(savedInstanceState == null){
 			furnituresToRecic = new ArrayList<Furniture>();
@@ -96,9 +96,7 @@ public class SolicitudEnseresActivity extends FragmentActivity {
 		mGridViewCategorY.setAdapter(mGridViewAdapter);		
 		Log.i("SolicitudEnseresActivity", "The GridView was created.");
 
-		
 		// Boton continuar
-		btn_continue = (Button) findViewById (R.id.buttonContinuar);
 		if(!botonActivo){
 			btn_continue.setEnabled(false);
 		}

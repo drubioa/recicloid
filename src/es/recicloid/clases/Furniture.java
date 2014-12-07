@@ -1,5 +1,7 @@
 package es.recicloid.clases;
 
+import java.util.ArrayList;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -88,14 +90,27 @@ public class Furniture implements Parcelable{
         return mName;
     }
 
-	 public static final Parcelable.Creator<Furniture> CREATOR = new Parcelable.Creator<Furniture>() {
-	        public Furniture createFromParcel(Parcel in) {
-	            return new Furniture(in);
-	        }
+	 /** Cuenta el numero total de muebles y enseres
+	 * @param furnitures
+	 * @return
+	 */
+	public static int countFurnitures(ArrayList<Furniture> furnitures) {
+		int total = 0;
+		for(int i = 0;i < furnitures.size();i++){
+			total += furnitures.get(i).getmNum();
+		}
+		return total;
+	}
+	
+	public static final Parcelable.Creator<Furniture> 
+		CREATOR = new Parcelable.Creator<Furniture>() {
+		public Furniture createFromParcel(Parcel in) {
+			return new Furniture(in);
+	    }
 
-	        public Furniture[] newArray(int size) {
-	            return new Furniture[size];
-	        }
-	    };
+	    public Furniture[] newArray(int size) {
+	    	return new Furniture[size];
+	    }
+	};
 	
 }

@@ -9,6 +9,10 @@ import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 import org.xmlpull.v1.XmlPullParserException;
 
+import roboguice.activity.RoboFragmentActivity;
+import roboguice.inject.ContentView;
+import roboguice.inject.InjectView;
+
 import es.recicloid.clases.CollectionPoint;
 import es.recicloid.clases.Furniture;
 import es.recicloid.clases.Zone;
@@ -41,7 +45,6 @@ import android.os.Handler;
 import android.os.StrictMode;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.Menu;
@@ -50,7 +53,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class UbicacionRecogidaActivity extends FragmentActivity {
+@ContentView(R.layout.activity_ubicacion_recogida)
+public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 	private boolean mLocalizado;
 	private boolean mShowedRuralProcAdvice;
 	private boolean mIsRuralPoint;
@@ -58,7 +62,8 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	private double mLatitud;
 	private ArrayList<Furniture> furnitures;
 	private GoogleMap map;	
-	private TextView mAddress;
+	
+	@InjectView(R.id.textViewDireccionAddress) private TextView mAddress;
 	private Button btnNextStep; 
 	private ConectorToCollectionPointService conector;
 	private String mAddressText;
@@ -72,7 +77,6 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_ubicacion_recogida);
 		btnNextStep = (Button) findViewById(R.id.buttonContinuar);
 		try {
 			conector = new ConectorToCollectionPointServiceImp(this);
@@ -98,8 +102,6 @@ public class UbicacionRecogidaActivity extends FragmentActivity {
 	                .findFragmentById(R.id.map)).getMap();
 			map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 			Log.i("UbicacionRecogidaActivity", "found and set GoogleMap.");
-			mAddress = (TextView) findViewById(R.id.textViewDireccionAddress);
-			
 			try {
 				Log.i("UbicacionRecogidaActivity", "xml were parser.");
 				urban = parserZone("urban-zone.xml");
