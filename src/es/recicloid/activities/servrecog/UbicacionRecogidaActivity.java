@@ -18,6 +18,7 @@ import es.recicloid.clases.Furniture;
 import es.recicloid.clases.Zone;
 import es.recicloid.dialogs.DialogAlert;
 import es.recicloid.dialogs.DialogSelecLocationType;
+import es.recicloid.json.JsonToFileManagement;
 import es.recicloid.logic.conections.ConectorToCollectionPointService;
 import es.recicloid.logic.conections.ConectorToCollectionPointServiceImp;
 import es.recicloid.logic.map.AddressTracker;
@@ -62,9 +63,11 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 	private double mLatitud;
 	private ArrayList<Furniture> furnitures;
 	private GoogleMap map;	
+	private final JsonToFileManagement jsonToFile = 
+			new JsonToFileManagement(this,"collection-point.json");
 	
 	@InjectView(R.id.textViewDireccionAddress) private TextView mAddress;
-	private Button btnNextStep; 
+	@InjectView(R.id.buttonContinuar) private Button btnNextStep; 
 	private ConectorToCollectionPointService conector;
 	private String mAddressText;
 	
@@ -77,7 +80,6 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		btnNextStep = (Button) findViewById(R.id.buttonContinuar);
 		try {
 			conector = new ConectorToCollectionPointServiceImp(this);
 		} catch (IOException e1) {
@@ -211,9 +213,13 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 						"Se pulsa en el boton de Solicitud.");
 				Intent intent = new Intent(UbicacionRecogidaActivity
 						.this,DatosContactoActivity.class);
-				intent.putExtra("punto_recogida", 
-						new CollectionPoint(mLongitud,mLatitud));
-				startActivity(intent);   
+				try {
+					jsonToFile.saveCollectionPointInJsonFile(
+							new CollectionPoint(mLongitud,mLatitud));
+					startActivity(intent);   
+				} catch (IOException e) {
+					Log.e("UbicacionRecogidaActivity",e.toString());
+				}
             }
         });
 	}

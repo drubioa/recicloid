@@ -13,5 +13,7 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/google-play-services_lib"/>
 	<classpathentry kind="lib" path="/Users/diegorubio/adt-bundle-mac-x86_64-20140702/librerias/guice-3.0-no_aop.jar"/>
 	<classpathentry kind="lib" path="/Users/diegorubio/adt-bundle-mac-x86_64-20140702/librerias/javax.inject-1.jar"/>
+	<classpathentry kind="lib" path="libs/gson-2.3.1.jar"/>
+	<classpathentry kind="lib" path="libs/guava-18.0.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

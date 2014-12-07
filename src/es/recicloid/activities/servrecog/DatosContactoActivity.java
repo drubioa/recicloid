@@ -4,8 +4,10 @@ import java.io.IOException;
 
 import roboguice.activity.RoboFragmentActivity;
 import roboguice.inject.ContentView;
+import roboguice.inject.InjectView;
 
 import es.recicloid.dialogs.DialogAlert;
+import es.recicloid.json.JsonToFileManagement;
 import es.recicloid.logic.conections.ConectorToUserService;
 import es.recicloid.logic.conections.ConectorToUserServiceImp;
 import es.uca.recicloid.R;
@@ -13,7 +15,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,9 +33,14 @@ import android.widget.EditText;
  */
 @ContentView(R.layout.activity_datos_contacto)
 public class DatosContactoActivity extends RoboFragmentActivity {
+	@InjectView(R.id.editTextNameOfContact) private EditText editTextName;
+	@InjectView(R.id.editTextPhone) private EditText editTextPhone;
+	@InjectView(R.id.button) private Button btn_continue;
 	private boolean mEditTextNameValid;
 	private boolean mEditTextTelValid;
 	private ConectorToUserService conector; 
+	private final String FILENAME = "user.json";
+	private JsonToFileManagement jsonToFile;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +50,7 @@ public class DatosContactoActivity extends RoboFragmentActivity {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+		jsonToFile = new JsonToFileManagement(this,FILENAME); 
 		if(savedInstanceState == null){
 			mEditTextNameValid = false;
 			mEditTextTelValid = false;
@@ -54,23 +60,18 @@ public class DatosContactoActivity extends RoboFragmentActivity {
 			mEditTextTelValid = savedInstanceState.getBoolean("editTextTelValid");
 		}
 		
-		Button btn_continue = (Button) findViewById(R.id.button);
 		addListenerToBtnContinue(btn_continue);
 		isValidTextActiveBtn();
-		EditText editTextName = 
-				(EditText)  findViewById(R.id.editTextNameOfContact);
 		addListenerToEditTextName(editTextName);
-		EditText editTextPhone = 
-				(EditText)  findViewById(R.id.editTextPhone);
 		addListenerToEditTextPhone(editTextPhone);
 		
 	}
 	
 	/**
-	 * Se añade un Listener que permita continuar al boton de
-	 * continuar con solicitud de recogida.
-	 * @param btn_continue
-	 */
+	* Se añade un Listener que permita continuar al boton de
+	* continuar con solicitud de recogida.
+	* @param btn_continue
+	*/
 	private void addListenerToBtnContinue(Button btn_continue){
 		btn_continue.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -81,14 +82,14 @@ public class DatosContactoActivity extends RoboFragmentActivity {
 				handler.postDelayed(new Runnable() {
 				    public void run() {
 						try {
+							Intent intent = new Intent(DatosContactoActivity
+									.this,CondicionesUsoActivity.class);
 							conector.postNewUser(getUserName(), getUserPhone());
 							Log.i("DatosContactoActivity",
 									"registrado nuevos datos de contacto");
+							jsonToFile
+								.saveUserInJsonFile(getUserName(),getUserPhone());
 							dialog.dismiss();
-							Intent intent = new Intent(DatosContactoActivity
-										.this,CondicionesUsoActivity.class);
-							intent.putExtra("user_name", getUserName());
-							intent.putExtra("user_phone", getUserPhone());
 							startActivity(intent); 
 						} catch (Exception e) {
 							Log.w("DatosContactoActivity",e.getMessage());
@@ -194,8 +195,6 @@ public class DatosContactoActivity extends RoboFragmentActivity {
 	}
 	
 	private String getUserPhone(){
-		EditText editTextName = 
-				(EditText)  findViewById(R.id.editTextPhone);
 		return editTextName
 				.getText().toString();			
 	}
@@ -205,14 +204,11 @@ public class DatosContactoActivity extends RoboFragmentActivity {
 	 * @return nombre introducido por el usuario
 	 */
 	private String getUserName(){
-		EditText editTextName = 
-				(EditText)  findViewById(R.id.editTextNameOfContact);
 		return editTextName
 				.getText().toString();	
 	}
 	
 	private void isValidTextActiveBtn(){
-		Button btn_continue = (Button) findViewById(R.id.button);
 		if(mEditTextNameValid && mEditTextTelValid){
 			btn_continue.setEnabled(true);
 		}

@@ -12,7 +12,6 @@ import es.recicloid.clases.Furniture;
 import es.recicloid.logic.conections.ConectorToServices;
 import es.uca.recicloid.R;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -23,17 +22,15 @@ public class ConfirmarFechaActivity extends RoboActivity {
 	@InjectView(R.id.collectioncalendar) private CalendarView mCalendarView; 
 	@InjectView(R.id.listViewFurnituresPerDay) private ListView mItemsPerDay;
 	@InjectView(R.id.buttonNext ) private Button mBtn_continuar;
-	private boolean isEnable;
 	private ConectorToServices mConector;  
 	public ArrayList<Furniture> furnituresToRecic;
-	private int numSolicitudes;
+	private boolean isEnable;
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		displayCalendar();
-		Bundle reicieveParams = getIntent().getExtras();
 		if(savedInstanceState == null){
 			mBtn_continuar.setEnabled(false);
 			isEnable = false;
@@ -48,6 +45,7 @@ public class ConfirmarFechaActivity extends RoboActivity {
 		mCalendarView.setFocusableInTouchMode(false);
 	    LocalDate today = new LocalDate();
 		mCalendarView.setDate(today.toDate().getTime());
+		
 	}
 		
 	@Override

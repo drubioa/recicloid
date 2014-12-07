@@ -1,16 +1,25 @@
 package es.recicloid.clases;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 
-public class Furniture implements Parcelable{
+public class Furniture implements Parcelable,Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private String idImg,idText;
 	private int mNum;
 	private String mName;
 	private int category;
+	
+	public Furniture(String name,int category){
+		this.mName = name;
+		this.category = category;
+		this.mNum = 0;
+	}
 	
 	public Furniture(String name,int category,String idText2,String idImg2){
 		this.mName = name;

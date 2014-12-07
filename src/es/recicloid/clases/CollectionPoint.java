@@ -1,9 +1,13 @@
 package es.recicloid.clases;
 
+import java.io.Serializable;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class CollectionPoint implements Parcelable{
+public class CollectionPoint implements Parcelable,Serializable{
+
+	private static final long serialVersionUID = 1L;
 	double mLng,mLat;
 	
 	public CollectionPoint(double lng,double lat){

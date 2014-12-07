@@ -1,5 +1,6 @@
 package es.recicloid.activities.servrecog;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,6 +14,7 @@ import es.recicloid.adapters.ItemsGridViewAdapter;
 import es.recicloid.clases.Furniture;
 import es.recicloid.dialogs.DialogAlert;
 import es.recicloid.dialogs.DialogMultiplesFurnitures;
+import es.recicloid.json.JsonToFileManagement;
 import es.recicloid.parser.ItemsParser;
 import es.uca.recicloid.R;
 import android.content.Intent;
@@ -59,7 +61,8 @@ public class SolicitudEnseresActivity extends RoboFragmentActivity {
     private int mOpcionActual;
     private List<String> OpcionesSpinner;
     private boolean botonActivo,mensaje4items;
-   
+	private final JsonToFileManagement jsonToFile = 
+			new JsonToFileManagement(this,"furnitures.json");   
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -167,7 +170,13 @@ public class SolicitudEnseresActivity extends RoboFragmentActivity {
 				Intent intent = new Intent(SolicitudEnseresActivity.this,
 						UbicacionRecogidaActivity.class);
 				intent.putExtra("itemsSelected", furnituresToRecic);
-				startActivity(intent);   
+				try {
+					jsonToFile.saveFurnituresInJsonFile(furnituresToRecic);
+					startActivity(intent);   
+				} catch (IOException e) {
+					Log.e("SolicitudEnseresActivity", e.toString());
+				} 
+				
             }
         });
 
