@@ -54,6 +54,7 @@ public class ItemsParser extends Parser{
 
 	private Furniture readFurniture(XmlPullParser parser) 
 			throws XmlPullParserException, IOException {
+		int id = 0;
 		String idImg = null,idText = null,title = null;
 		parser.require(XmlPullParser.START_TAG, ns, "item");
 		while (parser.next() != XmlPullParser.END_TAG) {
@@ -64,6 +65,8 @@ public class ItemsParser extends Parser{
 	        // Starts by looking for the entry tag
 	        if (name.equals("title")) {
 	        	title = readTag(parser,name);
+	        }else if(name.equals("idItem")){
+	        	id = Integer.parseInt(readTag(parser,name));
 	        }else if(name.equals("idText")){
 	        	idText = readTag(parser,name);
 	        }else if(name.equals("idImg")){
@@ -72,8 +75,8 @@ public class ItemsParser extends Parser{
 	            skip(parser);
 	        }
 		 }
-		if(title != null && idImg != null && idText != null){
-			return new Furniture(title,category,idText,idImg);
+		if(id != 0 && title != null && idImg != null && idText != null){
+			return new Furniture(id,title,category,idText,idImg);
 		}
 		else{
 			throw new XmlPullParserException("Invalid tags in file "+filename+".");

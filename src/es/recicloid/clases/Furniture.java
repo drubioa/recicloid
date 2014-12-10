@@ -10,6 +10,7 @@ import android.os.Parcelable;
 public class Furniture implements Parcelable,Serializable{
 
 	private static final long serialVersionUID = 1L;
+	private int id;
 	private String idImg,idText;
 	private int mNum;
 	private String mName;
@@ -21,7 +22,8 @@ public class Furniture implements Parcelable,Serializable{
 		this.mNum = 0;
 	}
 	
-	public Furniture(String name,int category,String idText2,String idImg2){
+	public Furniture(int id ,String name,int category,String idText2,String idImg2){
+		this.id = id;
 		this.mName = name;
 		this.category = category;
 		this.setIdImg(idImg2);
@@ -111,6 +113,14 @@ public class Furniture implements Parcelable,Serializable{
 		return total;
 	}
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public static final Parcelable.Creator<Furniture> 
 		CREATOR = new Parcelable.Creator<Furniture>() {
 		public Furniture createFromParcel(Parcel in) {

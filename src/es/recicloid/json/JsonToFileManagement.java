@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -29,12 +30,25 @@ public class JsonToFileManagement {
 	 * Save user name and telephone in file.
 	 * @throws IOException 
 	 */
-	public void saveUserInJsonFile(String name,String phone) 
+	public void saveInJsonFile(Serializable obj) 
 			throws IOException{
 		FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
-		User user = new User(name,phone);
 		Gson gson = new Gson();
-		String json = gson.toJson(user);
+		String json = gson.toJson(obj);
+		OutputStreamWriter os = new OutputStreamWriter(fos);
+		os.write(json);
+		os.close();		
+	}
+	
+	/**
+	 * Save user name and telephone in file.
+	 * @throws IOException 
+	 */
+	public void saveFurnituresInJsonFile(List<Furniture> obj) 
+			throws IOException{
+		FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+		Gson gson = new Gson();
+		String json = gson.toJson(obj);
 		OutputStreamWriter os = new OutputStreamWriter(fos);
 		os.write(json);
 		os.close();		
@@ -57,20 +71,7 @@ public class JsonToFileManagement {
 		Gson gson = new Gson();
 		return gson.fromJson(temp,User.class);
 	}
-	
-	/**
-	 * Save list of furnitures in json file.
-	 * @throws IOException 
-	 */
-	public void saveFurnituresInJsonFile(List<Furniture> furnitures) 
-			throws IOException{
-		FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
-		Gson gson = new Gson();
-		String json = gson.toJson(furnitures);
-		OutputStreamWriter os = new OutputStreamWriter(fos);
-		os.write(json);
-		os.close();		
-	}
+
 	
 	/**
 	 * Load list of furnitures to collection request from internal json file.
@@ -91,22 +92,7 @@ public class JsonToFileManagement {
 		List<Furniture> furnitures = gson.fromJson(temp, list);
 		return furnitures;
 	}
-	
-	/**
-	 * Save a collectionPoint in local json file.
-	 * @param point
-	 * @throws IOException
-	 */
-	public void saveCollectionPointInJsonFile(CollectionPoint point) 
-			throws IOException{
-		FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
-		Gson gson = new Gson();
-		String json = gson.toJson(point);
-		OutputStreamWriter os = new OutputStreamWriter(fos);
-		os.write(json);
-		os.close();				
-	} 
-	
+
 	/**
 	 * Load list of furnitures to collection request from internal json file.
 	 * @return List<Furniture> list of furnitures to collection request.

@@ -214,7 +214,7 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 				Intent intent = new Intent(UbicacionRecogidaActivity
 						.this,DatosContactoActivity.class);
 				try {
-					jsonToFile.saveCollectionPointInJsonFile(
+					jsonToFile.saveInJsonFile(
 							new CollectionPoint(mLongitud,mLatitud));
 					startActivity(intent);   
 				} catch (IOException e) {

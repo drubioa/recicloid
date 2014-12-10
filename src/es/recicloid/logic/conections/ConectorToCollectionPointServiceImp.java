@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import es.recicloid.clases.CollectionPoint;
+import es.recicloid.json.JSONConverter;
 
 import android.content.Context;
 import android.location.Location;
@@ -41,7 +42,7 @@ public class ConectorToCollectionPointServiceImp extends ConectorToServices
 			// handle response
 			String respStr = EntityUtils.toString(httpResponse.getEntity());
 			JSONObject respJSON = new JSONObject(respStr);
-			CollectionPoint p = jsonConverter.JSONToCollectionPoint(respJSON);
+			CollectionPoint p = JSONConverter.JSONToCollectionPoint(respJSON);
 			return p;
 		
 	}

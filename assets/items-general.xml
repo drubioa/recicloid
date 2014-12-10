@@ -3,16 +3,19 @@
 <furnitures>
     <item>
         <title>desk</title>
+        <idItem>33</idItem>
         <idText>item_desk</idText>
         <idImg>tuck</idImg>
     </item>
     <item>
         <title>door</title>
+        <idItem>34</idItem>
         <idText>item_door</idText>
         <idImg>tuck</idImg>
     </item>
     <item>
         <title>heater</title>
+        <idItem>35</idItem>
         <idText>item_heater</idText>
         <idImg>tuck</idImg>
     </item>

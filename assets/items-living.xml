@@ -8,26 +8,31 @@
     </item>
     <item>
         <title>living_chair</title>
+        <idItem>28</idItem>
         <idText>item_living_chair</idText>
         <idImg>tuck</idImg>
     </item>
     <item>
         <title>living_table</title>
+        <idItem>29</idItem>
         <idText>item_living_table</idText>
         <idImg>tuck</idImg>
     </item>
     <item>
         <title>armchair</title>
+        <idItem>30</idItem>
         <idText>item_armchair</idText>
         <idImg>tuck</idImg>
     </item>
     <item>
         <title>living_furniture</title>
+        <idItem>31</idItem>
         <idText>item_living_furniture</idText>
         <idImg>tuck</idImg>
     </item>
     <item>
         <title>living_shelf</title>
+        <idItem>32</idItem>
         <idText>item_living_shelf</idText>
         <idImg>tuck</idImg>
     </item>

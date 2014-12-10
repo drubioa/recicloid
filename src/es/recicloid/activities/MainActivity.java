@@ -25,49 +25,17 @@ import android.widget.TextView;
 public class MainActivity extends RoboActivity {
 
 	@InjectView(R.id.listViewMainMenu) private ListView mainMenu;
+	private ArrayList<TitleWithImg> options;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ArrayList<TitleWithImg> options = new ArrayList<TitleWithImg>();
-		// Solicitar Recogida
-		options.add(new TitleWithImg(R.drawable.ic_truck,getResources()
-				.getString(R.string.title_solicitud),getResources()
-				.getString(R.string.descr_solicitud)));
-		// Información de Reciclaje
-		options.add(new TitleWithImg(R.drawable.ic_papelera,getResources()
-				.getString(R.string.title_info_reciclaje),getResources()
-				.getString(R.string.descr_info_reciclaje)));		
-		// Consultar Historial
-		options.add(new TitleWithImg(R.drawable.ic_historial,getResources()
-				.getString(R.string.title_historial),getResources()
-				.getString(R.string.descr_historial)));
-		mainMenu.setAdapter(new ListAdaptor(this,
-				R.layout.list_item_image,options){
-			
-			@Override
-			public void onEntrada(Object entrada,View view){
-	            ImageView imagen_entrada = (ImageView) 
-	            		view.findViewById(R.id.imageViewItemList); 
-	            if (imagen_entrada != null){
-	            	imagen_entrada
-	            	.setImageResource(((TitleWithImg) entrada).getImageId());
-	        	}		
-	            TextView texto_superior_entrada = (TextView)
-	            		view.findViewById(R.id.textViewTitleItemList); 
-	            if (texto_superior_entrada != null){ 
-	            	texto_superior_entrada.setText(((TitleWithImg) entrada)
-	            			.getTitulo()); 
-	            }
-	            TextView texto_inferior_entrada = (TextView)
-	            		view.findViewById(R.id.textViewDescriptionItemList); 
-	            if (texto_inferior_entrada != null){
-	            	texto_inferior_entrada.setText(((TitleWithImg) entrada)
-	            			.getSubtitulo()); 
-	            }
-			}
-		});
-		
+		options = getOptiones();
+		setMainMenuAdapter();
+		setOnMainMenuItemClickListener();
+    }		
+	
+	private void setOnMainMenuItemClickListener() {
 		mainMenu.setOnItemClickListener(new OnItemClickListener() { 
 			@Override
 			public void onItemClick(AdapterView<?> pariente, View view, 
@@ -89,7 +57,51 @@ public class MainActivity extends RoboActivity {
 				}
 			}
         });
+	}
 
-    }		
+	private void setMainMenuAdapter(){
+			mainMenu.setAdapter(new ListAdaptor(this,
+					R.layout.list_item_image,options){
+				
+				@Override
+				public void onEntrada(Object entrada,View view){
+	            ImageView imagen_entrada = (ImageView) 
+	            		view.findViewById(R.id.imageViewItemList); 
+	            if (imagen_entrada != null){
+	            	imagen_entrada
+	            	.setImageResource(((TitleWithImg) entrada).getImageId());
+	        	}		
+	            TextView texto_superior_entrada = (TextView)
+	            		view.findViewById(R.id.textViewTitleItemList); 
+	            if (texto_superior_entrada != null){ 
+	            	texto_superior_entrada.setText(((TitleWithImg) entrada)
+	            			.getTitulo()); 
+	            }
+	            TextView texto_inferior_entrada = (TextView)
+	            		view.findViewById(R.id.textViewDescriptionItemList); 
+	            if (texto_inferior_entrada != null){
+	            	texto_inferior_entrada.setText(((TitleWithImg) entrada)
+	            			.getSubtitulo()); 
+	            }
+			}
+		});
+	}
+	
+	private ArrayList<TitleWithImg> getOptiones(){
+		ArrayList<TitleWithImg> options = new ArrayList<TitleWithImg>();
+		// Solicitar Recogida
+		options.add(new TitleWithImg(R.drawable.ic_truck,getResources()
+				.getString(R.string.title_solicitud),getResources()
+				.getString(R.string.descr_solicitud)));
+		// Información de Reciclaje
+		options.add(new TitleWithImg(R.drawable.ic_papelera,getResources()
+				.getString(R.string.title_info_reciclaje),getResources()
+				.getString(R.string.descr_info_reciclaje)));		
+		// Consultar Historial
+		options.add(new TitleWithImg(R.drawable.ic_historial,getResources()
+				.getString(R.string.title_historial),getResources()
+				.getString(R.string.descr_historial)));
+		return options;
+	}
 
 }

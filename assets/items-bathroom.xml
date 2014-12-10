@@ -3,36 +3,43 @@
 <furnitures>
     <item>
         <title>bathtub</title>
+        <idItem>1</idItem>
         <idText>item_bathtub</idText>
         <idImg>tuck</idImg>
     </item>
     <item>
         <title>sink</title>
+        <idItem>2</idItem>
         <idText>item_sink</idText>
         <idImg>tuck</idImg>        
     </item>
     <item>
         <title>bidet</title>
+        <idItem>3</idItem>
         <idText>item_bidet</idText>
         <idImg>tuck</idImg>        
     </item>
     <item>
         <title>bath_furniture</title>
+        <idItem>4</idItem>
         <idText>item_bath_furniture</idText>
         <idImg>tuck</idImg>        
     </item>
     <item>
         <title>shower_plate</title>
+        <idItem>5</idItem>
         <idText>item_shower_plate</idText>
         <idImg>tuck</idImg>        
     </item>
     <item>
         <title>bath_self</title>
+        <idItem>6</idItem>
         <idText>item_bath_self</idText>
         <idImg>tuck</idImg>        
     </item>
     <item>
         <title>wc</title>
+        <idItem>7</idItem>
         <idText>item_wc</idText>
         <idImg>tuck</idImg>        
     </item>

@@ -6,6 +6,7 @@ import roboguice.activity.RoboFragmentActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
 
+import es.recicloid.clases.User;
 import es.recicloid.dialogs.DialogAlert;
 import es.recicloid.json.JsonToFileManagement;
 import es.recicloid.logic.conections.ConectorToUserService;
@@ -88,7 +89,7 @@ public class DatosContactoActivity extends RoboFragmentActivity {
 							Log.i("DatosContactoActivity",
 									"registrado nuevos datos de contacto");
 							jsonToFile
-								.saveUserInJsonFile(getUserName(),getUserPhone());
+								.saveInJsonFile(new User(getUserName(),getUserPhone()));
 							dialog.dismiss();
 							startActivity(intent); 
 						} catch (Exception e) {

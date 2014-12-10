@@ -3,32 +3,32 @@
 <furnitures>
     <item>
         <title>bed</title>
+        <idItem>19</idItem>
         <idText>item_bed</idText>
         <idImg>tuck</idImg>
     </item>
     <item>
         <title>doublebed</title>
+        <idItem>20</idItem>
         <idText>item_doublebed</idText>
         <idImg>tuck</idImg>
     </item>
     <item>
         <title>bedroom_table</title>
+        <idItem>21</idItem>
         <idText>item_bedroom_table</idText>
         <idImg>tuck</idImg>
     </item>
     <item>
-        <title>bedroom_table</title>
+        <title>bedside_table</title>
+        <idItem>22</idItem>
         <idText>item_bedroom_table</idText>
         <idImg>tuck</idImg>
     </item> 
     <item>
-        <title>bedside_table</title>
-        <idText>item_bedside_table</idText>
-        <idImg>tuck</idImg>
-    </item>
-    <item>
         <title>bedroom_chair</title>
-        <idText>item_bedroom_chair</idText>
+        <idItem>23</idItem>
+        <idText>item_bedside_table</idText>
         <idImg>tuck</idImg>
     </item>
 </furnitures>

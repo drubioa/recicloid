@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
 import org.apache.http.HttpHost;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import es.recicloid.json.JSONConverterImp;
+import es.recicloid.json.JSONConverter;
 import android.content.Context;
 import android.content.res.AssetManager;
 
@@ -21,10 +21,9 @@ import android.content.res.AssetManager;
  *
  */
 public abstract class ConectorToServices{
-	HttpHost target;
-	DefaultHttpClient httpclient;
-	JSONConverterImp jsonConverter;
-	// Provisionalmente en modo local
+	protected HttpHost target;
+	protected DefaultHttpClient httpclient;
+	protected JSONConverter jsonConverter;
 	public String HOST;
 	public int PORT;
 	
@@ -37,7 +36,7 @@ public abstract class ConectorToServices{
 		is.close();	
 		httpclient = new DefaultHttpClient();
 		target = new HttpHost(HOST, PORT,"http");	
-		jsonConverter = new JSONConverterImp();
+		jsonConverter = new JSONConverter();
 	}
 	
 	/**

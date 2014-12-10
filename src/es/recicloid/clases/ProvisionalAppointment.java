@@ -11,7 +11,6 @@ public class ProvisionalAppointment{
 	private LocalDate fch_request;
 	private int num_furnitures;
 	
-	
 	public ProvisionalAppointment(){
 	}
 
