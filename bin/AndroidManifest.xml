@@ -32,7 +32,7 @@
         <uses-library android:name="com.google.android.maps" />
         
         <activity
-            android:name="es.recicloid.activities.SplashScreenActivity"
+            android:name="es.recicloid.main.SplashScreenActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,35 +40,40 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="es.recicloid.activities.MainActivity"
+           android:name="es.recicloid.main.MainActivity"
+           android:label="@string/title_activity_solicitud_enseres">
+        </activity>
+        <activity
+            android:name="es.recicloid.SolicitudEnseres.SolicitudEnseresActivity"
             android:label="@string/title_activity_solicitud_enseres" >
         </activity>
         <activity
-            android:name="es.recicloid.activities.servrecog.SolicitudEnseresActivity"
-            android:label="@string/title_activity_solicitud_enseres" >
+            android:name="es.recicloid.UbicacionRecogida.UbicacionRecogidaActivity"
+            android:label="@string/title_activity_ubicacion_recogida" 
+            android:noHistory = "true">
         </activity>
         <activity
-            android:name="es.recicloid.activities.servrecog.UbicacionRecogidaActivity"
-            android:label="@string/title_activity_ubicacion_recogida" >
+            android:name="es.recicloid.DatosContacto.DatosContactoActivity"
+            android:label="@string/title_activity_datos_contacto" 
+            android:noHistory = "true">
         </activity>
         <activity
-            android:name="es.recicloid.activities.servrecog.DatosContactoActivity"
-            android:label="@string/title_activity_datos_contacto" >
+           android:name="es.recicloid.ConfirmarFecha.ConfirmarFechaActivity"
+           android:label="@string/title_activity_confirmar_fechas"
+           android:noHistory = "true" >
         </activity>
         <activity
-           android:name="es.recicloid.activities.servrecog.ConfirmarFechaActivity"
-           android:label="@string/title_activity_confirmar_fechas" >
+      		android:name="es.recicloid.CondicionesUso.CondicionesUsoActivity"
+            android:label="@string/title_activity_condiciones_uso" 
+            android:noHistory = "true">
         </activity>
         <activity
-      		android:name="es.recicloid.activities.servrecog.CondicionesUsoActivity"
-            android:label="@string/title_activity_condiciones_uso" >
+            android:name="es.recicloid.main.ReciclopediaActivity"
+            android:label="@string/title_activity_reciclopedia" 
+            android:noHistory = "true">
         </activity>
         <activity
-            android:name="es.recicloid.activities.ReciclopediaActivity"
-            android:label="@string/title_activity_reciclopedia" >
-        </activity>
-        <activity
-            android:name="es.recicloid.activities.InformacionReciclajeActivity"
+            android:name="es.recicloid.main.InformacionReciclajeActivity"
             android:label="@string/title_activity_informacion_reciclaje" >
         </activity>
         

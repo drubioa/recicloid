@@ -3,7 +3,7 @@ package es.recicloid.adapters;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.recicloid.clases.Furniture;
+import es.recicloid.models.Furniture;
 import es.uca.recicloid.R;
 
 import android.content.Context;
@@ -47,10 +47,10 @@ public class ItemsGridViewAdapter extends ArrayAdapter<Furniture>{
 		int image = context.getResources().getIdentifier((item.getIdImg()), 
 				"drawable", context.getPackageName());	
 		holder.imageItem.setImageResource(image);
-		if(item.getmNum() > 0){
+		if(item.getCantidad() > 0){
 			int text = context.getResources()
 					.getIdentifier(item.getIdText(),"string", context.getPackageName());	
-			holder.textTitle.setText(context.getText(text)+"\n("+item.getmNum()+")");
+			holder.textTitle.setText(context.getText(text)+"\n("+item.getCantidad()+")");
 			holder.textTitle.setTypeface(null, Typeface.BOLD);
 		}
 		else{

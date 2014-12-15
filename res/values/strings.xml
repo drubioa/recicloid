@@ -130,7 +130,10 @@
     <string name="menu_datos_nombre">Nombre</string>
     <string name="menu_datos_contacto_telefono">Teléfono de contacto</string>
     <string name="title_activity_confirmar_fechas">Fecha de recogida</string>
-	<string name="message_registrer_user">Registrando datos de contacto.Espero por favor.</string>
+	<string name="message_registrer_user">Registrando datos de contacto.Espere por favor.</string>
+	<string name="loadind_title">Espere por favor.</string>
+	<string name="message_obtainsProvisionalAppointment_descr">Obteniendo solicitudes de recogida de muebles y enseres.</string>
+    <string name="message_confirmAppointment_descr">Confirmando solicitudes de recogida.</string>
     <string name="dialog_title_not_valid_user">Contacto no valido</string>
 	 <string name="dialog_title_not_valid_user_descr">No ha sido posible registrar los datos de contacto, compruebe si dispone de una petición de recogida en curso. En caso de no ser así, por favor póngase en contacto con nosotros.</string>
     
@@ -152,21 +155,16 @@
     <string name="menu_confirmar_fecha_title">Confirmar fecha de recogida</string>
     <string name="title_activity_condiciones_uso">Condiciones de Uso</string>
 	<string name="btn_siguiente">Siguiente</string>
-    
+    <string name="cofirmation">Confirmar Recogida.</string>
+	<string name="intro_message_confirm_1">Se recogeran </string>
+    <string name="intro_message_confirm_2"> enseres para la fecha </string>
+	
     <!-- Splash menu con el logo del ayuntamiento -->
     <string name="title_splash">Ayuntamiento de</string>
     <string name="subtitle_splash">Puerto Real</string>
 
-    
-    <!-- Colores de Splash inicial -->
-    <color name="purple">#A3207E</color>
-    <color name="gold">#EFCC02</color>
-
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
     <string name="title_activity_reciclopedia">Información sobre reciclaje</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
     <string name="title_activity_informacion_reciclaje">InformacionReciclajeActivity</string>
 
 </resources>

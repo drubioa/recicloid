@@ -10,7 +10,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import android.util.Xml;
 
-import es.recicloid.clases.Furniture;
+import es.recicloid.models.Furniture;
 
 public class ItemsParser extends Parser{
 	private int category;

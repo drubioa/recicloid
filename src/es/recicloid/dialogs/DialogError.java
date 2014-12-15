@@ -1,6 +1,6 @@
 package es.recicloid.dialogs;
 
-import es.recicloid.activities.MainActivity;
+import es.recicloid.main.MainActivity;
 import es.uca.recicloid.R;
 import android.app.AlertDialog;
 import android.app.Dialog;

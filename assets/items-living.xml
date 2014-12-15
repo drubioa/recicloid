@@ -3,6 +3,7 @@
 <furnitures>
     <item>
         <title>sofa</title>
+        <idItem>27</idItem>
         <idText>item_sofa</idText>
         <idImg>tuck</idImg>
     </item>
