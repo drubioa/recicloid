@@ -3,12 +3,12 @@ import org.joda.time.LocalDate;
 
 
 public abstract class Request {
-	private String mTelephone;
-	private int mCollectionPointId;
+	protected String mTelephone;
+	protected int mCollectionPointId;
 	protected int collectionDay,collectionMonth,collectionYear;
 	protected int requestDay,requestMonth,requestYear;
-	private LocalDate mFch_collection;
-	private LocalDate mFch_request;
+	protected LocalDate mFch_collection;
+	protected LocalDate mFch_request;
 	protected int mNum_furnitures;
 	
 	

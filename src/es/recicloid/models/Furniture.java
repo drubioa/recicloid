@@ -97,7 +97,12 @@ public class Furniture implements Parcelable,Serializable{
 	
 	@Override
     public String toString() {
-        return "id: "+id+"\nname: "+mName+"\ncantidad"+cantidad+"\n";
+		if(cantidad > 1){
+			return mName+"  x"+cantidad;
+		}
+		else{
+			return mName;
+		}
     }
 
 	 /** Cuenta el numero total de muebles y enseres

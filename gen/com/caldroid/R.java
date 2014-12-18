@@ -372,7 +372,7 @@ public final class R {
 		public static final int calendar_view = 0x7f03001f;
 		public static final int date_cell = 0x7f030020;
 		public static final int date_grid_fragment = 0x7f030021;
-		public static final int support_simple_spinner_dropdown_item = 0x7f030027;
+		public static final int support_simple_spinner_dropdown_item = 0x7f030028;
 	}
 	public static final class string {
 		public static final int abc_action_bar_home_description = 0x7f0a0001;

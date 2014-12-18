@@ -115,7 +115,7 @@
     <string name="dialog_err_location_error_not_exist_nearest">
         No hay ningun punto de recogida cerca de tu localización, por favor intentalo de nuevo. Si el error se repite contacte con nuestro teléfono de contacto.
     </string>
-    
+
     <!-- Dialogo se escoge mas de un mueble o enser -->
     <string name="dialog_more_furnitures_title">Elige una opción</string>
     <string name="dialog_more_funitures_add">Añadir un elemento mas</string>

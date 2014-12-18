@@ -10,6 +10,7 @@ import android.support.v4.app.DialogFragment;
 
 
 	public class DialogSelecLocationType extends DialogFragment {
+		
 	    @Override
 	    public Dialog onCreateDialog(Bundle savedInstanceState) {
 	 

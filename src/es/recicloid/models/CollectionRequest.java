@@ -1,10 +1,14 @@
 package es.recicloid.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CollectionRequest extends Request{
-	private int id;
-	private List<Furniture> mFurnitures;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class CollectionRequest extends Request implements Parcelable{
+	private int mId;
+	private ArrayList<Furniture> mFurnitures;
 	private CollectionPoint mCollectionPoint;
 	
 	public CollectionRequest(){
@@ -21,7 +25,7 @@ public class CollectionRequest extends Request{
 		if(furnitures.isEmpty()){
 			throw new IllegalArgumentException("furnitures is empty.");
 		}
-		this.mFurnitures = furnitures;
+		mFurnitures = (ArrayList<Furniture>) furnitures;
 		mNum_furnitures = numTotalFurniture(furnitures);
 	}
 	
@@ -39,15 +43,15 @@ public class CollectionRequest extends Request{
 
 	public void setFurnitures(List<Furniture> furnitures) {
 		super.setNumFurnitures(numTotalFurniture(furnitures));
-		this.mFurnitures = furnitures;
+		this.mFurnitures = (ArrayList<Furniture>) furnitures;
 	}
 
 	public int getId() {
-		return id;
+		return mId;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.mId = id;
 	}
 
 	public CollectionPoint getCollectionPoint() {
@@ -61,12 +65,12 @@ public class CollectionRequest extends Request{
 		
 	@Override
 	public String toString(){
-		String cad = "Telephone: "+this.getTelephone()+"\n"+
-				"numFurnitures: "+this.getNumFurnitures()+"\n"+
-				"fch_collection: "+this.getFch_collection()+"\n"+
-				"fch_request: "+this.getFch_request()+"\n"+
-				"collectionPointId: "+this.getCollectionPointId();
-		for(Furniture furniture : this.getFurnitures()){
+		String cad = "Telephone: "+getTelephone()+"\n"+
+				"numFurnitures: "+getNumFurnitures()+"\n"+
+				"fch_collection: "+getFch_collection()+"\n"+
+				"fch_request: "+getFch_request()+"\n"+
+				"collectionPointId: "+getCollectionPointId();
+		for(Furniture furniture : getFurnitures()){
 			cad = cad + furniture.toString();
 		}
 		return cad;
@@ -94,5 +98,27 @@ public class CollectionRequest extends Request{
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(mId);
+		dest.writeString(mTelephone);
+		dest.writeInt(mCollectionPointId);
+		dest.writeInt(collectionDay);
+		dest.writeInt(collectionMonth);
+		dest.writeInt(collectionYear);
+		dest.writeInt(requestDay);
+		dest.writeInt(requestMonth);
+		dest.writeInt(requestYear);
+		dest.writeInt(mNum_furnitures);
+		dest.writeParcelableArray(mFurnitures.toArray(
+				new Furniture[mFurnitures.size()]), 0);
+		dest.writeParcelable(mCollectionPoint, 0);
 	}
 }
