@@ -1,6 +1,7 @@
 package es.recicloid.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Parcel;
@@ -10,19 +11,19 @@ import android.os.Parcelable;
 public class Furniture implements Parcelable,Serializable{
 
 	private static final long serialVersionUID = 1L;
-	private int id;
+	private int mId;
 	private String idImg,idText;
 	private int cantidad;
 	private String mName;
 	private int category;
 	
 	public Furniture(int id,int cantidad){
-		this.id = id;
+		this.mId = id;
 		this.cantidad = cantidad;
 	}
 	
 	public Furniture(int id ,String name,int category,String idText2,String idImg2){
-		this.id = id;
+		this.mId = id;
 		this.mName = name;
 		this.category = category;
 		this.setIdImg(idImg2);
@@ -118,13 +119,48 @@ public class Furniture implements Parcelable,Serializable{
 	}
 	
 	public int getId() {
-		return id;
+		return mId;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.mId = id;
 	}
 
+	public static String[] toStringArray(List<Furniture> furnitures){
+		List<String> list = new ArrayList<String>();
+		for(Furniture f : furnitures){
+			for(int i = 0;i < f.getCantidad();i++){
+				list.add(f.getName());
+			}
+		}
+		return list.toArray(new String[Furniture.countFurnituresArray(furnitures)]);
+	}
+	
+	public static Integer[] toIntegerArray(List<Furniture> furnitures){
+		List<Integer> list = new ArrayList<Integer>();
+		for(Furniture f : furnitures){
+			for(int i = 0;i < f.getCantidad();i++){
+				list.add(f.getId());
+			}
+		}
+		return list.toArray(new Integer[Furniture.countFurnituresArray(furnitures)]);
+	}
+	
+	/**
+	 * Busca entre un listado de enseres el enser con el id indicado.
+	 * @param id
+	 * @param list
+	 * @return nulo en caso de no encontrado, el tipo de mueble en otro caso.
+	 */
+	public static Furniture findFurniture(int id,List<Furniture> list){
+		for(Furniture f: list){
+			if(f.getId() == id){
+				return f;
+			}
+		}
+		return null;
+	}
+	
 	public static final Parcelable.Creator<Furniture> 
 		CREATOR = new Parcelable.Creator<Furniture>() {
 		public Furniture createFromParcel(Parcel in) {
@@ -136,4 +172,7 @@ public class Furniture implements Parcelable,Serializable{
 	    }
 	};
 	
+	public boolean equals(Furniture obj){
+		return obj.getId() == mId;
+	}
 }

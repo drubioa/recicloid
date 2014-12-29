@@ -36,6 +36,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 @ContentView(R.layout.activity_confirmar_fechas)
 public class ConfirmarFechaActivity extends RoboFragmentActivity{
@@ -45,12 +46,15 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 	private List<ProvisionalAppointment> mProvisionalAppointment;
 	private List<CollectionRequest> mConfirmedRquest;
 	private CaldroidFragment caldroidFragment;
-	private FurnitureSelectorDialFrag furnituresToConfirmFrag;
+	private int mNumFurnituresForConfirm;
+	private static final int CONFIRMED_COLOR = R.color.green;
+	private static final int UNCONFIRMED_COLOR = R.color.light_green;
+	private static final int CURRENTDAYE_COLOR = R.color.blue;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		caldroidFragment = new CaldroidFragment();
+		caldroidFragment = new CaldroidFragment();;
 		try {
 			mConector = new ConectorToDailyAppointmentServiceImp(this);
 		} catch (IOException e1) {
@@ -63,6 +67,7 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 			loadFurnituresFromJsonFile();
 			Log.i("ConfirmarFechaActivity.onCreate",
 					"Cargadas furnirues del fichero json");
+			mConfirmedRquest = new ArrayList<CollectionRequest>();
 			try {
 				mProvisionalAppointment = obtainsProvisionalAppointments();
 				Log.i("ConfirmarFechaActivity.onCreate",
@@ -75,8 +80,8 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 			if(mProvisionalAppointment.size() == 1){
 				Log.i("ConfirmarFechaActivity.onCreate",
 						"Una Sola solicitud de recogida pdte de confirmar.");
+				mNumFurnituresForConfirm = 0;
 				try {
-					mConfirmedRquest = new ArrayList<CollectionRequest>();
 					CollectionRequest c = new CollectionRequest(
 							mProvisionalAppointment.get(0),
 							mTotalFurnituresToCollect);
@@ -93,7 +98,13 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 			else{
 				Log.i("ConfirmarFechaActivity.onCreate",
 						"Varias solicitudes de recogida");
-				mBtn_continuar.setEnabled(false);
+				
+				for(Furniture f : mTotalFurnituresToCollect){
+					mNumFurnituresForConfirm += f.getCantidad();
+				}
+				if(mNumFurnituresForConfirm > 0){
+					mBtn_continuar.setEnabled(false);
+				}
 			}
 		}
 		else{
@@ -107,7 +118,6 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 		t.commit();
 		Log.i("ConfirmarFechaActivity.onCreate",
 				"Se incluye fragment del calendario.");
-		final Bundle state = savedInstanceState;
 		// Setup listener
 		final CaldroidListener listener = new CaldroidListener() {
 
@@ -120,10 +130,10 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 			public void onSelectDate(Date date, View view) {
 				if(isCollectionDate(date)){
 					Log.i("CaldroidListener","Fecha confirmada");
+					FragmentManager fragmentManager = getSupportFragmentManager();
 					if(isConfirmedDate(date)){
 						Log.i("ConfirmarFechaActivity.onSelectDate",
 								"Se pulsa sobre un dia de recogida");
-						FragmentManager fragmentManager = getSupportFragmentManager();
 						CollectionRequest req = null;
 						for(CollectionRequest r : mConfirmedRquest){
 							if(r.getFch_collection().equals(new LocalDate(date))){
@@ -146,8 +156,17 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 								InfoCollectionDateFragment.newInstance(req);
 						dialog.show(fragmentManager, "tagShowAppointmentInfo");
 					}
+					/**
+					 * Se pulsa en una fecha pendiente de confirmar.
+					 */
 					else{
-						Log.i("CaldroidListener","Fecha pendiente de confirmacion");	
+						Log.i("CaldroidListener","Fecha pendiente de confirmacion");
+						ProvisionalAppointment appointment = 
+								getProvisionalAppointment(new LocalDate(date));
+						FurnitureSelectorDialFrag dialog = 
+								FurnitureSelectorDialFrag.newInstance(new LocalDate(date),
+										appointment.getNumFurnitures(),mTotalFurnituresToCollect);
+						dialog.show(fragmentManager, "furnitureSelector");
 					}
 				}
 			}
@@ -177,7 +196,7 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 					Log.e("ConfirmarFechaActivity","No se puede registrar, solicitud " +
 							"vacia");
 					throw new RuntimeException("cannot confirm because "
-				+"Confirmed request is empty.");
+						+"Confirmed request is empty.");
 				}
 				for(final CollectionRequest c : mConfirmedRquest){
 					if(!c.checkCorrectRequest()){
@@ -209,7 +228,7 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 								}
 						        dialog.dismiss();
 						    }   
-						}, 3000);  // 3000 milliseconds	
+						}, 4000);  // 4000 milliseconds	
 					} catch (Exception e) {
 						Log.e("ConfirmarFechaActivity",
 								"Caonnot confirm appointment because "+e.toString());
@@ -218,6 +237,10 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 				}
 				Intent intent = new Intent(ConfirmarFechaActivity
 						.this,MainActivity.class);
+				// Show message before finalize.
+				Toast.makeText(ConfirmarFechaActivity.this, 
+						getResources().getString(R.string.message_finalize), 
+						Toast.LENGTH_LONG).show();
 				startActivity(intent);
 			}
 			
@@ -227,17 +250,21 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 	public void setCustomResourceForDates(){
 		if (caldroidFragment != null) {
 			// Show request date as blue.
-				caldroidFragment.setBackgroundResourceForDate(R.color.blue,
+				caldroidFragment.setBackgroundResourceForDate(CURRENTDAYE_COLOR,
 					new LocalDate().toDate());
 			if(mProvisionalAppointment.size() == 1){
 				ProvisionalAppointment a = mProvisionalAppointment.get(0);
-				caldroidFragment.setBackgroundResourceForDate(R.color.green,
+				caldroidFragment.setBackgroundResourceForDate(CONFIRMED_COLOR,
 						a.getFch_collection().toDate());
 			}
 			else{
 				// Show collection request date as green.
 				for(ProvisionalAppointment a: mProvisionalAppointment){
-					caldroidFragment.setBackgroundResourceForDate(R.color.light_green,
+					caldroidFragment.setBackgroundResourceForDate(UNCONFIRMED_COLOR,
+							a.getFch_collection().toDate());
+				}
+				for(CollectionRequest a: mConfirmedRquest){
+					caldroidFragment.setBackgroundResourceForDate(CONFIRMED_COLOR,
 							a.getFch_collection().toDate());
 				}
 			}
@@ -270,6 +297,20 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * @param date
+	 * @return provisional appointment corresponds to argument date.
+	 */
+	private ProvisionalAppointment getProvisionalAppointment(LocalDate date){
+		for(ProvisionalAppointment p : mProvisionalAppointment){
+			if(p.getFch_collection().equals(date)){
+				return p;
+			}
+		}
+		throw new IllegalArgumentException("No exist provisional appoinbtmet "
+				+" for "+date.toString());
 	}
 
 	private List<ProvisionalAppointment> obtainsProvisionalAppointments() {
@@ -355,6 +396,36 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 		}
 	}
 
+	/**
+	 * Se confirma una solicitud de recogida correspondiente a la fecha
+	 * @param 
+	 */
+	public void confirmAppointment(LocalDate appointmentDate,
+			List<Furniture> furnitures){
+		ProvisionalAppointment p = findAppointment(appointmentDate);
+		try {
+			CollectionRequest req = new CollectionRequest(p,furnitures);
+			mConfirmedRquest.add(req);
+			mProvisionalAppointment.remove(p);
+			caldroidFragment.setBackgroundResourceForDate(CONFIRMED_COLOR,
+					appointmentDate.toDate());
+			for(Furniture f : furnitures){
+				mTotalFurnituresToCollect.remove(f);
+			}
+		} catch (Exception e) {
+			Log.e("ConfirmarFechaActivity","In confirmAppointment method "+e.toString());
+		}
+	}
+	
+	private ProvisionalAppointment findAppointment(LocalDate appointmentDate) {
+		for(ProvisionalAppointment p : mProvisionalAppointment){
+			if(p.getFch_collection() == appointmentDate){
+				return p;
+			}
+		}
+		throw new IllegalArgumentException("ProvisionalAppointment to "+appointmentDate+" not found.");
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.confirmar_fechas, menu);
@@ -367,5 +438,4 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 			caldroidFragment.saveStatesToKey(outState, "CALDROID_SAVED_STATE");
 		}
 	}
-
 }

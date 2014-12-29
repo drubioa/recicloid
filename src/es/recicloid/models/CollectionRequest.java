@@ -121,4 +121,12 @@ public class CollectionRequest extends Request implements Parcelable{
 				new Furniture[mFurnitures.size()]), 0);
 		dest.writeParcelable(mCollectionPoint, 0);
 	}
+	
+	public boolean equals(CollectionRequest obj){
+		return obj.getFch_collection() == this.mFch_collection &&
+				obj.getFch_request() == this.mFch_request &&
+				obj.getTelephone() == this.mTelephone &&
+				Furniture.countFurnituresArray(obj.getFurnitures()) == 
+						Furniture.countFurnituresArray(this.getFurnitures());
+	}
 }

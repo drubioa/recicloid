@@ -45,6 +45,7 @@ public class InfoCollectionDateFragment extends DialogFragment{
 	     
 	     return f;
 	 }
+	 
 	 @Override
 	    public Dialog onCreateDialog(Bundle savedInstanceState){
 		 Bundle bundle = getArguments();

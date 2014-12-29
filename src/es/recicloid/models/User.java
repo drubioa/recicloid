@@ -63,4 +63,8 @@ public class User implements Serializable{
 		}
 		return isValidName;
 	}
+	
+	public boolean equals(User obj){
+		return obj.getPhone().equals(mPhone);
+	}
 }

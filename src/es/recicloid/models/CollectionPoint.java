@@ -62,4 +62,8 @@ public class CollectionPoint implements Parcelable,Serializable{
 	public void setDirection(String mDirection) {
 		this.mDirection = mDirection;
 	}
+	
+	public boolean equals(CollectionPoint obj){
+		return obj.getId() == this.pointId;
+	}
 }

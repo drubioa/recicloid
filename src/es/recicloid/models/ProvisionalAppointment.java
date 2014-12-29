@@ -114,7 +114,7 @@ public class ProvisionalAppointment
 		dest.writeInt(requestYear);
 		dest.writeInt(num_furnitures);
 	}
-	
+
 	 public static final Parcelable.Creator<ProvisionalAppointment> CREATOR
 	 	= new Parcelable.Creator<ProvisionalAppointment>() {
 		 	public ProvisionalAppointment createFromParcel(Parcel in) {
@@ -126,6 +126,10 @@ public class ProvisionalAppointment
 		 	}
 	 };
 
-
+	 public boolean equials(ProvisionalAppointment obj){
+			return obj.getFch_collection() == this.fch_collection &&
+					obj.getFch_request() == this.fch_request &&
+					obj.getTelephone() == this.telephone;		 
+	 }
 	
 }

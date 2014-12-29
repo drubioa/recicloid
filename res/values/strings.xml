@@ -115,13 +115,21 @@
     <string name="dialog_err_location_error_not_exist_nearest">
         No hay ningun punto de recogida cerca de tu localización, por favor intentalo de nuevo. Si el error se repite contacte con nuestro teléfono de contacto.
     </string>
-
+    <string name="dialog_confirmar_aceptar">Confirmar</string>
+	<string name="dialog_confirmar_furnitures">Recogida de </string>
+    <string name="dialog_confirmar_furnitures2"> enseres. </string>
+    <string name="dialog_confirmar_numeroNoValido">Se han confirmado un número no valido de enseres.</string>
+	<string name="dialog_confirmar_numeroNoValido2">Faltan por confirmar </string>
+	<string name="dialog_confirmar_numeroNoValido3"> enseres.</string>
+	<string name="cancel">Cancelar</string>
+    
     <!-- Dialogo se escoge mas de un mueble o enser -->
     <string name="dialog_more_furnitures_title">Elige una opción</string>
     <string name="dialog_more_funitures_add">Añadir un elemento mas</string>
     <string name="dialog_more_furnitures_reset">Descartar todos los elementos seleccionados</string>
     <string name="title_activity_datos_contacto">Datos de Contacto</string>
 
+    
     <!-- Map -->
     <string name="dialog_obtains_dir">Obteniendo dirección</string>
 
@@ -158,7 +166,8 @@
     <string name="cofirmation">Confirmar Recogida.</string>
 	<string name="intro_message_confirm_1">Se recogeran </string>
     <string name="intro_message_confirm_2"> enseres para la fecha </string>
-	
+    <string name="message_finalize">Confirmada solicitud de recogida</string>
+    
     <!-- Splash menu con el logo del ayuntamiento -->
     <string name="title_splash">Ayuntamiento de</string>
     <string name="subtitle_splash">Puerto Real</string>
