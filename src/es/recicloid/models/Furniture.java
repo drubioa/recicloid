@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 
 public class Furniture implements Parcelable,Serializable{
@@ -160,6 +161,67 @@ public class Furniture implements Parcelable,Serializable{
 		}
 		return null;
 	}
+	
+	/**
+	 * Se incremente el numero de items indicados en uno, si no existe se agrega; si existe
+	 * se incrementa en uno.
+	 * @param furniture que se desea incluir o incrementar en caso de que ya este incluido.
+	 * @param list listado actual
+	 * @return una lista que incluye el intem incrementado en 1.
+	 */
+	public static List<Furniture> incrementFurnitureInOne(Furniture furniture,
+			List<Furniture> list){
+		boolean encontrado = false;
+		for(Furniture f: list){
+			if(f.equals(furniture)){
+				encontrado = true;
+				f.setCantidad(f.getCantidad() + 1);
+				break;
+			}
+		}
+		if(!encontrado){
+			furniture.setCantidad(1);
+			list.add(furniture);
+		}
+		return list;
+	}
+
+	/**
+	 * Se decrementa el numero de items indicados en uno, si solo hay uno se elimina del listado
+	 * @param furniture que se desea decrementar en uno.
+	 * @param list listado actual
+	 * @return una lista que incluye el intem decrementado en uno.
+	 */
+	public static List<Furniture> decrementFurniture(Furniture furniture,
+			List<Furniture> list){
+		boolean encontrado = false;
+		for(Furniture f: list){
+			if(f.equals(furniture)){
+				encontrado = true;
+				if(f.getCantidad() < furniture.getCantidad()){
+					throw new IllegalArgumentException("In decrementFurniture method, " +
+							" the account of furnitures is not valid.");
+				}
+				Log.i("decrementFurniture","in request"+furniture.getCantidad()+" and in all furnitures "
+						+f.getCantidad()+" of "+furniture.getName());
+				if(f.getCantidad() > furniture.getCantidad()){
+					Log.i("decrementFurniture","Decrement "+f.getName()+" in"+furniture.getCantidad());
+					f.setCantidad(f.getCantidad() - furniture.getCantidad() );
+				}
+				else{
+					Log.i("decrementFurniture","removes all furnitures of "+f.getName());
+					list.remove(f);
+				}
+				break;
+			}
+		}
+		if(!encontrado){
+			throw new IllegalArgumentException("In decrementFurniture method, " +
+					"furniture cannot be found.");
+		}
+		return list;
+	}
+
 	
 	public static final Parcelable.Creator<Furniture> 
 		CREATOR = new Parcelable.Creator<Furniture>() {

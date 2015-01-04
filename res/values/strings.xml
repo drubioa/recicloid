@@ -18,9 +18,9 @@
 
     <!-- Solicitud de recogida de enseres -->
     <string name="title_menu_enseres">Tipos de muebles y enseres</string>
-	<string name="dialog_info_solicitud_enseres">Añadir muebles y enseres para su recogida.</string>
+    <string name="dialog_info_solicitud_enseres">Añadir muebles y enseres para su recogida.</string>
     <string name="dialog_descr_info_solicitud_enseres">Seleccione uno o mas muebles y enseres que desea que sean recogidos para su posterior reciclaje por parte del servicio municipal. Si el enser que desea que recojamos no está entre los mostrados en la aplicación por favor pongase en contacto con nosotros.</string>
-    
+
     <!-- Categorias para el Spinner -->
     <string-array name="categorias_enseresa">
         <item>Baño</item>
@@ -41,8 +41,8 @@
     <string name="item_shower_plate">placa ducha</string>
     <string name="item_bath_self">estantería de baño</string>
     <string name="item_wc">inodoro</string>
-    
-    <!--  Cocina -->
+
+    <!-- Cocina -->
     <string name="item_kitchen_sink">fregadero</string>
     <string name="item_worktop">encimera</string>
     <string name="item_kitchen_table">mesa de cocina</string>
@@ -54,7 +54,7 @@
     <string name="item_kitchen_closet">armario de cocina</string>
     <string name="item_kitchen_fire">placa</string>
     <string name="item_kitchen_gas">cocina de gas</string>
-    
+
     <!-- Dormitorio -->
     <string name="item_bed">cama individual</string>
     <string name="item_doublebed">cama de matrimonio</string>
@@ -62,12 +62,12 @@
     <string name="item_bedroom_closet">armario de dormitorio</string>
     <string name="item_bedside_table">mesilla de noche</string>
     <string name="item_bedroom_chair">silla</string>
-       
+
     <!-- Exteriores -->
     <string name="item_garden_table">mesa de jardín</string>
     <string name="item_barbacue">barbacoa</string>
     <string name="item_garden_chair">silla de jardín</string>
-    
+
     <!-- Salon -->
     <string name="item_sofa">sofa</string>
     <string name="item_living_chair">silla</string>
@@ -75,14 +75,11 @@
     <string name="item_armchair">butaca</string>
     <string name="item_living_furniture">mueble de salón</string>
     <string name="item_living_shelf">estanteria</string>
-    
+
     <!-- General -->
     <string name="item_desk">esctitorio</string>
     <string name="item_door">puerta</string>
     <string name="item_heater">calefactor</string>
-  
-    
-    
     <string name="title_activity_ubicacion_recogida">Establece tu ubicacion</string>
 
     <!-- DIÁLOGOS -->
@@ -110,26 +107,26 @@
     <string name="dialog_err_google_play_title">Debes actualizar Google Play</string>
     <string name="dialog_err_google_play_descr">Es necesario que registres tu movil en Google Play, y actualices a la 
         última versión para poder utilizar esta aplicación.</string>
-	<string name="nearestPoint_message">Buscando punto de recogida mas cercano</string>
+    <string name="nearestPoint_message">Buscando punto de recogida mas cercano</string>
     <string name="dialog_err_dir_conection_descr">No se pudo establecer la conexión con el servidor, prueba si tiene habilitado 3g en su móvil o conexión WIFI.Si el error persiste, por favor intentelo mas tarde. </string>
-    <string name="dialog_err_location_error_not_exist_nearest">
-        No hay ningun punto de recogida cerca de tu localización, por favor intentalo de nuevo. Si el error se repite contacte con nuestro teléfono de contacto.
-    </string>
+    <string name="dialog_err_location_error_not_exist_nearest">        No hay ningun punto de recogida cerca de tu localización, por favor intentalo de nuevo. Si el error se repite contacte con nuestro teléfono de contacto.</string>
     <string name="dialog_confirmar_aceptar">Confirmar</string>
-	<string name="dialog_confirmar_furnitures">Recogida de </string>
+    <string name="dialog_confirmar_furnitures">Recogida de </string>
     <string name="dialog_confirmar_furnitures2"> enseres. </string>
     <string name="dialog_confirmar_numeroNoValido">Se han confirmado un número no valido de enseres.</string>
-	<string name="dialog_confirmar_numeroNoValido2">Faltan por confirmar </string>
-	<string name="dialog_confirmar_numeroNoValido3"> enseres.</string>
-	<string name="cancel">Cancelar</string>
-    
+    <string name="dialog_confirmar_numeroNoValido2">Faltan por confirmar </string>
+    <string name="dialog_confirmar_numeroNoValido3"> enseres.</string>
+    <string name="cancel">Cancelar</string>
+
+    <!-- Dialogo del Historial -->
+    <string name="dialog_ask_telephone">Introduce el telefono de contacto con el que fue realizada la solicitud de recogida.</string>
+
     <!-- Dialogo se escoge mas de un mueble o enser -->
     <string name="dialog_more_furnitures_title">Elige una opción</string>
     <string name="dialog_more_funitures_add">Añadir un elemento mas</string>
     <string name="dialog_more_furnitures_reset">Descartar todos los elementos seleccionados</string>
     <string name="title_activity_datos_contacto">Datos de Contacto</string>
 
-    
     <!-- Map -->
     <string name="dialog_obtains_dir">Obteniendo dirección</string>
 
@@ -138,14 +135,13 @@
     <string name="menu_datos_nombre">Nombre</string>
     <string name="menu_datos_contacto_telefono">Teléfono de contacto</string>
     <string name="title_activity_confirmar_fechas">Fecha de recogida</string>
-	<string name="message_registrer_user">Registrando datos de contacto.Espere por favor.</string>
-	<string name="loadind_title">Espere por favor.</string>
-	<string name="message_obtainsProvisionalAppointment_descr">Obteniendo solicitudes de recogida de muebles y enseres.</string>
+    <string name="message_registrer_user">Registrando datos de contacto.Espere por favor.</string>
+    <string name="loadind_title">Espere por favor.</string>
+    <string name="message_obtainsProvisionalAppointment_descr">Obteniendo solicitudes de recogida de muebles y enseres.</string>
     <string name="message_confirmAppointment_descr">Confirmando solicitudes de recogida.</string>
     <string name="dialog_title_not_valid_user">Contacto no valido</string>
-	 <string name="dialog_title_not_valid_user_descr">No ha sido posible registrar los datos de contacto, compruebe si dispone de una petición de recogida en curso. En caso de no ser así, por favor póngase en contacto con nosotros.</string>
-    
-    
+    <string name="dialog_title_not_valid_user_descr">No ha sido posible registrar los datos de contacto, compruebe si dispone de una petición de recogida en curso. En caso de no ser así, por favor póngase en contacto con nosotros.</string>
+
     <!-- MENU condiciones de uso -->
     <string name="menu_condiciones_uso_title">Condiciones de uso</string>
     <string name="condiciones_uso">Debido a anteriores actos vandálicos se ruega al usuario que deposite los enseres en
@@ -162,18 +158,27 @@
     <!-- Menu confirmar fecha -->
     <string name="menu_confirmar_fecha_title">Confirmar fecha de recogida</string>
     <string name="title_activity_condiciones_uso">Condiciones de Uso</string>
-	<string name="btn_siguiente">Siguiente</string>
+    <string name="btn_siguiente">Siguiente</string>
     <string name="cofirmation">Confirmar Recogida.</string>
-	<string name="intro_message_confirm_1">Se recogeran </string>
+    <string name="intro_message_confirm_1">Se recogeran </string>
     <string name="intro_message_confirm_2"> enseres para la fecha </string>
     <string name="message_finalize">Confirmada solicitud de recogida</string>
+    <string name="message_error_confirmation">No se pudieron confirmar las solicitudes</string>
+
+    <!-- MENSAJE DE CONFIRMACION -->
+    <string name="title_confirmaton">Finalizado</string>
+    <string name="descrip_confirmaton">Se ha finalizado la solicitud de recogida. Por favor deposite los enseres indicados a primera hora de la mañana y nuestro servicio de recogida acudirá a recogerlo. Si hubiese alguna dificultad a la hora de localizar los enseres, nos pondremos en contacto a su teléfono de contacto. Dispne de nuestro teléfono de contacto y de nuestra guia de reciclaje para mas información.</string>
+    <string name="back_main_menu">Volver al Menu Principal</string>
+    
+    <!-- HISTORIAL -->
+    <string name="message_no_valid_phone">Número de teléfono no válido</string>
     
     <!-- Splash menu con el logo del ayuntamiento -->
     <string name="title_splash">Ayuntamiento de</string>
     <string name="subtitle_splash">Puerto Real</string>
-
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
-    <string name="title_activity_reciclopedia">Información sobre reciclaje</string>
-    <string name="title_activity_informacion_reciclaje">InformacionReciclajeActivity</string>
+    <string name="title_activity_informacion_reciclaje">Información sobre reciclaje</string>
+    <string name="title_activity_historial">HistorialActivity</string>
+    <string name="title_activity_finalize">FinalizeActivity</string>
 
 </resources>

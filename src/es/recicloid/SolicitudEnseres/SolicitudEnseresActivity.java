@@ -46,6 +46,7 @@ public class SolicitudEnseresActivity extends RoboFragmentActivity {
 	private static final int CAT_OUTSIDE = 3;
 	private static final int CAT_LIVING = 4;
 	private static final int CAT_GENERAL = 5;
+	private static final int MAX_PER_USER = 10;
 
     @InjectView(R.id.GridView_items) private GridView mGridViewCategorY;
     @InjectView(R.id.buttonContinuar) public Button btn_continue;
@@ -115,18 +116,20 @@ public class SolicitudEnseresActivity extends RoboFragmentActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v,
 	                int position, long id) {
-				Furniture item = (Furniture) parent.getItemAtPosition (position);
-				if(item.getCantidad() == 0){
-					furnituresToRecic.add(item);
-					addFunritureToCollection(item.getName());
-				}
-				else{
-					DialogFragment newFragment = DialogMultiplesFurnitures.newInstance(
-							item.getName());
-				    newFragment.show(getSupportFragmentManager(), "addMoreItems");
-				}
-				if(Furniture.countFurnituresArray(furnituresToRecic) == 4 && !mensaje4items){
-					showMessage4Items();
+				if(Furniture.countFurnituresArray(furnituresToRecic) <= MAX_PER_USER){
+					Furniture item = (Furniture) parent.getItemAtPosition (position);
+					if(item.getCantidad() == 0){
+						furnituresToRecic.add(item);
+						addFunritureToCollection(item.getName());
+					}
+					else{
+						DialogFragment newFragment = DialogMultiplesFurnitures.newInstance(
+								item.getName());
+					    newFragment.show(getSupportFragmentManager(), "addMoreItems");
+					}
+					if(Furniture.countFurnituresArray(furnituresToRecic) == 5 && !mensaje4items){
+						showMessage4Items();
+					}
 				}
 			}
 			

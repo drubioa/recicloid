@@ -34,10 +34,6 @@ public abstract class Request {
 			throw new IllegalArgumentException("fch_collection ("+fch_collection+")"+
 		" is before today.");
 		}
-		if(fch_request.isBefore(today)){
-			throw new IllegalArgumentException("fch_request ("+fch_request+")"+
-		" is before today.");
-		}
 		if(!fch_collection.isAfter(fch_request)){
 			throw new IllegalArgumentException("fch_collection ("+fch_collection+")"+
 		" must be after to fch_request ("+fch_request+").");

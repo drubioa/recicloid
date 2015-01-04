@@ -75,7 +75,7 @@ public class FurnitureSelectorDialFrag extends DialogFragment{
 		Bundle bundle = getArguments();
 		 if(bundle != null){
 			 mDay = bundle.getInt("mDay");
-			 mMonth = bundle.getInt("mMomht");
+			 mMonth = bundle.getInt("mMonth");
 			 mYear = bundle.getInt("mYear");
 			 mAllFurnitures = bundle.getParcelableArrayList("allFurnitures");
 			 mNumPerDate = bundle.getInt("numPerDate");
@@ -96,11 +96,9 @@ public class FurnitureSelectorDialFrag extends DialogFragment{
 		         boolean isChecked) {
 				 	if(isChecked){
 				 		mSelectedItems.add(which);
-						cont++;
 					 }
 				 	 else if (mSelectedItems.contains(which)) {
 				 		mSelectedItems.remove(Integer.valueOf(which));
-					 	cont--;
 					 }
 					 Log.i("OnMultiChoiceClickListener","Pending "+cont+" request to confirm in date "
 					 			+mDay+"/"+mMonth+"/"+mYear);
@@ -112,7 +110,7 @@ public class FurnitureSelectorDialFrag extends DialogFragment{
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						if(cont < mNumPerDate){
+						if(Furniture.countFurnituresArray(mFurnitureToRequest) < mNumPerDate){
 							Log.i("FurnitureSelectorDialFrag.PositiveButton",
 									cont+" is lower than mNumPerDate "+mNumPerDate);
 							// Mensaje indicando que enseres faltan por confirmar
@@ -121,7 +119,7 @@ public class FurnitureSelectorDialFrag extends DialogFragment{
 									+" "+(mNumPerDate-cont)+" "+getResources().getString(R.string.dialog_confirmar_numeroNoValido3), 
 									Toast.LENGTH_LONG).show();
 						}
-						else if(cont > mNumPerDate){
+						else if(Furniture.countFurnituresArray(mFurnitureToRequest) > mNumPerDate){
 							// Mensaje indicando que el numero se enseres seleccionado no es valido para esta fecha.
 							Log.i("FurnitureSelectorDialFrag.PositiveButton",
 									cont+" is higher than mNumPerDate "+mNumPerDate);
@@ -130,6 +128,7 @@ public class FurnitureSelectorDialFrag extends DialogFragment{
 									Toast.LENGTH_LONG).show();
 						}
 						else{
+							Log.i("FurnitureSelectorDialFrag","Confirm appointment");
 							confirmAppointments();
 							Toast.makeText(getActivity(), 
 									getResources().getString(R.string.message_finalize), 
@@ -155,7 +154,11 @@ public class FurnitureSelectorDialFrag extends DialogFragment{
 		for(int id : mSelectedItems){
 			addFurnitureToRequest(furnituresId[id]);
 		}
-		((ConfirmarFechaActivity) getActivity()).confirmAppointment(new LocalDate(mYear,mMonth,mDay),
+		Log.i("FurnitureSelectorDialFrag.confirmAppointments",
+				"add "+Furniture.countFurnituresArray(mFurnitureToRequest)
+				+" items to appointment for date "+mYear+"/"+mMonth+"/"+mDay);
+		((ConfirmarFechaActivity) getActivity()).confirmAppointment(
+				new LocalDate(mYear,mMonth,mDay),
 				mFurnitureToRequest);
 	}
 
@@ -164,37 +167,14 @@ public class FurnitureSelectorDialFrag extends DialogFragment{
 			throw new NullPointerException("mFurnitureToRequest is null in " +
 					"FurnitureSelectorDialFrag.addFurnitureToRequest");
 		}
-		Furniture f = Furniture.findFurniture(id, mFurnitureToRequest);
+		Furniture f = Furniture.findFurniture(id, mAllFurnitures);
 		if(f == null){
 			throw new IllegalArgumentException("Furniture with id "+id+" not exist" +
 					" in addFurnitureToRequest method.");
 		}
-		// Se incrmentan en los confirmados
 		mFurnitureToRequest = (ArrayList<Furniture>) 
-				incrementFurniture(f,mFurnitureToRequest);
+				Furniture.incrementFurnitureInOne(f,mFurnitureToRequest);
 	}
 	
-	/**
-	 * Se incremente el numero de items indicados en uno, si no existe se agrega; si existe
-	 * se incrementa en uno.
-	 * @param furniture que se desea incluir o incrementar en caso de que ya este incluido.
-	 * @param list listado actual
-	 * @return una lista que incluye el intem incrementado en 1.
-	 */
-	private static List<Furniture> incrementFurniture(Furniture furniture,
-			List<Furniture> list){
-		boolean encontrado = false;
-		for(Furniture f: list){
-			if(f.equals(furniture)){
-				encontrado = true;
-				f.setCantidad(f.getCantidad() + 1 );
-				break;
-			}
-		}
-		if(!encontrado){
-			list.add(furniture);
-		}
-		return list;
-	}
 
 }

@@ -57,6 +57,45 @@ public abstract class JSONConverter{
 		return obj;
 	}
 
+	public static List<CollectionRequest> JSONtoCollectionRequest(JSONObject arg) 
+			throws JSONException{
+		List<CollectionRequest> requests 
+		= new ArrayList<CollectionRequest>();
+	JSONArray objects  = arg.getJSONArray("collectionRequest");
+	for(int i = 0; i < objects.length();i++){
+		JSONObject object = objects.getJSONObject(i);
+		CollectionRequest req = new CollectionRequest();
+        req.setCollectionPointId(object.getInt("collectionPointId"));
+        LocalDate fch_collection = new LocalDate(object.getString("fch_collection"));
+        req.setFch_collection(fch_collection);
+        LocalDate fch_request = new LocalDate(object.getString("fch_request"));
+        req.setFch_request(fch_request);
+        req.setNumFurnitures(object.getInt("numFurnitures"));
+        req.setTelephone(object.getString("telephone"));
+        // Incluir furnitures
+        List<Furniture> furnitures = new ArrayList<Furniture>();	       
+        try{
+        	JSONArray jsonFurnitures = object.getJSONArray("furnitures");
+	        for(int j = 0;j < jsonFurnitures.length();j++){
+	        	JSONObject obj = jsonFurnitures.getJSONObject(j);
+	        	int cantidad = obj.getInt("cantidad");
+	        	int furnitureId = obj.getInt("id");
+	        	Furniture f = new Furniture(furnitureId,cantidad);
+	        	furnitures.add(f);
+	        }
+        }catch(JSONException e){
+        	JSONObject furniture = object.getJSONObject("furnitures");
+        	int cantidad = furniture.getInt("cantidad");
+        	int furnitureId = furniture.getInt("id");
+        	Furniture f = new Furniture(furnitureId,cantidad);
+        	furnitures.add(f);
+        }
+        req.setFurnitures(furnitures);
+        requests.add(req);
+	}
+	return requests;
+	}
+	
 	public static List<ProvisionalAppointment> JSONtoProvisionalAppointment(JSONObject arg)
 			throws JSONException, ParseException {
 		List<ProvisionalAppointment> appointments 

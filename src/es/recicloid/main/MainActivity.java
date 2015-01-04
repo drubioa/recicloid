@@ -7,6 +7,7 @@ import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
 
 
+import es.recicloid.Historial.HistorialActivity;
 import es.recicloid.SolicitudEnseres.SolicitudEnseresActivity;
 import es.recicloid.activities.inforeciclaje.InformacionReciclajeActivity;
 import es.recicloid.adapters.ListAdaptor;
@@ -56,6 +57,12 @@ public class MainActivity extends RoboActivity implements MainView{
 					Intent intent = new Intent(MainActivity
 							.this,InformacionReciclajeActivity.class);
 					startActivity(intent);					
+				}
+				else if(elegido.getTitulo().equals(getResources()
+						.getString(R.string.title_historial))){
+					Intent intent = new Intent(MainActivity
+							.this,HistorialActivity.class);
+					startActivity(intent);	
 				}
 			}
         });

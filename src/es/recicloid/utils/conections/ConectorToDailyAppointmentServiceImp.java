@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import org.apache.http.HttpException;
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -57,6 +58,32 @@ extends ConectorToServices  implements ConectorToDailyAppointmentService{
 				return JSONConverter.JSONtoProvisionalAppointment(respJSON);
 	}
 
+	public List<CollectionRequest> getPendingRequest(String phone) 
+			throws ClientProtocolException, IOException, JSONException{
+		if(phone == null){
+			throw new NullPointerException("Phone argument is null in getPendingCollectionRequest method");
+		}
+		HttpGet getRequest =  
+				new HttpGet("/FurnitureCollectionService/resources/collectionrequests"
+						+"?phone_number="+phone);
+		getRequest.setHeader("content-type", MediaType.APPLICATION_JSON);
+		HttpResponse httpResponse = 
+				httpclient.execute(target, getRequest);
+		if(httpResponse == null){
+			throw new NullPointerException("httpResponse is null");
+		}
+		String respStr = EntityUtils.toString(httpResponse.getEntity());
+		if(httpResponse.getStatusLine().getStatusCode() != 200){
+			throw new RuntimeException("Failed : HTTP error code : "
+					 + httpResponse.getStatusLine().getStatusCode());	
+		}
+		JSONObject respJSON = new JSONObject(respStr);
+		if( httpResponse.getEntity() != null ) {
+			httpResponse.getEntity().consumeContent();
+	    }
+		return JSONConverter.JSONtoCollectionRequest(respJSON);
+	}
+	
 	@Override
 	public HttpResponse confirmAppointment(CollectionRequest appointment)
 			throws URISyntaxException, HttpException, IOException, JSONException{

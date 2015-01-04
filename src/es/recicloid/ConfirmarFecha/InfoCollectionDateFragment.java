@@ -31,7 +31,8 @@ public class InfoCollectionDateFragment extends DialogFragment{
 
 	     Bundle args = new Bundle();
 	     LocalDate fecha = req.getFch_collection();
-	     String title = new String("Solicitud de recogida para el día "+fecha.getDayOfMonth()+
+	     String title = new String("Solicitud de recogida para el día "+
+	    		 fecha.getDayOfMonth()+
 	    		 "/"+fecha.getMonthOfYear()+"/"+fecha.getYear());
 	     f.setTitle(title);
 	     args.putString("title", title);
@@ -61,7 +62,8 @@ public class InfoCollectionDateFragment extends DialogFragment{
              public void onClick(DialogInterface dialog, int which) {
          }
 		 });	
-		 builder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+		 builder.setPositiveButton(R.string.dialog_ok, 
+				 new DialogInterface.OnClickListener() {
              @Override
              public void onClick(DialogInterface dialog, int id) {
 

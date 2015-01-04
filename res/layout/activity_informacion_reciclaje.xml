@@ -7,11 +7,5 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="es.recicloid.main.InformacionReciclajeActivity" >
-
-    <ListView
-        android:id="@+id/listViewInfoReciclaje"
-    	android:layout_width="match_parent"
-    	android:layout_height="match_parent">
-    </ListView>
     
 </LinearLayout>
