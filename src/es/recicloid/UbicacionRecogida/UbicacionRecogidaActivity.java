@@ -2,7 +2,6 @@ package es.recicloid.UbicacionRecogida;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 
@@ -17,7 +16,7 @@ import es.recicloid.models.CollectionPoint;
 import es.recicloid.models.Furniture;
 import es.recicloid.models.Zone;
 import es.recicloid.utils.conections.ConectorToCollectionPointService;
-import es.recicloid.utils.conections.ConectorToCollectionPointServiceImp;
+import es.recicloid.utils.conections.InfoToFindCollectionPoint;
 import es.recicloid.utils.json.JsonToFileManagement;
 import es.recicloid.utils.map.AddressGetter;
 import es.recicloid.utils.map.LocationTracker;
@@ -75,14 +74,7 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		try {
-			conector = new ConectorToCollectionPointServiceImp(this);
-		} catch (IOException e1) {
-			Log.e("UbicacionRecogidaActivity.onCreate",
-					"Cannot read file to config connection");
-			e1.printStackTrace();
-		}
-		
+
 		// Si el usuario no dispone de Play Services unviable se muestra mensaje de error.
 		if(!checkPlayServicesIsInstalled()){
 			btnNextStep.setEnabled(false);
@@ -177,7 +169,7 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 				Handler handler = new Handler();
 				handler.postDelayed(new Runnable() {
 				    public void run() {
-				    	markCollectionPoint(Zone.convertLagIntToLocation(point));
+				    	findAndMarkCollectionPoint(Zone.convertLagIntToLocation(point));
 				                dialog.dismiss();
 				    }   
 				}, 5000);  // 5000 milliseconds
@@ -221,13 +213,12 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.ubicacion_recogida, menu);
 		return true;
 	}
 
 	public void checkLocation(LatLng point){
-		markCollectionPoint(Zone.convertLagIntToLocation(point));
+		findAndMarkCollectionPoint(Zone.convertLagIntToLocation(point));
 	}
 
 	/**
@@ -235,7 +226,7 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 	 * Shows dialogs if it fail and advice if it is rural zone.
 	 * @param point
 	 */
-	public void markCollectionPoint(Location point){
+	public void findAndMarkCollectionPoint(Location point){
 		// To resolve resolve NetworkOnMainThreadException
 		StrictMode.ThreadPolicy policy 
 			= new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -247,13 +238,28 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 			}
 			if(terminoMunicipal.isInside(point)){
 				mIsRuralPoint = (isRuralPoint(point));
-				Log.i("markCollectionPoint","location dentro del termino municipal");
-				CollectionPoint nearestPoint = 
-							conector.getNearestCollectionPoint(point, mIsRuralPoint);
+				Log.i("markCollectionPoint",
+						"location dentro del termino municipal");
+				// Conecta y Obtiene el punto de recogida mas cercano
+				InfoToFindCollectionPoint info
+					= new InfoToFindCollectionPoint(point,mIsRuralPoint);
+				conector = new ConectorToCollectionPointService(this);
+				conector.execute(info);
+				CollectionPoint nearestPoint = null;
+				try {
+					nearestPoint = conector.get();
+					Log.i("markCollectionPoint",
+							"Obtenido punto de recogida "+nearestPoint.toString());
+
+				} catch (Exception e){
+					Log.w("UbicacionRecogidaActivity.markCollectionPoint",
+							"No se ha obtenido ningun punto de recogida " +e.toString());
+				}
 				if(nearestPoint == null){
 					// Si no se ha localizado se muestra un mensaje de error.
 					Log.w("markCollectionPoint","no hay ningun punto de recogida " +
 							"cercano");
+					removeMarkToPosition();
 					showDialogAlert(R.string.dialog_title_location_not_valid,
 							R.string.dialog_descr_location_not_valid,
 							"tagAvisoLocNotValid");			
@@ -279,7 +285,9 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 						mDirection = address.getAddressLine(0);
 					}
 					else{
-						Log.w("UbicacionRecogidaActivity","cannot obtain address");
+						removeMarkToPosition();
+						Log.w("UbicacionRecogidaActivity",
+								"cannot obtain address");
 					}	
 				}
 			}
@@ -287,14 +295,15 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 				Log.w("UbicacionRecogidaActivity",
 						"No se puso marcar el punto ya que la localizacion " +
 						"no es valida ("+point.toString()+")");
-				mLocalizado = false;
-				btnNextStep.setEnabled(false);
-				showsGenericViewOfCity();
+				removeMarkToPosition();
 				showDialogAlert(R.string.dialog_title_location_not_valid,
 						R.string.dialog_descr_location_not_valid,
 						"tagAvisoLocNotValid");
 			}
-			
+			if(conector.exception != null){
+				removeMarkToPosition();
+				throw conector.exception;
+			}
 		}
 		catch (ClientProtocolException e) {
 			Log.e("markCollectionPoint.ClientProtocolException",e.toString());
@@ -314,6 +323,9 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 						R.string.dialog_err_location_error_not_exist_nearest,
 						"tagAvisoLocNotValid");
 			}
+		} catch (Exception e) {
+			removeMarkToPosition();
+			Log.e("markCollectionPoint",e.toString());
 		}
 	}
 
@@ -334,7 +346,7 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 					"LocationTracker cannot obtains current location");
 		}
 		else{
-			markCollectionPoint(currentLocation);
+			findAndMarkCollectionPoint(currentLocation);
 		}
 	}
 
@@ -411,6 +423,20 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
         	.title("Ubicaci??n")
         	.icon(BitmapDescriptorFactory.defaultMarker(
         		BitmapDescriptorFactory.HUE_GREEN)));
+	}
+	
+	
+	/**
+	 * Draw q mark in a map with location point
+	 * @param localizacion
+	 */
+	private void removeMarkToPosition(){
+		Log.i("addMarkToPosition",
+				"Se elimina la marca del mapa");
+		this.map.clear();
+		this.mLocalizado = false;
+		this.btnNextStep.setEnabled(false);
+		this.showsGenericViewOfCity();
 	}
 	
 	/**
