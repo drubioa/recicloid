@@ -16,10 +16,8 @@ import roboguice.inject.InjectView;
 import es.recicloid.ConfirmarFecha.InfoCollectionDateFragment;
 import es.recicloid.main.MainActivity;
 import es.recicloid.models.CollectionRequest;
-import es.recicloid.utils.conections.ConectorToDailyAppointmentService;
-import es.recicloid.utils.conections.ConectorToDailyAppointmentServiceImp;
 import es.recicloid.utils.conections.ConectorToDeletePendingRequests;
-import es.recicloid.utils.conections.ConectorToGetAppointments;
+import es.recicloid.utils.conections.ConectorToGetCollectionReq;
 import es.uca.recicloid.R;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -40,7 +38,7 @@ import android.widget.Toast;
 @ContentView(R.layout.activity_historial)
 public class HistorialActivity extends RoboFragmentActivity {
 	@InjectView(R.id.buttonCancelRequests) private Button btn_cancelRequests;
-	private ConectorToGetAppointments conectGetAppointments;
+	private ConectorToGetCollectionReq conectGetAppointments;
 	private ConectorToDeletePendingRequests conectDelPendReqs;
 	private ArrayList<CollectionRequest> request;
 	private CaldroidFragment caldroidFragment;
@@ -53,7 +51,7 @@ public class HistorialActivity extends RoboFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		conectGetAppointments = new ConectorToGetAppointments(this);
+		conectGetAppointments = new ConectorToGetCollectionReq(this);
 		conectDelPendReqs = new ConectorToDeletePendingRequests(this);
 		btn_cancelRequests.setEnabled(false);
 		if(savedInstanceState != null){

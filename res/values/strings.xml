@@ -8,9 +8,9 @@
     <string name="title_recogida_activity">Punto de recogida</string>
 
     <!-- Main Menu -->
-    <string name="title_activity_solicitud_enseres">Escoger enseres paraa recogida</string>
+    <string name="title_activity_solicitud_enseres">Menu Principal</string>
     <string name="title_solicitud">Solicitar recogida</string>
-    <string name="descr_solicitud">Realice una petición para que acudamos a recoger muebles y enseres voluminosos en caso de que no pueda acudir al punto limpio.</string>
+    <string name="descr_solicitud">Realice una petición para que acudamos a recoger muebles y enseres.</string>
     <string name="title_info_reciclaje">Información</string>
     <string name="descr_info_reciclaje">Consulta información sobre reciclaje y tratamiento de residuos.</string>
     <string name="title_historial">Historial</string>

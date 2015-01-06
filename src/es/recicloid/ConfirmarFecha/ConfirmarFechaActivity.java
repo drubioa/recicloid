@@ -20,8 +20,9 @@ import es.recicloid.models.CollectionRequest;
 import es.recicloid.models.Furniture;
 import es.recicloid.models.ProvisionalAppointment;
 import es.recicloid.models.User;
-import es.recicloid.utils.conections.ConectorToDailyAppointmentService;
-import es.recicloid.utils.conections.ConectorToDailyAppointmentServiceImp;
+import es.recicloid.utils.conections.ConectorToConfirmAppointment;
+import es.recicloid.utils.conections.ConectorToGetProvisAppointment;
+import es.recicloid.utils.conections.InfoToGetProvAppointments;
 import es.recicloid.utils.json.JsonToFileManagement;
 import es.uca.recicloid.R;
 import android.app.ProgressDialog;
@@ -40,7 +41,6 @@ import android.widget.Toast;
 @ContentView(R.layout.activity_confirmar_fechas)
 public class ConfirmarFechaActivity extends RoboFragmentActivity{
 	@InjectView(R.id.button_finalize ) private Button mBtn_continuar;
-	private ConectorToDailyAppointmentService mConector;  
 	private ArrayList<Furniture> mTotalFurnituresToCollect;
 	private ArrayList<ProvisionalAppointment> mProvisionalAppointment;
 	private ArrayList<CollectionRequest> mConfirmedRquest;
@@ -51,19 +51,13 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 	private static final int CONFIRMED_COLOR = R.color.green;
 	private static final int UNCONFIRMED_COLOR = R.color.light_green;
 	private static final int CURRENTDAYE_COLOR = R.color.blue;
-	
+	private ConectorToConfirmAppointment conector;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		caldroidFragment = new CaldroidFragment();;
-		try {
-			mConector = new ConectorToDailyAppointmentServiceImp(this);
-		} catch (IOException e1) {
-			Log.e("ConfirmarFechaActivity.onCreate",
-					"Cannot configure calendar "+
-				e1.toString());
-		}
+		conector = new ConectorToConfirmAppointment(this);
+		caldroidFragment = new CaldroidFragment();
 		if(savedInstanceState == null){
 			loadFurnituresFromJsonFile();
 			Log.i("ConfirmarFechaActivity.onCreate",
@@ -235,7 +229,12 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 						handler.postDelayed(new Runnable() {
 						    public void run() {
 						        try {
-									mConector.confirmAppointment(c);
+						        	conector.execute(c);
+									if(!conector.get()){
+										if(conector.exception != null){
+											throw conector.exception;
+										}
+									}
 									Log.i("ConfirmarFechaActivity","Se confirma la solicitud" +
 											" de recogida");
 									
@@ -338,15 +337,22 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 			User user = loadUserFromJSONFile();
 			CollectionPoint collectionPoint = loadCollectionPointFromJSONFile();
 			try {
-				List<ProvisionalAppointment> provisionalAppointment = 
-						mConector.getProvisionalAppointments(user.getPhone(), 
-						Furniture.countFurnituresArray(mTotalFurnituresToCollect),collectionPoint.getId());
+				ConectorToGetProvisAppointment conector =
+						new ConectorToGetProvisAppointment(this);
+				InfoToGetProvAppointments info = new 
+						InfoToGetProvAppointments(user.getPhone(), 
+								Furniture.countFurnituresArray(mTotalFurnituresToCollect),collectionPoint.getId());
+				conector.execute(info);
+				List<ProvisionalAppointment> provisionalAppointment = conector.get();
 				if(provisionalAppointment == null){
 					Log.w("ConfirmarFechasActivity.obtainsProvisionalAppointments",
 							"No se obtuvo ninguna solicitud pendiente de confirmar para el telefono"+
 							user.getPhone()+"\ncollectionPoint: "+collectionPoint.getId()
 							+"\nFurnitures to collect: "+
 							Furniture.countFurnituresArray(mTotalFurnituresToCollect));
+				}
+				if(conector.exception != null){
+					throw conector.exception;
 				}
 				return (ArrayList<ProvisionalAppointment>) provisionalAppointment;
 			} catch (Exception e) {
