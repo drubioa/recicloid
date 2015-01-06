@@ -53,7 +53,7 @@ public interface ConectorToDailyAppointmentService {
 	 * @throws IOException 
 	 * @throws HttpException 
 	 */
-	public HttpResponse deletePendingAppointments(String phone_number) 
+	public void deletePendingAppointments(String phone_number) 
 			throws URISyntaxException, HttpException, IOException;
 	
 }

@@ -68,6 +68,10 @@ public class Furniture implements Parcelable,Serializable{
 		return mName;
 	}
 	
+	public void setName(String name){
+		mName = name;
+	}
+	
 	public String getIdText() {
 		return idText;
 	}

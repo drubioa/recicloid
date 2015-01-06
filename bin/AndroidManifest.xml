@@ -84,7 +84,8 @@
 
         <activity
             android:name="es.recicloid.Historial.HistorialActivity"
-            android:label="@string/title_activity_historial" >
+            android:label="@string/title_activity_historial"
+             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="es.recicloid.ConfirmarFecha.FinalizeActivity"

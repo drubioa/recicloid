@@ -102,6 +102,8 @@
     <string name="dialog_err_dir_exception">Error al obtener la dirección</string>
     <string name="dialog_descr_error_dir_exception">No fue posible obtener la ubicación correspondiente
         a dicha dirección.</string>
+    <string name="dialog_error_canceling">No se pudieron cancelar las solicitudes</string>
+    <string name="dialog_canceling_ok">Solicitudes de recogida canceladas</string>
     <string name="dialog_err_location_exception">Se produjo un error al obtener
         la ubicación actual.</string>
     <string name="dialog_err_google_play_title">Debes actualizar Google Play</string>
@@ -117,7 +119,9 @@
     <string name="dialog_confirmar_numeroNoValido2">Faltan por confirmar </string>
     <string name="dialog_confirmar_numeroNoValido3"> enseres.</string>
     <string name="cancel">Cancelar</string>
-
+	<string name="dialog_title_cancel_request">Advertencia</string>
+    <string name="dialog_descr_cancel_request">¿Está usted seguro de que desea cancelar las peticiones de recogida?</string>
+	
     <!-- Dialogo del Historial -->
     <string name="dialog_ask_telephone">Introduce el telefono de contacto con el que fue realizada la solicitud de recogida.</string>
 
@@ -127,6 +131,10 @@
     <string name="dialog_more_furnitures_reset">Descartar todos los elementos seleccionados</string>
     <string name="title_activity_datos_contacto">Datos de Contacto</string>
 
+    <!-- Dialogo error por solicitud previa pendiente -->
+    <string name="dialog_title_prev_request">Hay una solicitud en curso</string>
+    <string name="dialog_descr_prev_request">No se pudo realizar la solicitud, ya que existe una solicitud previa pendiente de realizar.Puede acceder a su historial en el Menú principal o contactar con nosotros.</string>
+    
     <!-- Map -->
     <string name="dialog_obtains_dir">Obteniendo dirección</string>
 
@@ -172,6 +180,7 @@
     
     <!-- HISTORIAL -->
     <string name="message_no_valid_phone">Número de teléfono no válido</string>
+    <string name="cancel_requests">Cancelar peticiones</string>
     
     <!-- Splash menu con el logo del ayuntamiento -->
     <string name="title_splash">Ayuntamiento de</string>

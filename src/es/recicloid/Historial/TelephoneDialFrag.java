@@ -1,15 +1,16 @@
 package es.recicloid.Historial;
 
 import roboguice.fragment.RoboDialogFragment;
-import roboguice.inject.InjectView;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.widget.EditText; 
 import android.widget.Toast;
 import es.recicloid.main.MainActivity;
@@ -19,7 +20,7 @@ import es.uca.recicloid.R;
 public class TelephoneDialFrag extends RoboDialogFragment{
 	private boolean mValidPhone;
 	private String mPhoneNumber;
-	@InjectView(R.id.editTextPhone) private EditText telephone;
+	private EditText telephone;
 	
 	TelephoneDialFrag(){
 		mValidPhone = false;
@@ -33,9 +34,12 @@ public class TelephoneDialFrag extends RoboDialogFragment{
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		LayoutInflater inflater = getActivity().getLayoutInflater();
-		
-		builder.setView(inflater.inflate(R.layout.phone_fragment, null))
+		telephone = new EditText(getActivity());
+		telephone.setInputType(InputType.TYPE_CLASS_PHONE);
+		InputFilter[] filterArray = new InputFilter[1];
+		filterArray[0] = new InputFilter.LengthFilter(9);
+		telephone.setFilters(filterArray);
+		builder.setView(telephone)
 		    // Add action buttons
 				   .setTitle(R.string.menu_datos_contacto_telefono)
 				   .setMessage(R.string.dialog_ask_telephone)
@@ -43,11 +47,14 @@ public class TelephoneDialFrag extends RoboDialogFragment{
 		               @Override
 		               public void onClick(DialogInterface dialog, int id) {
 		                  if(mValidPhone){
+		                	  Log.i("TelephoneDialFrag","Valid phone number");
 		                	  // Conectar y cargar solicitudes de recogida
-		                	  ((HistorialActivity)  getActivity()).findAndShowRequest(mPhoneNumber);
+		                	  ((HistorialActivity)  
+		                			  getActivity()).findAndShowRequest(mPhoneNumber);
 		                  }
 		                  else{
 		                	  // Mostrar Toast 'Numero No Valido' y volver al Menu principal.
+		                	  Log.i("TelephoneDialFrag","Invalid phone number "+mPhoneNumber);
 		                	  Toast.makeText(getActivity(), 
 										getResources().getString(R.string.message_no_valid_phone),
 										Toast.LENGTH_LONG).show();
@@ -56,6 +63,7 @@ public class TelephoneDialFrag extends RoboDialogFragment{
 		                  }
 		               }
 		           });
+			addListenerToEditTextName(telephone);
 		    return builder.create();
 	}
 	
@@ -74,7 +82,8 @@ public class TelephoneDialFrag extends RoboDialogFragment{
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
-				if(s.length() == 9 && s.charAt(0) != '6' ||  s.charAt(0) != '0'){
+				if(s.length() == 9 && (s.charAt(0) != '6' ||  s.charAt(0) != '9')){
+					Log.i("TelephoneDialFrag","Valid number");
 					mPhoneNumber = s.toString();
 					mValidPhone = true;
 				}

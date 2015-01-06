@@ -25,7 +25,7 @@ import es.recicloid.models.ProvisionalAppointment;
 import es.recicloid.utils.json.JSONConverter;
 
 public class ConectorToDailyAppointmentServiceImp 
-extends ConectorToServices  implements ConectorToDailyAppointmentService{
+extends ConectorToServices implements ConectorToDailyAppointmentService{
 
 	public ConectorToDailyAppointmentServiceImp(Context context)
 			throws IOException {
@@ -72,11 +72,12 @@ extends ConectorToServices  implements ConectorToDailyAppointmentService{
 		if(httpResponse == null){
 			throw new NullPointerException("httpResponse is null");
 		}
-		String respStr = EntityUtils.toString(httpResponse.getEntity());
+		
 		if(httpResponse.getStatusLine().getStatusCode() != 200){
 			throw new RuntimeException("Failed : HTTP error code : "
 					 + httpResponse.getStatusLine().getStatusCode());	
 		}
+		String respStr = EntityUtils.toString(httpResponse.getEntity());
 		JSONObject respJSON = new JSONObject(respStr);
 		if( httpResponse.getEntity() != null ) {
 			httpResponse.getEntity().consumeContent();
@@ -114,7 +115,7 @@ extends ConectorToServices  implements ConectorToDailyAppointmentService{
 	}
 
 	@Override
-	public HttpResponse deletePendingAppointments(String phone_number)
+	public void deletePendingAppointments(String phone_number)
 			throws URISyntaxException, HttpException, IOException{
 
 		HttpDelete deleteRestues = new
@@ -122,6 +123,7 @@ extends ConectorToServices  implements ConectorToDailyAppointmentService{
 						+"?phone_number="+phone_number);
 		deleteRestues.setHeader("content-type", MediaType.APPLICATION_JSON);
 		HttpResponse resp = httpclient.execute(target, deleteRestues);
+
 		if (resp.getStatusLine().getStatusCode() != 200) {
 			throw new RuntimeException("Failed : HTTP error code : "
 			 + resp.getStatusLine().getStatusCode()+"\n"+resp.getParams());
@@ -129,7 +131,6 @@ extends ConectorToServices  implements ConectorToDailyAppointmentService{
 		if(resp.getEntity() != null) {
 			resp.getEntity().consumeContent();
 	    }
-		return resp;
 	}
 
 }

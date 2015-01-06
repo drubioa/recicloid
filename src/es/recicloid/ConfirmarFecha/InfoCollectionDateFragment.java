@@ -26,7 +26,7 @@ public class InfoCollectionDateFragment extends DialogFragment{
 		mFurnitures = f;
 	}
 
-	 static  InfoCollectionDateFragment newInstance(CollectionRequest req) {
+	 public static  InfoCollectionDateFragment newInstance(CollectionRequest req) {
 		 InfoCollectionDateFragment f = new InfoCollectionDateFragment();
 
 	     Bundle args = new Bundle();
