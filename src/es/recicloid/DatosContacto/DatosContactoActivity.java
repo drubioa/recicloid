@@ -1,7 +1,5 @@
 package es.recicloid.DatosContacto;
 
-import java.io.IOException;
-
 import roboguice.activity.RoboFragmentActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
@@ -9,8 +7,7 @@ import roboguice.inject.InjectView;
 import es.recicloid.CondicionesUso.CondicionesUsoActivity;
 import es.recicloid.dialogs.DialogAlert;
 import es.recicloid.models.User;
-import es.recicloid.utils.conections.ConectorToUserService;
-import es.recicloid.utils.conections.ConectorToUserServiceImp;
+import es.recicloid.utils.conections.ConectionToPostNewUser;
 import es.recicloid.utils.json.JsonToFileManagement;
 import es.uca.recicloid.R;
 import android.os.Bundle;
@@ -40,18 +37,14 @@ public class DatosContactoActivity extends RoboFragmentActivity {
 	@InjectView(R.id.button) private Button btn_continue;
 	private boolean mEditTextNameValid;
 	private boolean mEditTextTelValid;
-	private ConectorToUserService conector; 
+	private ConectionToPostNewUser conector; 
 	private final String FILENAME = "user.json";
 	private JsonToFileManagement jsonToFile;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		try {
-			conector = new ConectorToUserServiceImp(this);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		conector = new ConectionToPostNewUser(this);
 		jsonToFile = new JsonToFileManagement(this,FILENAME); 
 		if(savedInstanceState == null){
 			mEditTextNameValid = false;
@@ -82,7 +75,15 @@ public class DatosContactoActivity extends RoboFragmentActivity {
 							Intent intent = new Intent(DatosContactoActivity
 									.this,CondicionesUsoActivity.class);
 							try {
-								conector.postNewUser(getUserName(), getUserPhone());
+								User user = new User(getUserName(), getUserPhone());
+								conector.execute(user);
+								if(!conector.get()){
+									Log.e("DatosContactoActivity",
+											"Cannot create user");
+									if(conector.exception != null){
+										throw conector.exception;
+									}
+								}
 							}catch(Exception e){
 								Log.w("DatosContactoActivity","No se pudo crear el usuario "+e.toString());
 							}
