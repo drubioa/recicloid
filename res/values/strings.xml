@@ -181,13 +181,14 @@
     <!-- HISTORIAL -->
     <string name="message_no_valid_phone">Número de teléfono no válido</string>
     <string name="cancel_requests">Cancelar peticiones</string>
+    <string name="not_exist_prev_req">No se encontro ninguna solicitud de recogida</string>
     
     <!-- Splash menu con el logo del ayuntamiento -->
     <string name="title_splash">Ayuntamiento de</string>
     <string name="subtitle_splash">Puerto Real</string>
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
     <string name="title_activity_informacion_reciclaje">Información sobre reciclaje</string>
-    <string name="title_activity_historial">HistorialActivity</string>
-    <string name="title_activity_finalize">FinalizeActivity</string>
+    <string name="title_activity_historial">Historial</string>
+    <string name="title_activity_finalize">Solicitud confirmada</string>
 
 </resources>

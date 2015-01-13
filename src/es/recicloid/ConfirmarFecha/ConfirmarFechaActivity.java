@@ -231,12 +231,22 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 						        try {
 						        	conector.execute(c);
 									if(!conector.get()){
+										Log.e("ConfirmarFechaActivity","No se pudo confirmar la solicitud de recogida");
 										if(conector.exception != null){
 											throw conector.exception;
 										}
 									}
-									Log.i("ConfirmarFechaActivity","Se confirma la solicitud" +
-											" de recogida");
+									else{
+										Log.i("ConfirmarFechaActivity","Se confirma la solicitud" +
+												" de recogida");
+										Intent intent = new Intent(ConfirmarFechaActivity
+												.this,FinalizeActivity.class);
+										startActivity(intent);
+										// Show message before finalize.
+										Toast.makeText(ConfirmarFechaActivity.this, 
+												getResources().getString(R.string.message_finalize), 
+												Toast.LENGTH_LONG).show();
+									}
 									
 								} catch (Exception e) {
 									Log.e("ConfirmarFechaActivity","Cannot confirm appointment "+e.toString());
@@ -244,14 +254,7 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 								}
 						        dialog.dismiss();
 						    }   
-						}, 5000);  // 5000 milliseconds	
-						// Show message before finalize.
-						Toast.makeText(ConfirmarFechaActivity.this, 
-								getResources().getString(R.string.message_finalize), 
-								Toast.LENGTH_LONG).show();
-						Intent intent = new Intent(ConfirmarFechaActivity
-								.this,FinalizeActivity.class);
-						startActivity(intent);
+						}, 5000);  // 5000 milliseconds							
 					} catch (Exception e) {
 						Log.e("ConfirmarFechaActivity",
 								"Caonnot confirm appointment because "+e.toString());

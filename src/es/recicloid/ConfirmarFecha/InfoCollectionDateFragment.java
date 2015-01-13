@@ -13,6 +13,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 
 public class InfoCollectionDateFragment extends DialogFragment{
 	private String mTitle;
@@ -38,7 +39,7 @@ public class InfoCollectionDateFragment extends DialogFragment{
 	     args.putString("title", title);
 	     ArrayList<String> funritures = new ArrayList<String>();
 	     for(Furniture furniture : req.getFurnitures()){
-	    	 funritures.add(furniture.getIdText());
+	    	 funritures.add(furniture.getName());
 	     }
 	     args.putStringArrayList("furnitures", funritures);
 	     f.setFurnitures(funritures);
@@ -57,7 +58,7 @@ public class InfoCollectionDateFragment extends DialogFragment{
 		 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		 
 		 builder.setTitle(mTitle);
-		 builder.setItems(mFurnitures.toArray(new CharSequence[mFurnitures.size()]),
+		 builder.setItems(getFurnituresNames(),
 				 new DialogInterface.OnClickListener() {
              public void onClick(DialogInterface dialog, int which) {
          }
@@ -70,5 +71,17 @@ public class InfoCollectionDateFragment extends DialogFragment{
              }
          });
 		 return builder.create();
-	 }
+	}
+	 
+	private  CharSequence[] getFurnituresNames(){
+		CharSequence[] furnituresNames = new CharSequence[mFurnitures.size()];
+		for(int i = 0; i < mFurnitures.size();i++){
+			Log.i("getFurnituresNames","@string/item_"+mFurnitures.get(i));
+			int stringId = getResources().getIdentifier("@string/item_"+mFurnitures.get(i),
+					"string", getActivity().getPackageName());        
+			Log.i("getFurnituresNames","id: "+stringId);
+			furnituresNames[i] = getActivity().getString(stringId);
+		}
+		return furnituresNames;
+	}
 }

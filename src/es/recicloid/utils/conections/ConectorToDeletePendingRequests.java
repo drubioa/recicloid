@@ -39,7 +39,7 @@ public class ConectorToDeletePendingRequests
 				return false;
 			}
 
-			if (resp.getStatusLine().getStatusCode() != 200) {
+			if (resp.getStatusLine().getStatusCode() == 500) {
 				throw new RuntimeException("Failed : HTTP error code : "
 				 + resp.getStatusLine().getStatusCode()+"\n"+resp.getParams());
 			}

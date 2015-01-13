@@ -168,7 +168,7 @@ public class HistorialActivity extends RoboFragmentActivity {
 						phone+" no tiene ninguna peticion en curso");
 				TextView text = new TextView(this);
 				text.setId((int)System.currentTimeMillis());
-				text.setText("No se encontro ninguna solicitud de recogida");
+				text.setText(R.string.not_exist_prev_req);
 				LinearLayout layout = (LinearLayout) this.findViewById(R.id.historial_layout);
 				layout.addView(text);
 				btn_cancelRequests.setEnabled(false);

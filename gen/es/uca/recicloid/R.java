@@ -2000,19 +2000,20 @@ containing a value of this type.
         public static final int message_obtainsProvisionalAppointment_descr=0x7f0a008f;
         public static final int message_registrer_user=0x7f0a008d;
         public static final int nearestPoint_message=0x7f0a0075;
+        public static final int not_exist_prev_req=0x7f0a00a3;
         public static final int store_picture_message=0x7f0a000f;
         public static final int store_picture_title=0x7f0a000e;
-        public static final int subtitle_splash=0x7f0a00a4;
+        public static final int subtitle_splash=0x7f0a00a5;
         public static final int title_activity_condiciones_uso=0x7f0a0097;
         public static final int title_activity_confirmar_fechas=0x7f0a008c;
         public static final int title_activity_datos_contacto=0x7f0a0085;
-        public static final int title_activity_finalize=0x7f0a00a8;
-        public static final int title_activity_historial=0x7f0a00a7;
-        public static final int title_activity_informacion_reciclaje=0x7f0a00a6;
+        public static final int title_activity_finalize=0x7f0a00a9;
+        public static final int title_activity_historial=0x7f0a00a8;
+        public static final int title_activity_informacion_reciclaje=0x7f0a00a7;
         /**  Main Menu 
          */
         public static final int title_activity_solicitud_enseres=0x7f0a0035;
-        public static final int title_activity_splash_screen=0x7f0a00a5;
+        public static final int title_activity_splash_screen=0x7f0a00a6;
         public static final int title_activity_ubicacion_recogida=0x7f0a0064;
         /**  MENSAJE DE CONFIRMACION 
          */
@@ -2026,7 +2027,7 @@ containing a value of this type.
         public static final int title_solicitud=0x7f0a0036;
         /**  Splash menu con el logo del ayuntamiento 
          */
-        public static final int title_splash=0x7f0a00a3;
+        public static final int title_splash=0x7f0a00a4;
         /**  Text on a placeholder buy button when Google Play services is not
          available or up-to-date 
          */
