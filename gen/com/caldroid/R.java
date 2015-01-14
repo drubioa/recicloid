@@ -261,15 +261,15 @@ public final class R {
 		public static final int abc_textfield_searchview_holo_light = 0x7f020054;
 		public static final int abc_textfield_searchview_right_holo_dark = 0x7f020055;
 		public static final int abc_textfield_searchview_right_holo_light = 0x7f020056;
-		public static final int calendar_next_arrow = 0x7f020058;
-		public static final int calendar_prev_arrow = 0x7f020059;
-		public static final int cell_bg = 0x7f02005a;
-		public static final int disable_cell = 0x7f020075;
-		public static final int ic_launcher = 0x7f020077;
-		public static final int left_arrow = 0x7f02007e;
-		public static final int red_border = 0x7f020082;
-		public static final int red_border_gray_bg = 0x7f020083;
-		public static final int right_arrow = 0x7f020084;
+		public static final int calendar_next_arrow = 0x7f02005f;
+		public static final int calendar_prev_arrow = 0x7f020060;
+		public static final int cell_bg = 0x7f020061;
+		public static final int disable_cell = 0x7f02007e;
+		public static final int ic_launcher = 0x7f020085;
+		public static final int left_arrow = 0x7f02008c;
+		public static final int red_border = 0x7f020092;
+		public static final int red_border_gray_bg = 0x7f020093;
+		public static final int right_arrow = 0x7f020094;
 	}
 	public static final class id {
 		public static final int action_bar = 0x7f05002e;

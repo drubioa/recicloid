@@ -42,7 +42,7 @@
         </activity>
         <activity
             android:name="es.recicloid.main.MainActivity"
-            android:label="@string/title_activity_solicitud_enseres" >
+            android:label="@string/title_menu_principal" >
         </activity>
         <activity
             android:name="es.recicloid.SolicitudEnseres.SolicitudEnseresActivity"

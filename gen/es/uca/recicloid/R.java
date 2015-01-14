@@ -1460,53 +1460,75 @@ containing a value of this type.
         public static final int abc_textfield_searchview_holo_light=0x7f020054;
         public static final int abc_textfield_searchview_right_holo_dark=0x7f020055;
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
-        public static final int bigtruck_track=0x7f020057;
-        public static final int calendar_next_arrow=0x7f020058;
-        public static final int calendar_prev_arrow=0x7f020059;
-        public static final int cell_bg=0x7f02005a;
-        public static final int common_full_open_on_phone=0x7f02005b;
-        public static final int common_ic_googleplayservices=0x7f02005c;
-        public static final int common_signin_btn_icon_dark=0x7f02005d;
-        public static final int common_signin_btn_icon_disabled_dark=0x7f02005e;
-        public static final int common_signin_btn_icon_disabled_focus_dark=0x7f02005f;
-        public static final int common_signin_btn_icon_disabled_focus_light=0x7f020060;
-        public static final int common_signin_btn_icon_disabled_light=0x7f020061;
-        public static final int common_signin_btn_icon_focus_dark=0x7f020062;
-        public static final int common_signin_btn_icon_focus_light=0x7f020063;
-        public static final int common_signin_btn_icon_light=0x7f020064;
-        public static final int common_signin_btn_icon_normal_dark=0x7f020065;
-        public static final int common_signin_btn_icon_normal_light=0x7f020066;
-        public static final int common_signin_btn_icon_pressed_dark=0x7f020067;
-        public static final int common_signin_btn_icon_pressed_light=0x7f020068;
-        public static final int common_signin_btn_text_dark=0x7f020069;
-        public static final int common_signin_btn_text_disabled_dark=0x7f02006a;
-        public static final int common_signin_btn_text_disabled_focus_dark=0x7f02006b;
-        public static final int common_signin_btn_text_disabled_focus_light=0x7f02006c;
-        public static final int common_signin_btn_text_disabled_light=0x7f02006d;
-        public static final int common_signin_btn_text_focus_dark=0x7f02006e;
-        public static final int common_signin_btn_text_focus_light=0x7f02006f;
-        public static final int common_signin_btn_text_light=0x7f020070;
-        public static final int common_signin_btn_text_normal_dark=0x7f020071;
-        public static final int common_signin_btn_text_normal_light=0x7f020072;
-        public static final int common_signin_btn_text_pressed_dark=0x7f020073;
-        public static final int common_signin_btn_text_pressed_light=0x7f020074;
-        public static final int disable_cell=0x7f020075;
-        public static final int ic_historial=0x7f020076;
-        public static final int ic_launcher=0x7f020077;
-        public static final int ic_papelera=0x7f020078;
-        public static final int ic_plusone_medium_off_client=0x7f020079;
-        public static final int ic_plusone_small_off_client=0x7f02007a;
-        public static final int ic_plusone_standard_off_client=0x7f02007b;
-        public static final int ic_plusone_tall_off_client=0x7f02007c;
-        public static final int ic_truck=0x7f02007d;
-        public static final int left_arrow=0x7f02007e;
-        public static final int logo_ayuntamiento=0x7f02007f;
-        public static final int powered_by_google_dark=0x7f020080;
-        public static final int powered_by_google_light=0x7f020081;
-        public static final int red_border=0x7f020082;
-        public static final int red_border_gray_bg=0x7f020083;
-        public static final int right_arrow=0x7f020084;
-        public static final int tuck=0x7f020085;
+        public static final int armchair=0x7f020057;
+        public static final int barbacue=0x7f020058;
+        public static final int bath=0x7f020059;
+        public static final int bath_furniture=0x7f02005a;
+        public static final int bath_self=0x7f02005b;
+        public static final int bed=0x7f02005c;
+        public static final int bidet=0x7f02005d;
+        public static final int bigtruck_track=0x7f02005e;
+        public static final int calendar_next_arrow=0x7f02005f;
+        public static final int calendar_prev_arrow=0x7f020060;
+        public static final int cell_bg=0x7f020061;
+        public static final int chair=0x7f020062;
+        public static final int common_full_open_on_phone=0x7f020063;
+        public static final int common_ic_googleplayservices=0x7f020064;
+        public static final int common_signin_btn_icon_dark=0x7f020065;
+        public static final int common_signin_btn_icon_disabled_dark=0x7f020066;
+        public static final int common_signin_btn_icon_disabled_focus_dark=0x7f020067;
+        public static final int common_signin_btn_icon_disabled_focus_light=0x7f020068;
+        public static final int common_signin_btn_icon_disabled_light=0x7f020069;
+        public static final int common_signin_btn_icon_focus_dark=0x7f02006a;
+        public static final int common_signin_btn_icon_focus_light=0x7f02006b;
+        public static final int common_signin_btn_icon_light=0x7f02006c;
+        public static final int common_signin_btn_icon_normal_dark=0x7f02006d;
+        public static final int common_signin_btn_icon_normal_light=0x7f02006e;
+        public static final int common_signin_btn_icon_pressed_dark=0x7f02006f;
+        public static final int common_signin_btn_icon_pressed_light=0x7f020070;
+        public static final int common_signin_btn_text_dark=0x7f020071;
+        public static final int common_signin_btn_text_disabled_dark=0x7f020072;
+        public static final int common_signin_btn_text_disabled_focus_dark=0x7f020073;
+        public static final int common_signin_btn_text_disabled_focus_light=0x7f020074;
+        public static final int common_signin_btn_text_disabled_light=0x7f020075;
+        public static final int common_signin_btn_text_focus_dark=0x7f020076;
+        public static final int common_signin_btn_text_focus_light=0x7f020077;
+        public static final int common_signin_btn_text_light=0x7f020078;
+        public static final int common_signin_btn_text_normal_dark=0x7f020079;
+        public static final int common_signin_btn_text_normal_light=0x7f02007a;
+        public static final int common_signin_btn_text_pressed_dark=0x7f02007b;
+        public static final int common_signin_btn_text_pressed_light=0x7f02007c;
+        public static final int cooker=0x7f02007d;
+        public static final int disable_cell=0x7f02007e;
+        public static final int dishwasher=0x7f02007f;
+        public static final int door=0x7f020080;
+        public static final int doublebed=0x7f020081;
+        public static final int fridge=0x7f020082;
+        public static final int heater=0x7f020083;
+        public static final int ic_historial=0x7f020084;
+        public static final int ic_launcher=0x7f020085;
+        public static final int ic_papelera=0x7f020086;
+        public static final int ic_plusone_medium_off_client=0x7f020087;
+        public static final int ic_plusone_small_off_client=0x7f020088;
+        public static final int ic_plusone_standard_off_client=0x7f020089;
+        public static final int ic_plusone_tall_off_client=0x7f02008a;
+        public static final int ic_truck=0x7f02008b;
+        public static final int left_arrow=0x7f02008c;
+        public static final int logo_ayuntamiento=0x7f02008d;
+        public static final int microwave=0x7f02008e;
+        public static final int oven=0x7f02008f;
+        public static final int powered_by_google_dark=0x7f020090;
+        public static final int powered_by_google_light=0x7f020091;
+        public static final int red_border=0x7f020092;
+        public static final int red_border_gray_bg=0x7f020093;
+        public static final int right_arrow=0x7f020094;
+        public static final int shower_plate=0x7f020095;
+        public static final int sink=0x7f020096;
+        public static final int sofa=0x7f020097;
+        public static final int table=0x7f020098;
+        public static final int tuck=0x7f020099;
+        public static final int wc=0x7f02009a;
+        public static final int worktop=0x7f02009b;
     }
     public static final class id {
         public static final int GridView_items=0x7f050064;
@@ -1762,15 +1784,15 @@ containing a value of this type.
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f0a000b;
         public static final int accept=0x7f0a0010;
-        public static final int accept_conditions=0x7f0a0095;
+        public static final int accept_conditions=0x7f0a0096;
         public static final int action_settings=0x7f0a0031;
         public static final int address=0x7f0a0033;
         public static final int app_name=0x7f0a000d;
-        public static final int back_main_menu=0x7f0a00a0;
-        public static final int btn_siguiente=0x7f0a0098;
-        public static final int cancel=0x7f0a007e;
-        public static final int cancel_requests=0x7f0a00a2;
-        public static final int cofirmation=0x7f0a0099;
+        public static final int back_main_menu=0x7f0a00a1;
+        public static final int btn_siguiente=0x7f0a0099;
+        public static final int cancel=0x7f0a007f;
+        public static final int cancel_requests=0x7f0a00a3;
+        public static final int cofirmation=0x7f0a009a;
         /**   Text for notification shown when the Android Wear apps needs to be updated. Only shown on the wearable. [CHAR LIMIT=NONE] 
          */
         public static final int common_android_wear_notification_needs_update_text=0x7f0a0017;
@@ -1870,164 +1892,165 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f0a002e;
-        public static final int condiciones_uso=0x7f0a0094;
+        public static final int condiciones_uso=0x7f0a0095;
         public static final int create_calendar_message=0x7f0a0013;
         public static final int create_calendar_title=0x7f0a0012;
         public static final int decline=0x7f0a0011;
-        public static final int descr_historial=0x7f0a003b;
-        public static final int descr_info_reciclaje=0x7f0a0039;
-        public static final int descr_solicitud=0x7f0a0037;
-        public static final int descrip_confirmaton=0x7f0a009f;
+        public static final int descr_historial=0x7f0a003c;
+        public static final int descr_info_reciclaje=0x7f0a003a;
+        public static final int descr_solicitud=0x7f0a0038;
+        public static final int descrip_confirmaton=0x7f0a00a0;
         /**  MUEBLES Y ENSERES por Categorias 
          */
-        public static final int description_item=0x7f0a003f;
+        public static final int description_item=0x7f0a0040;
         /**  Dialogo del Historial 
          */
-        public static final int dialog_ask_telephone=0x7f0a0081;
-        public static final int dialog_canceling_ok=0x7f0a0071;
-        public static final int dialog_confirmar_aceptar=0x7f0a0078;
-        public static final int dialog_confirmar_furnitures=0x7f0a0079;
-        public static final int dialog_confirmar_furnitures2=0x7f0a007a;
-        public static final int dialog_confirmar_numeroNoValido=0x7f0a007b;
-        public static final int dialog_confirmar_numeroNoValido2=0x7f0a007c;
-        public static final int dialog_confirmar_numeroNoValido3=0x7f0a007d;
-        public static final int dialog_descr_4items=0x7f0a0066;
-        public static final int dialog_descr_cancel_request=0x7f0a0080;
-        public static final int dialog_descr_error_dir_exception=0x7f0a006f;
-        public static final int dialog_descr_info_solicitud_enseres=0x7f0a003e;
-        public static final int dialog_descr_location_not_valid=0x7f0a006c;
-        public static final int dialog_descr_prev_request=0x7f0a0087;
-        public static final int dialog_err_dir_conection_descr=0x7f0a0076;
-        public static final int dialog_err_dir_exception=0x7f0a006e;
-        public static final int dialog_err_google_play_descr=0x7f0a0074;
-        public static final int dialog_err_google_play_title=0x7f0a0073;
-        public static final int dialog_err_location_error_not_exist_nearest=0x7f0a0077;
-        public static final int dialog_err_location_exception=0x7f0a0072;
-        public static final int dialog_err_location_gpsint3d_disabled=0x7f0a006d;
-        public static final int dialog_error_canceling=0x7f0a0070;
-        public static final int dialog_info_solicitud_enseres=0x7f0a003d;
-        public static final int dialog_more_funitures_add=0x7f0a0083;
-        public static final int dialog_more_furnitures_reset=0x7f0a0084;
+        public static final int dialog_ask_telephone=0x7f0a0082;
+        public static final int dialog_canceling_ok=0x7f0a0072;
+        public static final int dialog_confirmar_aceptar=0x7f0a0079;
+        public static final int dialog_confirmar_furnitures=0x7f0a007a;
+        public static final int dialog_confirmar_furnitures2=0x7f0a007b;
+        public static final int dialog_confirmar_numeroNoValido=0x7f0a007c;
+        public static final int dialog_confirmar_numeroNoValido2=0x7f0a007d;
+        public static final int dialog_confirmar_numeroNoValido3=0x7f0a007e;
+        public static final int dialog_descr_4items=0x7f0a0067;
+        public static final int dialog_descr_cancel_request=0x7f0a0081;
+        public static final int dialog_descr_error_dir_exception=0x7f0a0070;
+        public static final int dialog_descr_info_solicitud_enseres=0x7f0a003f;
+        public static final int dialog_descr_location_not_valid=0x7f0a006d;
+        public static final int dialog_descr_prev_request=0x7f0a0088;
+        public static final int dialog_err_dir_conection_descr=0x7f0a0077;
+        public static final int dialog_err_dir_exception=0x7f0a006f;
+        public static final int dialog_err_google_play_descr=0x7f0a0075;
+        public static final int dialog_err_google_play_title=0x7f0a0074;
+        public static final int dialog_err_location_error_not_exist_nearest=0x7f0a0078;
+        public static final int dialog_err_location_exception=0x7f0a0073;
+        public static final int dialog_err_location_gpsint3d_disabled=0x7f0a006e;
+        public static final int dialog_error_canceling=0x7f0a0071;
+        public static final int dialog_info_solicitud_enseres=0x7f0a003e;
+        public static final int dialog_more_funitures_add=0x7f0a0084;
+        public static final int dialog_more_furnitures_reset=0x7f0a0085;
         /**  Dialogo se escoge mas de un mueble o enser 
          */
-        public static final int dialog_more_furnitures_title=0x7f0a0082;
+        public static final int dialog_more_furnitures_title=0x7f0a0083;
         /**  Map 
          */
-        public static final int dialog_obtains_dir=0x7f0a0088;
-        public static final int dialog_ok=0x7f0a0067;
-        public static final int dialog_selectlocacion_title=0x7f0a0068;
-        public static final int dialog_selectlocation_auto=0x7f0a0069;
-        public static final int dialog_selectlocation_manual=0x7f0a006a;
+        public static final int dialog_obtains_dir=0x7f0a0089;
+        public static final int dialog_ok=0x7f0a0068;
+        public static final int dialog_selectlocacion_title=0x7f0a0069;
+        public static final int dialog_selectlocation_auto=0x7f0a006a;
+        public static final int dialog_selectlocation_manual=0x7f0a006b;
         /**  DIÁLOGOS 
          */
-        public static final int dialog_title_4items=0x7f0a0065;
-        public static final int dialog_title_cancel_request=0x7f0a007f;
-        public static final int dialog_title_location_not_valid=0x7f0a006b;
-        public static final int dialog_title_not_valid_user=0x7f0a0091;
-        public static final int dialog_title_not_valid_user_descr=0x7f0a0092;
+        public static final int dialog_title_4items=0x7f0a0066;
+        public static final int dialog_title_cancel_request=0x7f0a0080;
+        public static final int dialog_title_location_not_valid=0x7f0a006c;
+        public static final int dialog_title_not_valid_user=0x7f0a0092;
+        public static final int dialog_title_not_valid_user_descr=0x7f0a0093;
         /**  Dialogo error por solicitud previa pendiente 
          */
-        public static final int dialog_title_prev_request=0x7f0a0086;
+        public static final int dialog_title_prev_request=0x7f0a0087;
         public static final int hello_world=0x7f0a0032;
-        public static final int intro_message_confirm_1=0x7f0a009a;
-        public static final int intro_message_confirm_2=0x7f0a009b;
-        public static final int item_armchair=0x7f0a005e;
-        public static final int item_barbacue=0x7f0a0059;
-        public static final int item_bath_furniture=0x7f0a0043;
-        public static final int item_bath_self=0x7f0a0045;
+        public static final int intro_message_confirm_1=0x7f0a009b;
+        public static final int intro_message_confirm_2=0x7f0a009c;
+        public static final int item_armchair=0x7f0a005f;
+        public static final int item_barbacue=0x7f0a005a;
+        public static final int item_bath_furniture=0x7f0a0044;
+        public static final int item_bath_self=0x7f0a0046;
         /**  Baño 
          */
-        public static final int item_bathtub=0x7f0a0040;
+        public static final int item_bathtub=0x7f0a0041;
         /**  Dormitorio 
          */
-        public static final int item_bed=0x7f0a0052;
-        public static final int item_bedroom_chair=0x7f0a0057;
-        public static final int item_bedroom_closet=0x7f0a0055;
-        public static final int item_bedroom_table=0x7f0a0054;
-        public static final int item_bedside_table=0x7f0a0056;
-        public static final int item_bidet=0x7f0a0042;
+        public static final int item_bed=0x7f0a0053;
+        public static final int item_bedroom_chair=0x7f0a0058;
+        public static final int item_bedroom_closet=0x7f0a0056;
+        public static final int item_bedroom_table=0x7f0a0055;
+        public static final int item_bedside_table=0x7f0a0057;
+        public static final int item_bidet=0x7f0a0043;
         /**  General 
          */
-        public static final int item_desk=0x7f0a0061;
-        public static final int item_dishwasher=0x7f0a004e;
-        public static final int item_door=0x7f0a0062;
-        public static final int item_doublebed=0x7f0a0053;
-        public static final int item_fridge=0x7f0a004a;
-        public static final int item_garden_chair=0x7f0a005a;
+        public static final int item_desk=0x7f0a0062;
+        public static final int item_dishwasher=0x7f0a004f;
+        public static final int item_door=0x7f0a0063;
+        public static final int item_doublebed=0x7f0a0054;
+        public static final int item_fridge=0x7f0a004b;
+        public static final int item_garden_chair=0x7f0a005b;
         /**  Exteriores 
          */
-        public static final int item_garden_table=0x7f0a0058;
-        public static final int item_heater=0x7f0a0063;
-        public static final int item_kitchen_closet=0x7f0a004f;
-        public static final int item_kitchen_fire=0x7f0a0050;
-        public static final int item_kitchen_gas=0x7f0a0051;
-        public static final int item_kitchen_self=0x7f0a004b;
+        public static final int item_garden_table=0x7f0a0059;
+        public static final int item_heater=0x7f0a0064;
+        public static final int item_kitchen_closet=0x7f0a0050;
+        public static final int item_kitchen_fire=0x7f0a0051;
+        public static final int item_kitchen_gas=0x7f0a0052;
+        public static final int item_kitchen_self=0x7f0a004c;
         /**  Cocina 
          */
-        public static final int item_kitchen_sink=0x7f0a0047;
-        public static final int item_kitchen_table=0x7f0a0049;
-        public static final int item_living_chair=0x7f0a005c;
-        public static final int item_living_furniture=0x7f0a005f;
-        public static final int item_living_shelf=0x7f0a0060;
-        public static final int item_living_table=0x7f0a005d;
-        public static final int item_microwave=0x7f0a004d;
-        public static final int item_oven=0x7f0a004c;
-        public static final int item_shower_plate=0x7f0a0044;
-        public static final int item_sink=0x7f0a0041;
+        public static final int item_kitchen_sink=0x7f0a0048;
+        public static final int item_kitchen_table=0x7f0a004a;
+        public static final int item_living_chair=0x7f0a005d;
+        public static final int item_living_furniture=0x7f0a0060;
+        public static final int item_living_shelf=0x7f0a0061;
+        public static final int item_living_table=0x7f0a005e;
+        public static final int item_microwave=0x7f0a004e;
+        public static final int item_oven=0x7f0a004d;
+        public static final int item_shower_plate=0x7f0a0045;
+        public static final int item_sink=0x7f0a0042;
         /**  Salon 
          */
-        public static final int item_sofa=0x7f0a005b;
-        public static final int item_wc=0x7f0a0046;
-        public static final int item_worktop=0x7f0a0048;
-        public static final int loadind_title=0x7f0a008e;
+        public static final int item_sofa=0x7f0a005c;
+        public static final int item_wc=0x7f0a0047;
+        public static final int item_worktop=0x7f0a0049;
+        public static final int loadind_title=0x7f0a008f;
         /**  MENU condiciones de uso 
          */
-        public static final int menu_condiciones_uso_title=0x7f0a0093;
+        public static final int menu_condiciones_uso_title=0x7f0a0094;
         /**  Menu confirmar fecha 
          */
-        public static final int menu_confirmar_fecha_title=0x7f0a0096;
-        public static final int menu_datos_contacto_telefono=0x7f0a008b;
+        public static final int menu_confirmar_fecha_title=0x7f0a0097;
+        public static final int menu_datos_contacto_telefono=0x7f0a008c;
         /**  MENU datos de contacto 
          */
-        public static final int menu_datos_contacto_title=0x7f0a0089;
-        public static final int menu_datos_nombre=0x7f0a008a;
-        public static final int message_confirmAppointment_descr=0x7f0a0090;
-        public static final int message_error_confirmation=0x7f0a009d;
-        public static final int message_finalize=0x7f0a009c;
+        public static final int menu_datos_contacto_title=0x7f0a008a;
+        public static final int menu_datos_nombre=0x7f0a008b;
+        public static final int message_confirmAppointment_descr=0x7f0a0091;
+        public static final int message_error_confirmation=0x7f0a009e;
+        public static final int message_finalize=0x7f0a009d;
         /**  HISTORIAL 
          */
-        public static final int message_no_valid_phone=0x7f0a00a1;
-        public static final int message_obtainsProvisionalAppointment_descr=0x7f0a008f;
-        public static final int message_registrer_user=0x7f0a008d;
-        public static final int nearestPoint_message=0x7f0a0075;
-        public static final int not_exist_prev_req=0x7f0a00a3;
+        public static final int message_no_valid_phone=0x7f0a00a2;
+        public static final int message_obtainsProvisionalAppointment_descr=0x7f0a0090;
+        public static final int message_registrer_user=0x7f0a008e;
+        public static final int nearestPoint_message=0x7f0a0076;
+        public static final int not_exist_prev_req=0x7f0a00a4;
         public static final int store_picture_message=0x7f0a000f;
         public static final int store_picture_title=0x7f0a000e;
-        public static final int subtitle_splash=0x7f0a00a5;
-        public static final int title_activity_condiciones_uso=0x7f0a0097;
-        public static final int title_activity_confirmar_fechas=0x7f0a008c;
-        public static final int title_activity_datos_contacto=0x7f0a0085;
-        public static final int title_activity_finalize=0x7f0a00a9;
-        public static final int title_activity_historial=0x7f0a00a8;
-        public static final int title_activity_informacion_reciclaje=0x7f0a00a7;
-        /**  Main Menu 
-         */
-        public static final int title_activity_solicitud_enseres=0x7f0a0035;
-        public static final int title_activity_splash_screen=0x7f0a00a6;
-        public static final int title_activity_ubicacion_recogida=0x7f0a0064;
+        public static final int subtitle_splash=0x7f0a00a6;
+        public static final int title_activity_condiciones_uso=0x7f0a0098;
+        public static final int title_activity_confirmar_fechas=0x7f0a008d;
+        public static final int title_activity_datos_contacto=0x7f0a0086;
+        public static final int title_activity_finalize=0x7f0a00aa;
+        public static final int title_activity_historial=0x7f0a00a9;
+        public static final int title_activity_informacion_reciclaje=0x7f0a00a8;
+        public static final int title_activity_solicitud_enseres=0x7f0a0036;
+        public static final int title_activity_splash_screen=0x7f0a00a7;
+        public static final int title_activity_ubicacion_recogida=0x7f0a0065;
         /**  MENSAJE DE CONFIRMACION 
          */
-        public static final int title_confirmaton=0x7f0a009e;
-        public static final int title_historial=0x7f0a003a;
-        public static final int title_info_reciclaje=0x7f0a0038;
+        public static final int title_confirmaton=0x7f0a009f;
+        public static final int title_historial=0x7f0a003b;
+        public static final int title_info_reciclaje=0x7f0a0039;
         /**  Solicitud de recogida de enseres 
          */
-        public static final int title_menu_enseres=0x7f0a003c;
+        public static final int title_menu_enseres=0x7f0a003d;
+        /**  Main Menu 
+         */
+        public static final int title_menu_principal=0x7f0a0035;
         public static final int title_recogida_activity=0x7f0a0034;
-        public static final int title_solicitud=0x7f0a0036;
+        public static final int title_solicitud=0x7f0a0037;
         /**  Splash menu con el logo del ayuntamiento 
          */
-        public static final int title_splash=0x7f0a00a4;
+        public static final int title_splash=0x7f0a00a5;
         /**  Text on a placeholder buy button when Google Play services is not
          available or up-to-date 
          */

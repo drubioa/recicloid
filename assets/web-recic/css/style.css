@@ -67,7 +67,7 @@ ul.navig li a{
 	padding:10px 0;
 }
 ul.navig li a.active{
-	color:#ff530d;
+	color:#ffffff;
 }
 span.menu{
 		width:32px;
@@ -132,7 +132,7 @@ ul.navig li{
 }
 .what-we-column{}
 h3.heding{
-	color:#e92802;
+	color:#8fbf2d;
 	text-transform: uppercase;
 	font-weight:400;
 	font-size:1em;
@@ -214,7 +214,7 @@ h3.heding span{
 .team-top p{
 	font-size: 0.8em;
 	font-weight:400;
-	color:#808080;
+	color:#7f7f7f;
 	line-height:1.6em;
 	padding:0.5em 0;
 }
@@ -238,7 +238,7 @@ h3.heding span{
 .team-column h3{
 	font-size:0.8em;
 	text-transform:uppercase;
-	color:#ff530d;
+	color:#8fbf2d;
 	margin:1em 0 0.5em;
 	font-weight:400;
 }
@@ -297,7 +297,7 @@ h3.heding span{
 }
 .ser-col-right a{
 	font-weight:600;
-	color:#e92802;
+	color:#74d91d;
 	text-transform:uppercase;
 	font-size:0.8em;
 	text-decoration:none;
@@ -309,11 +309,11 @@ ul.reserch{
 ul.reserch li{
 	list-style-type:decimal;
 	line-height:1.8em;
-	color:#e92802;
+	color:#74d91d;
 	font-size:0.8em;
 }
 ul.reserch li a{
-	color:#e92802;
+	color:#74d91d;
 	text-decoration:none;
 }
 /*-- Services Part Ends Here --*/
@@ -325,7 +325,7 @@ ul.reserch li a{
 .portfolios p{
 	margin:1em 0;
 	font-size:0.8em;
-	color:#808080;
+	color:#7f7f7f;
 	font-weight:400;
 }
 ul#filters li {
@@ -337,8 +337,8 @@ ul#filters li {
 	font-size:0.6em;
 }
 #filters li span.active {
-	background: #fcff00;
-	color: #e92802;
+	background: #fbff00;
+	color: #74d91d;
 }
 .portfoliolist-col{
 	width:50%;
