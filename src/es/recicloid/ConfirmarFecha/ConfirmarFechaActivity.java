@@ -75,40 +75,183 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 						"Cannot load request " + e.toString());
 				throw new RuntimeException("Cannot obtains ProvisionalAppointments.");
 			}
-			if(mProvisionalAppointment.size() == 1){
-				Log.i("ConfirmarFechaActivity.onCreate",
-						"Una Sola solicitud de recogida pdte de confirmar.");
-				mNumFurnituresForConfirm = 0;
-				try {
-					CollectionRequest c = new CollectionRequest(
-							mProvisionalAppointment.get(0),
-							mTotalFurnituresToCollect);
-					mConfirmedRquest.add(c);
-					mBtn_continuar.setEnabled(true);
-					mIsBtnContinuarActive = true;
+			if(mProvisionalAppointment != null){
+				if(mProvisionalAppointment.size() == 1){
 					Log.i("ConfirmarFechaActivity.onCreate",
-							"Creada solicitud de recogida.");
-				} catch (Exception e) {
-					Log.e("ConfirmarFechaActivity.onCreate",
-							e.toString());
-					throw new RuntimeException("Connot create collection request.");
-				}
-			}
-			else{
-				Log.i("ConfirmarFechaActivity.onCreate",
-						"Varias solicitudes de recogida");
-				
-				mNumFurnituresForConfirm = 
-						Furniture.countFurnituresArray(mTotalFurnituresToCollect);
-				if(mNumFurnituresForConfirm == 0){
-					mBtn_continuar.setEnabled(true);
-					mIsBtnContinuarActive = true;
+							"Una Sola solicitud de recogida pdte de confirmar.");
+					mNumFurnituresForConfirm = 0;
+					try {
+						CollectionRequest c = new CollectionRequest(
+								mProvisionalAppointment.get(0),
+								mTotalFurnituresToCollect);
+						mConfirmedRquest.add(c);
+						mBtn_continuar.setEnabled(true);
+						mIsBtnContinuarActive = true;
+						Log.i("ConfirmarFechaActivity.onCreate",
+								"Creada solicitud de recogida.");
+					} catch (Exception e) {
+						Log.e("ConfirmarFechaActivity.onCreate",
+								e.toString());
+						throw new RuntimeException("Connot create collection request.");
+					}
 				}
 				else{
-					mBtn_continuar.setEnabled(false);
-					mIsBtnContinuarActive = false;
+					Log.i("ConfirmarFechaActivity.onCreate",
+							"Varias solicitudes de recogida");
+					
+					mNumFurnituresForConfirm = 
+							Furniture.countFurnituresArray(mTotalFurnituresToCollect);
+					if(mNumFurnituresForConfirm == 0){
+						mBtn_continuar.setEnabled(true);
+						mIsBtnContinuarActive = true;
+					}
+					else{
+						mBtn_continuar.setEnabled(false);
+						mIsBtnContinuarActive = false;
+					}
 				}
 			}
+			configureCalendar();
+			setCustomResourceForDates();
+			// Attach to the activity
+			t = getSupportFragmentManager().beginTransaction();
+			t.replace(R.id.calendar1, caldroidFragment);
+			t.commit();
+			Log.i("ConfirmarFechaActivity.onCreate",
+					"Se incluye fragment del calendario.");
+			// Setup listener
+			final CaldroidListener listener = new CaldroidListener() {
+	
+				/**
+				 * Si el usuario realiza una pulsacion en un dia recogida entonces
+				 * se muestra una ventana con los muebles que seran recogidos 
+				 * en dicha fecha.
+				 */
+				@Override
+				public void onSelectDate(Date date, View view) {
+					if(isCollectionDate(date)){
+						Log.i("CaldroidListener","Fecha confirmada");
+						FragmentManager fragmentManager = getSupportFragmentManager();
+						if(isConfirmedDate(date)){
+							Log.i("ConfirmarFechaActivity.onSelectDate",
+									"Se pulsa sobre un dia de recogida");
+							CollectionRequest req = null;
+							for(CollectionRequest r : mConfirmedRquest){
+								if(r.getFch_collection().equals(new LocalDate(date))){
+									req = r;
+									Log.i("ConfirmarFechaActivity.onSelectDate",
+											"fecha de recogida localizada");
+									break;
+								}
+							}
+							if(req == null){
+								Log.e("ConfirmarFechaActivity.onSelectDate","Cannot find " +
+										"collection date when calender were consulted.");
+								throw new NullPointerException("Cannot find collection date" +
+										" when calender were consulted.");
+							}
+							Log.i("ConfirmarFechaActivity.onSelectDate",
+									"Solicitud de recogida para el dia "
+							+req.getFch_collection().toString());
+							InfoCollectionDateFragment dialog = 
+									InfoCollectionDateFragment.newInstance(req);
+							dialog.show(fragmentManager, "tagShowAppointmentInfo");
+						}
+						/**
+						 * Se pulsa en una fecha pendiente de confirmar.
+						 */
+						else{
+							Log.i("CaldroidListener","Fecha pendiente de confirmacion");
+							ProvisionalAppointment appointment = 
+									getProvisionalAppointment(new LocalDate(date));
+							
+							FurnitureSelectorDialFrag dialog = 
+									FurnitureSelectorDialFrag.newInstance(new LocalDate(date),
+											appointment.getNumFurnitures(),mTotalFurnituresToCollect);
+							dialog.show(fragmentManager, "furnitureSelector");
+						}
+					}
+				}
+				
+				/**
+				 * Si el usuario manteien una pulsacion larga sobre un dia de recogida
+				 * que haya sido confirmado, esta confirmacion se cancela y los
+				 * muebles vuelven al listado de furnitures to confirm.
+				 */
+				@Override
+				public void onLongClickDate(Date date, View view) {
+					if(isCollectionDate(date)){
+						Log.i("CaldroidListener",
+								"Pulsacon larga en un dia de recogida");
+					}
+				}
+						
+			};
+			// Setup Caldroid
+			caldroidFragment.setCaldroidListener(listener);
+			Log.i("ConfirmarFechaActivity","Solicitudes para "+this.mNumFurnituresForConfirm+" enseres");
+			mBtn_continuar.setOnClickListener(new OnClickListener() {
+	
+				@Override
+				public void onClick(View v) {
+					
+					if(mConfirmedRquest.isEmpty()){
+						Log.e("ConfirmarFechaActivity","No se puede registrar, solicitud vacia");
+						throw new RuntimeException("cannot confirm because "
+							+"Confirmed request is empty.");
+					}
+					
+					try {
+							final ProgressDialog dialog = ProgressDialog.show(
+									ConfirmarFechaActivity.this, getResources()
+									.getText(R.string.loadind_title),
+									getResources().getText(R.string
+											.message_confirmAppointment_descr),true);
+							Handler handler = new Handler();
+							handler.postDelayed(new Runnable() {
+							    
+							public void run() {
+								try {
+									CollectionRequest[] reqs = new CollectionRequest[mConfirmedRquest.size()];
+									for(int i = 0; i < mConfirmedRquest.size();i++){
+										reqs[i] = mConfirmedRquest.get(i);
+									}
+									conector.execute(reqs);
+									if(!conector.get()){
+										Log.e("ConfirmarFechaActivity",
+												"No se pudo confirmar la solicitud de recogida");
+										if(conector.exception != null){
+											throw conector.exception;
+										}
+									}
+									else{
+										Log.i("ConfirmarFechaActivity",
+												"Se confirma la solicitud de recogida");
+										// Show message before finalize.
+										Toast.makeText(ConfirmarFechaActivity.this, 
+												getResources().getString(R.string.message_finalize), 
+												Toast.LENGTH_LONG).show();
+									}
+								} catch (Exception e) {
+									Log.e("ConfirmarFechaActivity",
+											"Cannot confirm appointment "+e.toString());
+									throw new RuntimeException("Cannot confirm appointment ");								}
+							        dialog.dismiss();
+							        Intent intent = new Intent(ConfirmarFechaActivity
+										.this,FinalizeActivity.class);
+									startActivity(intent);
+							    }   
+							}, 5000);  // 5000 milliseconds							
+						} catch (Exception e) {
+							Log.e("ConfirmarFechaActivity",
+									"Caonnot confirm appointment because "+e.toString());
+							Toast.makeText(ConfirmarFechaActivity.this, 
+									getResources().getString(R.string.message_error_confirmation), 
+									Toast.LENGTH_LONG).show();
+							throw new RuntimeException(e.toString());
+						}
+					}
+			});
 		}
 		else{
 			caldroidFragment.restoreStatesFromKey(savedInstanceState,
@@ -124,151 +267,10 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 			mConfirmedRquest = 
 					savedInstanceState.getParcelableArrayList("mConfirmedRquest");
 		}
-		configureCalendar();
-		setCustomResourceForDates();
-		// Attach to the activity
-		t = getSupportFragmentManager().beginTransaction();
-		t.replace(R.id.calendar1, caldroidFragment);
-		t.commit();
-		Log.i("ConfirmarFechaActivity.onCreate",
-				"Se incluye fragment del calendario.");
-		// Setup listener
-		final CaldroidListener listener = new CaldroidListener() {
-
-			/**
-			 * Si el usuario realiza una pulsacion en un dia recogida entonces
-			 * se muestra una ventana con los muebles que seran recogidos 
-			 * en dicha fecha.
-			 */
-			@Override
-			public void onSelectDate(Date date, View view) {
-				if(isCollectionDate(date)){
-					Log.i("CaldroidListener","Fecha confirmada");
-					FragmentManager fragmentManager = getSupportFragmentManager();
-					if(isConfirmedDate(date)){
-						Log.i("ConfirmarFechaActivity.onSelectDate",
-								"Se pulsa sobre un dia de recogida");
-						CollectionRequest req = null;
-						for(CollectionRequest r : mConfirmedRquest){
-							if(r.getFch_collection().equals(new LocalDate(date))){
-								req = r;
-								Log.i("ConfirmarFechaActivity.onSelectDate",
-										"fecha de recogida localizada");
-								break;
-							}
-						}
-						if(req == null){
-							Log.e("ConfirmarFechaActivity.onSelectDate","Cannot find " +
-									"collection date when calender were consulted.");
-							throw new NullPointerException("Cannot find collection date" +
-									" when calender were consulted.");
-						}
-						Log.i("ConfirmarFechaActivity.onSelectDate",
-								"Solicitud de recogida para el dia "
-						+req.getFch_collection().toString());
-						InfoCollectionDateFragment dialog = 
-								InfoCollectionDateFragment.newInstance(req);
-						dialog.show(fragmentManager, "tagShowAppointmentInfo");
-					}
-					/**
-					 * Se pulsa en una fecha pendiente de confirmar.
-					 */
-					else{
-						Log.i("CaldroidListener","Fecha pendiente de confirmacion");
-						ProvisionalAppointment appointment = 
-								getProvisionalAppointment(new LocalDate(date));
-						
-						FurnitureSelectorDialFrag dialog = 
-								FurnitureSelectorDialFrag.newInstance(new LocalDate(date),
-										appointment.getNumFurnitures(),mTotalFurnituresToCollect);
-						dialog.show(fragmentManager, "furnitureSelector");
-					}
-				}
-			}
-			
-			/**
-			 * Si el usuario manteien una pulsacion larga sobre un dia de recogida
-			 * que haya sido confirmado, esta confirmacion se cancela y los
-			 * muebles vuelven al listado de furnitures to confirm.
-			 */
-			@Override
-			public void onLongClickDate(Date date, View view) {
-				if(isCollectionDate(date)){
-					Log.i("CaldroidListener",
-							"Pulsacon larga en un dia de recogida");
-				}
-			}
-					
-		};
-		// Setup Caldroid
-		caldroidFragment.setCaldroidListener(listener);
-		Log.i("ConfirmarFechaActivity","Solicitudes para "+this.mNumFurnituresForConfirm+" enseres");
-		mBtn_continuar.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				
-				if(mConfirmedRquest.isEmpty()){
-					Log.e("ConfirmarFechaActivity","No se puede registrar, solicitud vacia");
-					throw new RuntimeException("cannot confirm because "
-						+"Confirmed request is empty.");
-				}
-				
-				try {
-						final ProgressDialog dialog = ProgressDialog.show(
-								ConfirmarFechaActivity.this, getResources()
-								.getText(R.string.loadind_title),
-								getResources().getText(R.string
-										.message_confirmAppointment_descr),true);
-						Handler handler = new Handler();
-						handler.postDelayed(new Runnable() {
-						    
-						public void run() {
-							try {
-								CollectionRequest[] reqs = new CollectionRequest[mConfirmedRquest.size()];
-								for(int i = 0; i < mConfirmedRquest.size();i++){
-									reqs[i] = mConfirmedRquest.get(i);
-								}
-								conector.execute(reqs);
-								if(!conector.get()){
-									Log.e("ConfirmarFechaActivity",
-											"No se pudo confirmar la solicitud de recogida");
-									if(conector.exception != null){
-										throw conector.exception;
-									}
-								}
-								else{
-									Log.i("ConfirmarFechaActivity",
-											"Se confirma la solicitud de recogida");
-									// Show message before finalize.
-									Toast.makeText(ConfirmarFechaActivity.this, 
-											getResources().getString(R.string.message_finalize), 
-											Toast.LENGTH_LONG).show();
-								}
-							} catch (Exception e) {
-								Log.e("ConfirmarFechaActivity",
-										"Cannot confirm appointment "+e.toString());
-								throw new RuntimeException("Cannot confirm appointment ");								}
-						        dialog.dismiss();
-						        Intent intent = new Intent(ConfirmarFechaActivity
-									.this,FinalizeActivity.class);
-								startActivity(intent);
-						    }   
-						}, 5000);  // 5000 milliseconds							
-					} catch (Exception e) {
-						Log.e("ConfirmarFechaActivity",
-								"Caonnot confirm appointment because "+e.toString());
-						Toast.makeText(ConfirmarFechaActivity.this, 
-								getResources().getString(R.string.message_error_confirmation), 
-								Toast.LENGTH_LONG).show();
-						throw new RuntimeException(e.toString());
-					}
-				}
-		});
 	}
 
 	public void setCustomResourceForDates() {
-		if (caldroidFragment != null) {
+		if (caldroidFragment != null && mProvisionalAppointment != null) {
 			// Show request date as blue.
 				caldroidFragment.setBackgroundResourceForDate(CURRENTDAYE_COLOR,
 					new LocalDate().toDate());
@@ -289,6 +291,7 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 				}
 			}
 		}
+		
 	}
 
 	public void configureCalendar(){
@@ -303,7 +306,7 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 		// CaldroidFragment.TUESDAY); // Tuesday
 	
 	}
-
+	
 	/**
 	 * Comprueba si el dia d es un dia de recogida.
 	 * @param d
@@ -355,18 +358,16 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 			if(conector.exception != null){
 				throw conector.exception;
 			}
-			return (ArrayList<ProvisionalAppointment>) provisionalAppointment;
 		} catch (Exception e) {
 			if(e.toString().contains("HTTP error code : 400")){
 				// Solicitud en curso : muestra un mensaje de error.
 				Log.e("ConfirmarFechaActivity.obtainsProvisionalAppointments",
 						"Se muestra mensaje de error y se vuelve al menu principal.");
 				Toast.makeText(ConfirmarFechaActivity.this, 
-						getResources().getString(R.string.message_finalize), 
+						getResources().getString(R.string.dialog_title_prev_request), 
 						Toast.LENGTH_LONG).show();
-		        Intent intent = new Intent(ConfirmarFechaActivity.this,
-		        		MainActivity.class);
-				startActivity(intent);
+				Intent i = new Intent(this,MainActivity.class);
+				startActivity(i);
 			}
 			else{
 				Log.e("ConfirmarFechaActivity.obtainsProvisionalAppointments",
@@ -374,10 +375,10 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 				Log.e("ConfirmarFechaActivity.obtainsProvisionalAppointments",
 						"Cannot getProvisionalAppointments: "
 								+e.toString());
-				throw new RuntimeException();	
+				throw new RuntimeException(e.toString());	
 			}
 		}
-		return null;
+		return (ArrayList<ProvisionalAppointment>) provisionalAppointment;
 	}
 	
 	

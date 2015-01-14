@@ -302,6 +302,7 @@ public class HistorialActivity extends RoboFragmentActivity {
 							break;
 						}
 					}
+					Log.i("onSelectDate",req.toString());
 					InfoCollectionDateFragment dialog = 
 							InfoCollectionDateFragment.newInstance(req);
 					dialog.show(fragmentManager, "tagShowAppointmentInfo");

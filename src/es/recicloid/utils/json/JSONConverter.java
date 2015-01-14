@@ -82,14 +82,16 @@ public abstract class JSONConverter{
 	        	int furnitureId = obj.getInt("id");
 	        	String name = obj.getString("name");
 	        	Furniture f = new Furniture(furnitureId,cantidad);
-	        	f.setIdText(name);
+	        	f.setName(name);
 	        	furnitures.add(f);
 	        }
         }catch(JSONException e){
         	JSONObject furniture = object.getJSONObject("furnitures");
         	int cantidad = furniture.getInt("cantidad");
         	int furnitureId = furniture.getInt("id");
+        	String name = furniture.getString("name");
         	Furniture f = new Furniture(furnitureId,cantidad);
+        	f.setName(name);
         	furnitures.add(f);
         }
         req.setFurnitures(furnitures);
