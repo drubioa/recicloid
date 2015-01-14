@@ -96,7 +96,7 @@ public class MainActivity extends RoboActivity implements MainView{
 		});
 	}
 	
-	public ArrayList<TitleWithImg> getOptiones(){
+	public ArrayList<TitleWithImg> getOptiones() {
 		ArrayList<TitleWithImg> options = new ArrayList<TitleWithImg>();
 		// Solicitar Recogida.
 		options.add(new TitleWithImg(R.drawable.ic_truck,getResources()

@@ -9,7 +9,7 @@ import android.os.Parcelable;
 import android.util.Log;
 
 
-public class Furniture implements Parcelable,Serializable{
+public class Furniture implements Parcelable,Serializable,Cloneable{
 
 	private static final long serialVersionUID = 1L;
 	private int mId;
@@ -178,14 +178,22 @@ public class Furniture implements Parcelable,Serializable{
 		boolean encontrado = false;
 		for(Furniture f: list){
 			if(f.equals(furniture)){
+				Log.i("incrementFurnitureInOne","Increment "+furniture.getName()+" in one.");
 				encontrado = true;
 				f.setCantidad(f.getCantidad() + 1);
 				break;
 			}
 		}
 		if(!encontrado){
-			furniture.setCantidad(1);
-			list.add(furniture);
+			Furniture f;
+			try {
+				f = furniture.clone();
+				f.setCantidad(1);
+				list.add(f);
+			} catch (CloneNotSupportedException e) {
+				Log.e("Furniture.incrementFurnitureInOne",e.toString());
+			}
+			Log.i("incrementFurnitureInOne","Add "+furniture.getName()+" to the list.");
 		}
 		return list;
 	}
@@ -197,24 +205,27 @@ public class Furniture implements Parcelable,Serializable{
 	 * @return una lista que incluye el intem decrementado en uno.
 	 */
 	public static List<Furniture> decrementFurniture(Furniture furniture,
-			List<Furniture> list){
+			final List<Furniture> list) {
 		boolean encontrado = false;
+		Log.i("decrementFurniture","param is"+furniture.cantidad);
 		for(Furniture f: list){
+			// find furniture in list.
+			Log.i("decrementFurniture","There are "+f.getCantidad()+" of"+f.getName());
 			if(f.equals(furniture)){
 				encontrado = true;
 				if(f.getCantidad() < furniture.getCantidad()){
+					// Cantidad superior a la existente en el listado.
 					throw new IllegalArgumentException("In decrementFurniture method, " +
 							" the account of furnitures is not valid.");
 				}
-				Log.i("decrementFurniture","in request"+furniture.getCantidad()+" and in all furnitures "
-						+f.getCantidad()+" of "+furniture.getName());
-				if(f.getCantidad() > furniture.getCantidad()){
-					Log.i("decrementFurniture","Decrement "+f.getName()+" in"+furniture.getCantidad());
-					f.setCantidad(f.getCantidad() - furniture.getCantidad() );
-				}
 				else{
-					Log.i("decrementFurniture","removes all furnitures of "+f.getName());
-					list.remove(f);
+					f.setCantidad(f.getCantidad() - furniture.getCantidad());
+					Log.i("decrementFurniture","Decrement "+f.getName()+" in"+furniture.getCantidad()+
+							" result = "+f.getCantidad());
+					if(f.getCantidad() == 0){
+						Log.w("decrementFurniture","removes all furnitures of "+f.getName());
+						list.remove(f);
+					}
 				}
 				break;
 			}
@@ -240,5 +251,11 @@ public class Furniture implements Parcelable,Serializable{
 	
 	public boolean equals(Furniture obj){
 		return obj.getId() == mId;
+	}
+	
+	public Furniture clone() throws CloneNotSupportedException{
+		Furniture obj = null;
+        obj = (Furniture) super.clone();
+        return obj;
 	}
 }

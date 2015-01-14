@@ -24,8 +24,8 @@ public class FurnitureSelectorDialFrag extends DialogFragment{
 	private ArrayList<Furniture> mAllFurnitures,mFurnitureToRequest;
 	private int mDay,mMonth,mYear;
 	private int mNumPerDate;
-	protected int cont = 0;
 	private List<Integer> mSelectedItems;
+	private int cont = 0;
 	
 	public FurnitureSelectorDialFrag(){
 		mFurnitureToRequest = new  ArrayList<Furniture>();
@@ -52,7 +52,7 @@ public class FurnitureSelectorDialFrag extends DialogFragment{
 	}
 	
 	static FurnitureSelectorDialFrag newInstance(LocalDate date,int numPerDate,
-			List<Furniture> allFurnitures){
+			final List<Furniture> allFurnitures){
 		FurnitureSelectorDialFrag f = new FurnitureSelectorDialFrag();
 		Bundle args = new Bundle();
 		f.setAllFurnitures(allFurnitures);
@@ -81,13 +81,12 @@ public class FurnitureSelectorDialFrag extends DialogFragment{
 			 mNumPerDate = bundle.getInt("numPerDate");
 		 }
 		 mSelectedItems = new ArrayList<Integer>();
-		 final String[] furnitures = Furniture.toStringArray(mAllFurnitures);
-		 final boolean[] selectedTypes = new boolean[furnitures.length];
+		 final boolean[] selectedTypes = new boolean[Furniture.countFurnituresArray(mAllFurnitures)];
 		 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		 builder.setTitle(getResources().getString(R.string.dialog_confirmar_furnitures)
-				 +mNumPerDate+getResources().getString(R.string.dialog_confirmar_furnitures2));
+				 +" "+mNumPerDate+" "+getResources().getString(R.string.dialog_confirmar_furnitures2));
 		 Log.i("FurnitureSelectorDialFrag","Se crea el titulo del dialogo");
-		 builder.setMultiChoiceItems(furnitures, selectedTypes,
+		 builder.setMultiChoiceItems(getFurnituresNames(), selectedTypes,
 				 new DialogInterface.OnMultiChoiceClickListener() { 
 		
 			 
@@ -95,34 +94,41 @@ public class FurnitureSelectorDialFrag extends DialogFragment{
 		     public void onClick(DialogInterface dialog, int which,
 		         boolean isChecked) {
 				 	if(isChecked){
+				 		Log.i("FurnitureSelectorDialFrag.onclick",
+				 				"Add "+which+" was clicked, add to the selected items array.");
 				 		mSelectedItems.add(which);
+				 		cont++;
 					 }
 				 	 else if (mSelectedItems.contains(which)) {
+					 	Log.i("FurnitureSelectorDialFrag.onclick",
+					 				"Remove "+which+" was clicked, delete to the selected items array.");
+					 		mSelectedItems.add(which);
 				 		mSelectedItems.remove(Integer.valueOf(which));
+				 		cont--;
 					 }
-					 Log.i("OnMultiChoiceClickListener","Pending "+cont+" request to confirm in date "
-					 			+mDay+"/"+mMonth+"/"+mYear);
 			}
-			 
 		 });
 		 builder.setPositiveButton(getResources().getString(R.string.dialog_confirmar_aceptar), 
 				 new DialogInterface.OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						if(Furniture.countFurnituresArray(mFurnitureToRequest) < mNumPerDate){
+						// Aun quedan item por seleccionar para dicha fecha.
+						if(cont < mNumPerDate){
 							Log.i("FurnitureSelectorDialFrag.PositiveButton",
-									cont+" is lower than mNumPerDate "+mNumPerDate);
+									Furniture.countFurnituresArray(mFurnitureToRequest)+" is lower than mNumPerDate "+mNumPerDate);
 							// Mensaje indicando que enseres faltan por confirmar
 							Toast.makeText(getActivity(), 
 									getResources().getString(R.string.dialog_confirmar_numeroNoValido2)
-									+" "+(mNumPerDate-cont)+" "+getResources().getString(R.string.dialog_confirmar_numeroNoValido3), 
+									+" "+(mNumPerDate-Furniture.countFurnituresArray(mFurnitureToRequest))
+									+" "+getResources().getString(R.string.dialog_confirmar_numeroNoValido3), 
 									Toast.LENGTH_LONG).show();
 						}
-						else if(Furniture.countFurnituresArray(mFurnitureToRequest) > mNumPerDate){
-							// Mensaje indicando que el numero se enseres seleccionado no es valido para esta fecha.
+						else if(cont > mNumPerDate){
+							// Mensaje indicando que el numero de enseres seleccionado no es valido para esta fecha.
 							Log.i("FurnitureSelectorDialFrag.PositiveButton",
-									cont+" is higher than mNumPerDate "+mNumPerDate);
+									Furniture.countFurnituresArray(mFurnitureToRequest)
+									+" is higher than mNumPerDate "+mNumPerDate);
 							Toast.makeText(getActivity(), 
 									getResources().getString(R.string.dialog_confirmar_numeroNoValido), 
 									Toast.LENGTH_LONG).show();
@@ -151,7 +157,10 @@ public class FurnitureSelectorDialFrag extends DialogFragment{
 	protected void confirmAppointments() {
 		final Integer[] furnituresId = 
 				Furniture.toIntegerArray(mAllFurnitures);
+		// Obtain selected furnitures
 		for(int id : mSelectedItems){
+			Log.i("FurnitureSelectorDialFrag.confirmAppointments",
+					"Se incluye item "+id);
 			addFurnitureToRequest(furnituresId[id]);
 		}
 		Log.i("FurnitureSelectorDialFrag.confirmAppointments",
@@ -162,6 +171,10 @@ public class FurnitureSelectorDialFrag extends DialogFragment{
 				mFurnitureToRequest);
 	}
 
+	/**
+	 * Incrementa en uno el numero de muebles seleccionados.
+	 * @param id
+	 */
 	protected void addFurnitureToRequest(Integer id) {
 		if(mFurnitureToRequest == null){
 			throw new NullPointerException("mFurnitureToRequest is null in " +
@@ -172,9 +185,24 @@ public class FurnitureSelectorDialFrag extends DialogFragment{
 			throw new IllegalArgumentException("Furniture with id "+id+" not exist" +
 					" in addFurnitureToRequest method.");
 		}
+		Log.i("addFurnitureToRequest",
+				"Add "+f.getName()+" to the request");
 		mFurnitureToRequest = (ArrayList<Furniture>) 
 				Furniture.incrementFurnitureInOne(f,mFurnitureToRequest);
 	}
 	
+	private  CharSequence[] getFurnituresNames(){
+		CharSequence[] furnituresNames = Furniture.toStringArray(mAllFurnitures);
+		for(int i = 0 ; i < furnituresNames.length; i++){
+			Log.i("getFurnituresNames","@string/item_"+furnituresNames[i]);
+			int stringId = getResources()
+					.getIdentifier("@string/item_"+furnituresNames[i],
+					"string", getActivity().getPackageName());        
+			Log.i("getFurnituresNames","id: "+stringId);
+			furnituresNames[i] = getActivity().getString(stringId);
+		}
+		return furnituresNames;
+	}
 
 }
+

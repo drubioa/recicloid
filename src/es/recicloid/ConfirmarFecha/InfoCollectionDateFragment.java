@@ -39,7 +39,9 @@ public class InfoCollectionDateFragment extends DialogFragment{
 	     args.putString("title", title);
 	     ArrayList<String> funritures = new ArrayList<String>();
 	     for(Furniture furniture : req.getFurnitures()){
-	    	 funritures.add(furniture.getName());
+	    	 for(int i = 0 ; i < furniture.getCantidad();i++){
+	    		 funritures.add(furniture.getName());
+	    	 }
 	     }
 	     args.putStringArrayList("furnitures", funritures);
 	     f.setFurnitures(funritures);

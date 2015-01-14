@@ -15,6 +15,7 @@ import roboguice.inject.InjectView;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
+import es.recicloid.main.MainActivity;
 import es.recicloid.models.CollectionPoint;
 import es.recicloid.models.CollectionRequest;
 import es.recicloid.models.Furniture;
@@ -59,9 +60,10 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 		conector = new ConectorToConfirmAppointment(this);
 		caldroidFragment = new CaldroidFragment();
 		if(savedInstanceState == null){
-			loadFurnituresFromJsonFile();
+			mTotalFurnituresToCollect = loadFurnituresFromJSONFile();
 			Log.i("ConfirmarFechaActivity.onCreate",
-					"Cargadas furnirues del fichero json");
+					"Cargadas "+Furniture.countFurnituresArray(mTotalFurnituresToCollect)
+					+" furnitures del fichero json");
 			mConfirmedRquest = new ArrayList<CollectionRequest>();
 			try {
 				mProvisionalAppointment = (ArrayList<ProvisionalAppointment>) 
@@ -111,8 +113,10 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 		else{
 			caldroidFragment.restoreStatesFromKey(savedInstanceState,
 					"CALDROID_SAVED_STATE");
-			mNumFurnituresForConfirm = savedInstanceState.getInt("mNumFurnituresForConfirm");
-			mIsBtnContinuarActive = savedInstanceState.getBoolean("mIsBtnContinuarActive");
+			mNumFurnituresForConfirm = savedInstanceState
+					.getInt("mNumFurnituresForConfirm");
+			mIsBtnContinuarActive = savedInstanceState
+					.getBoolean("mIsBtnContinuarActive");
 			mTotalFurnituresToCollect = 
 					savedInstanceState.getParcelableArrayList("mTotalFurnituresToCollect");
 			mProvisionalAppointment = 
@@ -173,6 +177,7 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 						Log.i("CaldroidListener","Fecha pendiente de confirmacion");
 						ProvisionalAppointment appointment = 
 								getProvisionalAppointment(new LocalDate(date));
+						
 						FurnitureSelectorDialFrag dialog = 
 								FurnitureSelectorDialFrag.newInstance(new LocalDate(date),
 										appointment.getNumFurnitures(),mTotalFurnituresToCollect);
@@ -202,24 +207,14 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 
 			@Override
 			public void onClick(View v) {
+				
 				if(mConfirmedRquest.isEmpty()){
-					Log.e("ConfirmarFechaActivity","No se puede registrar, solicitud " +
-							"vacia");
+					Log.e("ConfirmarFechaActivity","No se puede registrar, solicitud vacia");
 					throw new RuntimeException("cannot confirm because "
 						+"Confirmed request is empty.");
 				}
-				for(final CollectionRequest c : mConfirmedRquest){
-					if(!c.checkCorrectRequest()){
-						final String errorMessage = 
-								"Caonnot confirm appointment because request is "
-								+"in bad format.";
-						Log.e("ConfirmarFechaActivity",errorMessage+
-								c.toString());
-						throw new RuntimeException(errorMessage);	
-					}
-					try {
-						Log.i("ConfirmarFechaActivity","Confirmes request "+
-								c.toString());
+				
+				try {
 						final ProgressDialog dialog = ProgressDialog.show(
 								ConfirmarFechaActivity.this, getResources()
 								.getText(R.string.loadind_title),
@@ -227,32 +222,37 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 										.message_confirmAppointment_descr),true);
 						Handler handler = new Handler();
 						handler.postDelayed(new Runnable() {
-						    public void run() {
-						        try {
-						        	conector.execute(c);
-									if(!conector.get()){
-										Log.e("ConfirmarFechaActivity","No se pudo confirmar la solicitud de recogida");
-										if(conector.exception != null){
-											throw conector.exception;
-										}
-									}
-									else{
-										Log.i("ConfirmarFechaActivity","Se confirma la solicitud" +
-												" de recogida");
-										Intent intent = new Intent(ConfirmarFechaActivity
-												.this,FinalizeActivity.class);
-										startActivity(intent);
-										// Show message before finalize.
-										Toast.makeText(ConfirmarFechaActivity.this, 
-												getResources().getString(R.string.message_finalize), 
-												Toast.LENGTH_LONG).show();
-									}
-									
-								} catch (Exception e) {
-									Log.e("ConfirmarFechaActivity","Cannot confirm appointment "+e.toString());
-									throw new RuntimeException("Cannot confirm appointment ");
+						    
+						public void run() {
+							try {
+								CollectionRequest[] reqs = new CollectionRequest[mConfirmedRquest.size()];
+								for(int i = 0; i < mConfirmedRquest.size();i++){
+									reqs[i] = mConfirmedRquest.get(i);
 								}
+								conector.execute(reqs);
+								if(!conector.get()){
+									Log.e("ConfirmarFechaActivity",
+											"No se pudo confirmar la solicitud de recogida");
+									if(conector.exception != null){
+										throw conector.exception;
+									}
+								}
+								else{
+									Log.i("ConfirmarFechaActivity",
+											"Se confirma la solicitud de recogida");
+									// Show message before finalize.
+									Toast.makeText(ConfirmarFechaActivity.this, 
+											getResources().getString(R.string.message_finalize), 
+											Toast.LENGTH_LONG).show();
+								}
+							} catch (Exception e) {
+								Log.e("ConfirmarFechaActivity",
+										"Cannot confirm appointment "+e.toString());
+								throw new RuntimeException("Cannot confirm appointment ");								}
 						        dialog.dismiss();
+						        Intent intent = new Intent(ConfirmarFechaActivity
+									.this,FinalizeActivity.class);
+								startActivity(intent);
 						    }   
 						}, 5000);  // 5000 milliseconds							
 					} catch (Exception e) {
@@ -264,12 +264,10 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 						throw new RuntimeException(e.toString());
 					}
 				}
-			}
-			
 		});
 	}
 
-	public void setCustomResourceForDates(){
+	public void setCustomResourceForDates() {
 		if (caldroidFragment != null) {
 			// Show request date as blue.
 				caldroidFragment.setBackgroundResourceForDate(CURRENTDAYE_COLOR,
@@ -336,34 +334,50 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 	}
 
 	private ArrayList<ProvisionalAppointment> obtainsProvisionalAppointments() {
-			mTotalFurnituresToCollect = (ArrayList<Furniture>) loadFurnituresFromJSONFile();
-			User user = loadUserFromJSONFile();
-			CollectionPoint collectionPoint = loadCollectionPointFromJSONFile();
-			try {
-				ConectorToGetProvisAppointment conector =
-						new ConectorToGetProvisAppointment(this);
-				InfoToGetProvAppointments info = new 
-						InfoToGetProvAppointments(user.getPhone(), 
-								Furniture.countFurnituresArray(mTotalFurnituresToCollect),collectionPoint.getId());
-				conector.execute(info);
-				List<ProvisionalAppointment> provisionalAppointment = conector.get();
-				if(provisionalAppointment == null){
-					Log.w("ConfirmarFechasActivity.obtainsProvisionalAppointments",
-							"No se obtuvo ninguna solicitud pendiente de confirmar para el telefono"+
-							user.getPhone()+"\ncollectionPoint: "+collectionPoint.getId()
-							+"\nFurnitures to collect: "+
-							Furniture.countFurnituresArray(mTotalFurnituresToCollect));
-				}
-				if(conector.exception != null){
-					throw conector.exception;
-				}
-				return (ArrayList<ProvisionalAppointment>) provisionalAppointment;
-			} catch (Exception e) {
+		User user = loadUserFromJSONFile();
+		CollectionPoint collectionPoint = loadCollectionPointFromJSONFile();
+		List<ProvisionalAppointment> provisionalAppointment = null;
+		try {
+			ConectorToGetProvisAppointment conector =
+					new ConectorToGetProvisAppointment(this);
+			InfoToGetProvAppointments info = new 
+					InfoToGetProvAppointments(user.getPhone(), 
+							Furniture.countFurnituresArray(mTotalFurnituresToCollect),collectionPoint.getId());
+			conector.execute(info);
+			provisionalAppointment = conector.get();
+			if(provisionalAppointment == null){
+				Log.w("ConfirmarFechasActivity.obtainsProvisionalAppointments",
+						"No se obtuvo ninguna solicitud pendiente de confirmar para el telefono"+
+						user.getPhone()+"\ncollectionPoint: "+collectionPoint.getId()
+						+"\nFurnitures to collect: "+
+						Furniture.countFurnituresArray(mTotalFurnituresToCollect));
+			}
+			if(conector.exception != null){
+				throw conector.exception;
+			}
+			return (ArrayList<ProvisionalAppointment>) provisionalAppointment;
+		} catch (Exception e) {
+			if(e.toString().contains("HTTP error code : 400")){
+				// Solicitud en curso : muestra un mensaje de error.
+				Log.e("ConfirmarFechaActivity.obtainsProvisionalAppointments",
+						"Se muestra mensaje de error y se vuelve al menu principal.");
+				Toast.makeText(ConfirmarFechaActivity.this, 
+						getResources().getString(R.string.message_finalize), 
+						Toast.LENGTH_LONG).show();
+		        Intent intent = new Intent(ConfirmarFechaActivity.this,
+		        		MainActivity.class);
+				startActivity(intent);
+			}
+			else{
+				Log.e("ConfirmarFechaActivity.obtainsProvisionalAppointments",
+						"No se ha capturado el error.");
 				Log.e("ConfirmarFechaActivity.obtainsProvisionalAppointments",
 						"Cannot getProvisionalAppointments: "
-			+e.toString());
-				throw new RuntimeException();
+								+e.toString());
+				throw new RuntimeException();	
 			}
+		}
+		return null;
 	}
 	
 	
@@ -393,11 +407,11 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 		}
 	}
 	
-	private List<Furniture> loadFurnituresFromJSONFile(){
+	private ArrayList<Furniture> loadFurnituresFromJSONFile(){
 		try {
 			JsonToFileManagement jsonFile = new JsonToFileManagement(this);
 			jsonFile.changeFileName("furnitures.json");
-			return jsonFile.loadFurnituresFromLocalFile();
+			return (ArrayList<Furniture>) jsonFile.loadFurnituresFromLocalFile();
 		} catch (IOException e) {
 			Log.e("ConfirmarFechaActivity.loadFurnituresFromJSONFile",
 					"Cannot load furnitures "+e.toString());
@@ -414,18 +428,6 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 		return false;
 	}
 	
-	private void loadFurnituresFromJsonFile(){
-		try {
-			JsonToFileManagement jsonFile = new JsonToFileManagement(this);
-			jsonFile.changeFileName("furnitures.json");
-			mTotalFurnituresToCollect= (ArrayList<Furniture>) 
-					jsonFile.loadFurnituresFromLocalFile();
-		} catch (IOException e) {
-			Log.e("ConfirmarFechaActivity", e.toString());
-			throw new RuntimeException("Cannot load furnitures.");
-		}
-	}
-
 	/**
 	 * Se confirma una solicitud de recogida correspondiente a la fecha
 	 * @param 
@@ -437,28 +439,42 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 		try {
 			CollectionRequest req = new CollectionRequest(p,furnitures);
 			mConfirmedRquest.add(req);
-			Log.i("ConfirmarFechaActivity.confirmAppointment","confirmed request");
+			Log.i("ConfirmarFechaActivity.confirmAppointment",
+					"confirmed request");
 			mProvisionalAppointment.remove(p);
+			Log.i("ConfirmarFechaActivity.confirmAppointment",
+					"removing provisional request");
+			if(Furniture.countFurnituresArray(furnitures) ==
+					Furniture.countFurnituresArray(mTotalFurnituresToCollect)){
+				Log.w("confirmAppointment",
+						"furnitures selected are equal than mTotalFurnituresToCollect");
+			}
+			Log.i("confirmAppointment","Before: "+
+					Furniture.countFurnituresArray(mTotalFurnituresToCollect));
 			for(Furniture f : furnitures){
+				Log.i("ConfirmarFechaActivity.confirmAppointment",
+						"Debe decrementar "+f.getName()
+					+" en "+f.getCantidad());
 				mTotalFurnituresToCollect = (ArrayList<Furniture>) 
 						Furniture.decrementFurniture(f, mTotalFurnituresToCollect);
 			}
 			Log.i("ConfirmarFechaActivity.confirmAppointment","Removes "+Furniture.countFurnituresArray(furnitures)
 					+" to furniture list.");
-			mNumFurnituresForConfirm = Furniture.countFurnituresArray(mTotalFurnituresToCollect);
-			Log.i("ConfirmarFechaActivity.confirmAppointment",
-					"all furniture of appointment removes frome furniture pending list");
-			if(mNumFurnituresForConfirm == 0){
+			Log.i("confirmAppointment","After: "+
+					Furniture.countFurnituresArray(mTotalFurnituresToCollect));
+			if(Furniture.countFurnituresArray(mTotalFurnituresToCollect) == 0){
 				mBtn_continuar.setEnabled(true);
 				mIsBtnContinuarActive = true;
 				Log.i("ConfirmarFechaActivity.confirmAppointment","Active button to continue");
 			}
+			// Change the color of the date.
 			caldroidFragment.setBackgroundResourceForDate(CONFIRMED_COLOR,
 					appointmentDate.toDate());
 			t.replace(R.id.calendar1, caldroidFragment);
 			Log.i("ConfirmarFechaActivity.confirmAppointment",
 					"Changes the colour of the appointment confirmed date");
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			Log.e("ConfirmarFechaActivity","In confirmAppointment method "+e.toString());
 		}
 	}
@@ -485,6 +501,7 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 	
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
+		Log.w("ConfirmadFechaActivity","onSaveInstanceState");
 		if (caldroidFragment != null) {
 			caldroidFragment.saveStatesToKey(outState, "CALDROID_SAVED_STATE");
 		}
@@ -493,7 +510,6 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 		outState.putParcelableArrayList("mTotalFurnituresToCollect",
 				mTotalFurnituresToCollect);
 		outState.putParcelableArrayList("mProvisionalAppointment", mProvisionalAppointment);
-		outState.putParcelableArrayList("mConfirmedRquest", mConfirmedRquest);
-		
+		outState.putParcelableArrayList("mConfirmedRquest", mConfirmedRquest);	
 	}
 }

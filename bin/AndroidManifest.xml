@@ -46,7 +46,8 @@
         </activity>
         <activity
             android:name="es.recicloid.SolicitudEnseres.SolicitudEnseresActivity"
-            android:label="@string/title_activity_solicitud_enseres" >
+            android:label="@string/title_activity_solicitud_enseres"
+            android:noHistory="true" >
         </activity>
         <activity
             android:name="es.recicloid.UbicacionRecogida.UbicacionRecogidaActivity"
@@ -85,7 +86,8 @@
         <activity
             android:name="es.recicloid.Historial.HistorialActivity"
             android:label="@string/title_activity_historial"
-             android:screenOrientation="portrait" >
+            android:screenOrientation="portrait" 
+            android:noHistory="true">
         </activity>
         <activity
             android:name="es.recicloid.ConfirmarFecha.FinalizeActivity"
