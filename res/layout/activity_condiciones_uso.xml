@@ -13,7 +13,7 @@
     <ScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_weight="12"
+    android:layout_weight="1"
     >
     
 	    <TextView
@@ -31,17 +31,17 @@
     <CheckBox
         android:id="@+id/checkBoxAceptar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
         android:gravity="left|center"
-        android:paddingTop="5dp"
+        android:paddingTop="10dp"
         android:text="@string/accept_conditions" />
 
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
         android:text="@string/title_solicitud" />
     
 </LinearLayout>
