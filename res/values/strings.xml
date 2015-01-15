@@ -120,6 +120,7 @@
     <string name="dialog_confirmar_numeroNoValido2">Faltan por confirmar </string>
     <string name="dialog_confirmar_numeroNoValido3"> enseres.</string>
     <string name="cancel">Cancelar</string>
+    <string name="dialog_confirmar_ubicacion">Confirmar Ubicación de Recogida</string>
 	<string name="dialog_title_cancel_request">Advertencia</string>
     <string name="dialog_descr_cancel_request">¿Está usted seguro de que desea cancelar las peticiones de recogida?</string>
 	

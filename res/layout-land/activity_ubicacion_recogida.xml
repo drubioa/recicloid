@@ -6,18 +6,20 @@
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
     android:gravity="center"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
 
     <fragment
         android1:id="@+id/map"
-        android1:layout_width="262dp"
-        android1:layout_height="227dp"
+        android1:layout_width="match_parent"
+        android1:layout_height="match_parent"
+        android1:layout_weight="1"
         class="com.google.android.gms.maps.SupportMapFragment"
         android1:scaleType="fitXY" />
 
     <LinearLayout
         android1:layout_width="match_parent"
-        android1:layout_height="wrap_content"
+        android1:layout_height="match_parent"
+        android1:layout_weight="3"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="10dp" >
@@ -29,22 +31,6 @@
             android:gravity="center"
             android:paddingLeft="10dip"
             android:orientation="horizontal" >
-
-            <TextView
-                android:id="@+id/textViewDireccionTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:text="@string/address"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <TextView
-                android1:id="@+id/textViewDireccionAddress"
-                android1:layout_width="match_parent"
-                android1:layout_height="match_parent"
-                android:maxLength="20"
-                android1:lines="1"
-                android1:ems="10"/>
          
         </LinearLayout>
 
@@ -53,8 +39,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android1:layout_gravity="right"
             android:paddingTop="10dip"
             android:text="@string/title_solicitud" />
+
     </LinearLayout>
 
 </LinearLayout>

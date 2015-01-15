@@ -9,7 +9,6 @@ import roboguice.activity.RoboFragmentActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
 
-import es.recicloid.DatosContacto.DatosContactoActivity;
 import es.recicloid.dialogs.DialogAlert;
 import es.recicloid.dialogs.DialogSelecLocationType;
 import es.recicloid.models.CollectionPoint;
@@ -17,7 +16,6 @@ import es.recicloid.models.Furniture;
 import es.recicloid.models.Zone;
 import es.recicloid.utils.conections.ConectorToCollectionPointService;
 import es.recicloid.utils.conections.InfoToFindCollectionPoint;
-import es.recicloid.utils.json.JsonToFileManagement;
 import es.recicloid.utils.map.AddressGetter;
 import es.recicloid.utils.map.LocationTracker;
 import es.uca.recicloid.R;
@@ -46,12 +44,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 @ContentView(R.layout.activity_ubicacion_recogida)
 public class UbicacionRecogidaActivity extends RoboFragmentActivity {
-	@InjectView(R.id.textViewDireccionAddress) private TextView mAddress;
 	@InjectView(R.id.buttonContinuar) private Button btnNextStep; 
 	private GoogleMap map;		
 	private boolean mLocalizado;
@@ -62,9 +58,8 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 	private int mCollectionPointId;
 	private String mDirection;
 	private ArrayList<Furniture> furnitures;
-	private final JsonToFileManagement jsonToFile = 
-			new JsonToFileManagement(this,"collection-point.json");
 	private ConectorToCollectionPointService conector;
+	private FragmentManager fm;
 	
 	//private String direccion;
 	private final LatLng LOCAL = 
@@ -74,7 +69,7 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		fm = getSupportFragmentManager();
 		// Si el usuario no dispone de Play Services unviable se muestra mensaje de error.
 		if(!checkPlayServicesIsInstalled()){
 			btnNextStep.setEnabled(false);
@@ -87,7 +82,6 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 			newFragment.show(fragmentManager, "tagAvisoLocNotValid");
 			finish();
 		}
-		mAddress.setText(mDirection);
 		map = ((SupportMapFragment) getSupportFragmentManager()
 	               .findFragmentById(R.id.map)).getMap();
 		map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -124,7 +118,7 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 					getBoolean("ShowedRuralProcAdvice");
 			mIsRuralPoint = savedInstanceState.getBoolean("isRuralPoint");
 			mDirection =  savedInstanceState.getString("mDirection");
-			mAddress.setText(mDirection);
+
 			mCollectionPointId = savedInstanceState.getInt("mCollectionPointId");
 			
 			if(mLocalizado){
@@ -184,20 +178,16 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 			public void onClick(View v) {
 				Log.i("UbicacionRecogidaActivity", 
 						"Se pulsa en el boton de Solicitud.");
-				Intent intent = new Intent(UbicacionRecogidaActivity
-						.this,DatosContactoActivity.class);
-				try {
-					CollectionPoint c = new CollectionPoint();
-					c.setPointId(mCollectionPointId);
-					c.setLatitude(mLatitud);
-					c.setLongitude(mLongitud);
-					c.setDirection(mDirection);
-					jsonToFile.saveInJsonFile(c);
-					startActivity(intent);   
-				} catch (IOException e) {
-					Log.e("UbicacionRecogidaActivity",e.toString());
-				}
-            }
+				CollectionPoint c = new CollectionPoint();
+				c.setPointId(mCollectionPointId);
+				c.setLatitude(mLatitud);
+				c.setLongitude(mLongitud);
+				c.setDirection(mDirection);
+				ConfirmarDireccionDialFrag dialogConfirmarDireccion = 
+							ConfirmarDireccionDialFrag.newInstance(c);
+				
+				dialogConfirmarDireccion.show(fm, "ConfirmCollectionPointDialog");
+			}
         });
 	}
 
@@ -281,7 +271,6 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 					if(address != null){
 						Log.w("UbicacionRecogidaActivity","adress is: "
 					+address.getAddressLine(0));
-						mAddress.setText(address.getAddressLine(0));
 						mDirection = address.getAddressLine(0);
 					}
 					else{
@@ -352,15 +341,18 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 
 
 	/**
-	 * Show general view in map of the city
+	 * Show general view in map of the city, and the button is uncheck.
 	 */
-	private void showsGenericViewOfCity(){
+	public void showsGenericViewOfCity(){
 		CameraPosition camPos = new CameraPosition.Builder()
         .target(LOCAL)  
         .zoom(14)         
         .build();
 		CameraUpdate camUpd = CameraUpdateFactory.newCameraPosition(camPos);
 		map.moveCamera(camUpd);
+		map.clear();
+		mLocalizado = false;
+		btnNextStep.setEnabled(false);
 	}
 	
 	/**
@@ -385,7 +377,6 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 	private void showRuralProcessToCollectMessage(){
 		Log.i("UbicacionRecogidaActivity","location in invalid area");
 		mShowedRuralProcAdvice = true;
-		FragmentManager fm = getSupportFragmentManager();
 		Bundle args = new Bundle();
 		args.putInt("title", R.string.dialog_title_location_not_valid);
 		args.putInt("description",R.string
@@ -475,7 +466,6 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 	private void errorPlaySevicesNotInstalled(){
 		Log.i("UbicacionRecogidaActivity",
 				"Google Plays Services not installed");
-		FragmentManager fm = getSupportFragmentManager();
 		Bundle args = new Bundle();
 		args.putInt("title", R.string.dialog_err_google_play_title);
 		args.putInt("description",R.string.dialog_err_google_play_descr	);
