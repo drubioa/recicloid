@@ -59,6 +59,7 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 		super.onCreate(savedInstanceState);
 		conector = new ConectorToConfirmAppointment(this);
 		caldroidFragment = new CaldroidFragment();
+		t = getSupportFragmentManager().beginTransaction();
 		if(savedInstanceState == null){
 			mTotalFurnituresToCollect = loadFurnituresFromJSONFile();
 			Log.i("ConfirmarFechaActivity.onCreate",
@@ -113,8 +114,7 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 			}
 			configureCalendar();
 			setCustomResourceForDates();
-			// Attach to the activity
-			t = getSupportFragmentManager().beginTransaction();
+			// Attach to the activity			
 			t.replace(R.id.calendar1, caldroidFragment);
 			t.commit();
 			Log.i("ConfirmarFechaActivity.onCreate",
@@ -293,7 +293,7 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 		}
 		
 	}
-
+	
 	public void configureCalendar(){
 		Bundle args = new Bundle();
 		Calendar cal = Calendar.getInstance();
@@ -471,7 +471,10 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 			// Change the color of the date.
 			caldroidFragment.setBackgroundResourceForDate(CONFIRMED_COLOR,
 					appointmentDate.toDate());
-			t.replace(R.id.calendar1, caldroidFragment);
+			t = getSupportFragmentManager().beginTransaction();
+			t.detach(caldroidFragment);
+			t.attach(caldroidFragment);
+			t.commit();
 			Log.i("ConfirmarFechaActivity.confirmAppointment",
 					"Changes the colour of the appointment confirmed date");
 		} 
