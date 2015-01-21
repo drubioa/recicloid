@@ -19,6 +19,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -35,6 +36,7 @@ public class DatosContactoActivity extends RoboFragmentActivity {
 	@InjectView(R.id.editTextNameOfContact) private EditText editTextName;
 	@InjectView(R.id.editTextPhone) private EditText editTextPhone;
 	@InjectView(R.id.button) private Button btn_continue;
+	@InjectView(R.id.webViewDatosContacto) private WebView textDatosContacto;
 	private boolean mEditTextNameValid;
 	private boolean mEditTextTelValid;
 	private ConectionToPostNewUser conector; 
@@ -44,6 +46,7 @@ public class DatosContactoActivity extends RoboFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		textDatosContacto.loadData(getString(R.string.condiciones_uso),"text/html", "utf-8");
 		conector = new ConectionToPostNewUser(this);
 		jsonToFile = new JsonToFileManagement(this,FILENAME); 
 		if(savedInstanceState == null){

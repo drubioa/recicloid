@@ -141,6 +141,9 @@
     <string name="dialog_obtains_dir">Obteniendo dirección</string>
 
     <!-- MENU datos de contacto -->
+    <string name="info_datos_contacto"><![CDATA[
+<html><head></head><body style="text-align:justify><p>En caso de que haya alg&uacute;n tipo de dificultad a la hora de localizar los enseres en el punto de recogida, o alguna incidencia en la recogida requerimos de un n&uacute;mero de tel&eacute;fono de contacto.</p>
+<p>Por favor ind&iacute;quenos un tel&eacute:lefono y el nombre de una persona de contacto, por si tuvi&eacute;ramos que contactar con ud. Dicho tel&eacute;fono podr&acute; ser un fijo o un m&oacute;vil.</p></body></html>]]></string>
     <string name="menu_datos_contacto_title">Datos de contacto</string>
     <string name="menu_datos_nombre">Nombre</string>
     <string name="menu_datos_contacto_telefono">Teléfono de contacto</string>
