@@ -48,6 +48,7 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 	private CaldroidFragment caldroidFragment;
 	private int mNumFurnituresForConfirm;
 	private FragmentTransaction t;
+	private FragmentManager fragmentManager;
 	private boolean mIsBtnContinuarActive;
 	private static final int CONFIRMED_COLOR = R.color.green;
 	private static final int UNCONFIRMED_COLOR = R.color.light_green;
@@ -131,7 +132,7 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 				public void onSelectDate(Date date, View view) {
 					if(isCollectionDate(date)){
 						Log.i("CaldroidListener","Fecha confirmada");
-						FragmentManager fragmentManager = getSupportFragmentManager();
+						fragmentManager = getSupportFragmentManager();
 						if(isConfirmedDate(date)){
 							Log.i("ConfirmarFechaActivity.onSelectDate",
 									"Se pulsa sobre un dia de recogida");
@@ -168,8 +169,9 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 							FurnitureSelectorDialFrag dialog = 
 									FurnitureSelectorDialFrag.newInstance(new LocalDate(date),
 											appointment.getNumFurnitures(),mTotalFurnituresToCollect);
-							dialog.show(fragmentManager, "furnitureSelector");
+							dialog.show(fragmentManager, "furnitureSelector"); 
 						}
+						fragmentManager.executePendingTransactions();
 					}
 				}
 				

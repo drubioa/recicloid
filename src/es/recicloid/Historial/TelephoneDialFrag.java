@@ -43,7 +43,7 @@ public class TelephoneDialFrag extends RoboDialogFragment{
 		    // Add action buttons
 				   .setTitle(R.string.menu_datos_contacto_telefono)
 				   .setMessage(R.string.dialog_ask_telephone)
-		           .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+		           .setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
 		               @Override
 		               public void onClick(DialogInterface dialog, int id) {
 		                  if(mValidPhone){
