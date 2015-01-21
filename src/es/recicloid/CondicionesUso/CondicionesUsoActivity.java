@@ -7,8 +7,8 @@ import es.recicloid.ConfirmarFecha.ConfirmarFechaActivity;
 import es.uca.recicloid.R;
 import android.os.Bundle;
 import android.content.Intent;
-import android.view.Menu;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -17,10 +17,12 @@ import android.widget.CompoundButton;
 public class CondicionesUsoActivity extends RoboActivity {
 	boolean mAcepted;
 	@InjectView(R.id.button1) Button btn_continue;
+	@InjectView(R.id.webViewCondicionesUso) WebView condicionesUso;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		condicionesUso.loadData(getString(R.string.condiciones_uso),"text/html", "utf-8");
 		if(savedInstanceState == null){
 			mAcepted = false;
 		}
@@ -57,13 +59,6 @@ public class CondicionesUsoActivity extends RoboActivity {
 		
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.condiciones_uso, menu);
-		return true;
-	}
-	
 	@Override
     protected void onSaveInstanceState(Bundle outState) {
        outState.putBoolean("acepted", mAcepted);

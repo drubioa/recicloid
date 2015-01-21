@@ -1,20 +1,26 @@
 package es.recicloid.ConfirmarFecha;
 
+import roboguice.activity.RoboActivity;
+import roboguice.inject.ContentView;
+import roboguice.inject.InjectView;
 import es.recicloid.main.MainActivity;
 import es.uca.recicloid.R;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 
-public class FinalizeActivity extends Activity {
-
+@ContentView(R.layout.activity_finalize)
+public class FinalizeActivity extends RoboActivity {
+	@InjectView(R.id.webViewTextFinalize ) WebView text;
+	@InjectView(R.id.buttonEnd ) Button btn_end;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_finalize);
-		Button btn_end = (Button) findViewById(R.id.buttonEnd);
+		text.loadData(getString(R.string.descrip_confirmaton), "text/html", "utf-8");
+		
 		btn_end.setOnClickListener(new View.OnClickListener() {
             
 			public void onClick(View v) {

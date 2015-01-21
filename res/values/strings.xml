@@ -81,7 +81,7 @@
     <string name="item_desk">esctitorio</string>
     <string name="item_door">puerta</string>
     <string name="item_heater">calefactor</string>
-    <string name="title_activity_ubicacion_recogida">Establece tu ubicacion</string>
+    <string name="title_activity_ubicacion_recogida">Establece tu ubicación</string>
 
     <!-- DIÁLOGOS -->
     <string name="dialog_title_4items">Atención</string>
@@ -154,16 +154,11 @@
 
     <!-- MENU condiciones de uso -->
     <string name="menu_condiciones_uso_title">Condiciones de uso</string>
-    <string name="condiciones_uso">Debido a anteriores actos vandálicos se ruega al usuario que deposite los enseres en
-        el punto de recogida a horas posteriores a la medianoche, o en la madrugada. Así mismo se recuerda al usuario que
-        es responsabilidad del mismo lo que pueda acontecer causado por dichos objetos. La recogida se hará  a la mañana siguiente
-        de su depósito. \n Los datos aportados de nombre y teléfono se almacenarán en el sistema del ayuntamiento y serán utilizados 
-        únicamente para contacar con el usuario en caso de que haya alguna incidencia en el proceso de recogida. Su almacenamiento
-        y tratamiento se realizará tal y como exige la ley orgánica 15/1999 o ley de protección de datos. \n
-        El aceptar los términos anteriormente especificados dan conformidad de que ud se responsabiliza de los enseres depositados
-        hasta su recogida, y de que da su conformidad para que contactemos con usted en caso de que se produzca alguna incidencia
-        en el proceso de recogida.</string>
-    <string name="accept_conditions">Acepto las condiciones</string>
+    <string name="condiciones_uso"><![CDATA[
+<html><head></head><body style="text-align:justify>
+<p>Debido a anteriores actos vand&aacute;licos se ruega al usuario que deposite los enseres en el punto de recogida a horas posteriores a la medianoche, o en la madrugada. As&iacute; mismo se recuerda al usuario que es responsabilidad del mismo lo que pueda acontecer causado por dichos objetos. La recogida se har&aacute;  a la ma&ntilde;ana siguiente de su dep&oacute;sito. \n Los datos aportados de nombre y tel&eacute;fono se almacenar&aacute;n en el sistema del ayuntamiento y ser&aacute;n utilizados &uacute;nicamente para contacar con el usuario en caso de que haya alguna incidencia en el proceso de recogida. Su almacenamiento y tratamiento se realizar&aacute; tal y como exige la ley org&aacute;nica 15/1999 o ley de protecci&oacute;n de datos. </p>
+<p>El aceptar los t&eacute;rminos anteriormente especificados dan conformidad de que ud se responsabiliza de los enseres depositados hasta su recogida, y de que da su conformidad para que contactemos con usted en caso de que se produzca alguna incidencia en el proceso de recogida.</p></body></html>]]></string>
+<string name="accept_conditions">Acepto las condiciones</string>
 
     <!-- Menu confirmar fecha -->
     <string name="menu_confirmar_fecha_title">Confirmar fecha de recogida</string>
@@ -177,7 +172,7 @@
 
     <!-- MENSAJE DE CONFIRMACION -->
     <string name="title_confirmaton">Finalizado</string>
-    <string name="descrip_confirmaton">Se ha finalizado la solicitud de recogida. Por favor deposite los enseres indicados a primera hora de la mañana y nuestro servicio de recogida acudirá a recogerlo. Si hubiese alguna dificultad a la hora de localizar los enseres, nos pondremos en contacto a su teléfono de contacto. Dispne de nuestro teléfono de contacto y de nuestra guia de reciclaje para mas información.</string>
+    <string name="descrip_confirmaton"><![CDATA[<html><head></head><body style="text-align:justify>Se ha finalizado la solicitud de recogida. Por favor deposite los enseres indicados a primera hora de la ma&ntilde;ana y nuestro servicio de recogida acudir&aacute; a recogerlo. Si hubiese alguna dificultad a la hora de localizar los enseres, nos pondremos en contacto a su tel&eacute;fono de contacto. Dispone de nuestro tel&eacute;fono de contacto y de nuestra guia de reciclaje para mas informaci&oacute;n.</body></html>]]></string>
     <string name="back_main_menu">Volver al Menu Principal</string>
     
     <!-- HISTORIAL -->

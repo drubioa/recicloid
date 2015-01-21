@@ -5,35 +5,37 @@
     android:gravity="center_horizontal"
     android:orientation="vertical" >
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:src="@drawable/bigtruck_track" />
-
+   <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/accept"
+            android:src="@drawable/bigtruck_track"
+            android:layout_weight="7" />
+        
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent" 
         android:text="@string/title_confirmaton"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/green" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:padding="30dp"
-        android:text="@string/descrip_confirmaton"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textColor="@color/green" 
+        android:layout_weight="7"/>
+        
+   <WebView
+       android:id="@+id/webViewTextFinalize"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_weight="3"
+       android:padding="30dp" />
 
     <Button
         android:id="@+id/buttonEnd"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent" 
         android:layout_gravity="right"
+        android:layout_weight="7"
         android:text="@string/back_main_menu" />
 
 </LinearLayout>

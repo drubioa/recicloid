@@ -286,12 +286,12 @@ public final class R {
 		public static final int activity_chooser_view_content = 0x7f050037;
 		public static final int always = 0x7f05000b;
 		public static final int beginning = 0x7f050011;
-		public static final int calendar_gridview = 0x7f05006e;
-		public static final int calendar_left_arrow = 0x7f050068;
-		public static final int calendar_month_year_textview = 0x7f050069;
-		public static final int calendar_right_arrow = 0x7f05006a;
-		public static final int calendar_title_view = 0x7f050067;
-		public static final int calendar_tv = 0x7f05006d;
+		public static final int calendar_gridview = 0x7f05006f;
+		public static final int calendar_left_arrow = 0x7f050069;
+		public static final int calendar_month_year_textview = 0x7f05006a;
+		public static final int calendar_right_arrow = 0x7f05006b;
+		public static final int calendar_title_view = 0x7f050068;
+		public static final int calendar_tv = 0x7f05006e;
 		public static final int checkbox = 0x7f05003f;
 		public static final int collapseActionView = 0x7f05000d;
 		public static final int default_activity_button = 0x7f05003a;
@@ -310,7 +310,7 @@ public final class R {
 		public static final int listMode = 0x7f050001;
 		public static final int list_item = 0x7f05003b;
 		public static final int middle = 0x7f050012;
-		public static final int months_infinite_pager = 0x7f05006c;
+		public static final int months_infinite_pager = 0x7f05006d;
 		public static final int never = 0x7f050009;
 		public static final int none = 0x7f050010;
 		public static final int normal = 0x7f050000;
@@ -338,7 +338,7 @@ public final class R {
 		public static final int top_action_bar = 0x7f050032;
 		public static final int up = 0x7f050033;
 		public static final int useLogo = 0x7f050003;
-		public static final int weekday_gridview = 0x7f05006b;
+		public static final int weekday_gridview = 0x7f05006c;
 		public static final int withText = 0x7f05000c;
 	}
 	public static final class integer {

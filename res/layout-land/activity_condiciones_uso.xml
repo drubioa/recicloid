@@ -9,46 +9,34 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".CondicionesUsoActivity" >
 
-    <ScrollView
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:layout_weight="2"
-    >
-    
-	    <TextView
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:text="@string/condiciones_uso"
-	        android:singleLine="false"
-	        android:scrollHorizontally="false"
-	        android:scrollbars="vertical"
-	        android:textAppearance="?android:attr/textAppearanceMedium"
-	        android:padding="10dp" />
-        
-    </ScrollView>
+    <WebView
+        android:id="@+id/webViewCondicionesUso"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2" />
 
      <LinearLayout
          android:layout_width="match_parent"
          android:layout_height="match_parent"
-         android:layout_weight="4"
+         android:layout_weight="5"
          android:orientation="horizontal"
          android:paddingTop="5dp" >
 
          <CheckBox
              android:id="@+id/checkBoxAceptar"
-             android:layout_width="wrap_content"
+             android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:layout_gravity="left"
-             android:layout_weight="2"
+             android:layout_weight="1"
              android:paddingTop="10dp"
              android:text="@string/accept_conditions" />
 
          <Button
              android:id="@+id/button1"
-             android:layout_width="wrap_content"
+             android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:layout_gravity="right"
-             android:layout_weight="1"
+             android:layout_weight="2"
              android:text="@string/title_solicitud" />
          
     </LinearLayout>
