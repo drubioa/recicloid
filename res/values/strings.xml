@@ -21,7 +21,8 @@
     <string name="title_menu_enseres">Tipos de muebles y enseres</string>
     <string name="dialog_info_solicitud_enseres">Añadir muebles y enseres para su recogida.</string>
     <string name="dialog_descr_info_solicitud_enseres">Seleccione uno o mas muebles y enseres que desea que sean recogidos para su posterior reciclaje por parte del servicio municipal. Si el enser que desea que recojamos no está entre los mostrados en la aplicación por favor pongase en contacto con nosotros.</string>
-
+	<string name="punto_de_recogida">Punto de Recogida</string>
+    
     <!-- Categorias para el Spinner -->
     <string-array name="categorias_enseresa">
         <item>Baño</item>
@@ -91,6 +92,7 @@
         jornadas recogiendose 4 elementos en cada una de estas.</string>
     <string name="dialog_ok">Aceptar</string>
     <string name="dialog_selectlocacion_title">Establecer punto de recogida</string>
+    <string name="dialog_localizando_punto_recogida">Localizando punto de recogida más cercano</string>
     <string name="dialog_selectlocation_auto">Por ubicación actual del móvil</string>
     <string name="dialog_selectlocation_manual">Establecer manualmente</string>
     <string name="dialog_title_location_not_valid">Localización no válida</string>

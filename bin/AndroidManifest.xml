@@ -62,6 +62,7 @@
         <activity
             android:name="es.recicloid.DatosContacto.DatosContactoActivity"
             android:label="@string/title_activity_datos_contacto"
+            android:windowSoftInputMode="adjustNothing"
             android:noHistory="true" >
         </activity>
         <activity

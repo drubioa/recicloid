@@ -39,6 +39,7 @@ import android.os.Handler;
 import android.os.StrictMode;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.Menu;
@@ -60,6 +61,7 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 	private ArrayList<Furniture> furnitures;
 	private ConectorToCollectionPointService conector;
 	private FragmentManager fm;
+	private Handler handler = new Handler();
 	
 	//private String direccion;
 	private final LatLng LOCAL = 
@@ -118,7 +120,6 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 					getBoolean("ShowedRuralProcAdvice");
 			mIsRuralPoint = savedInstanceState.getBoolean("isRuralPoint");
 			mDirection =  savedInstanceState.getString("mDirection");
-
 			mCollectionPointId = savedInstanceState.getInt("mCollectionPointId");
 			
 			if(mLocalizado){
@@ -158,13 +159,16 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 	         */
 	        public void onMapClick(final LatLng point) {
 				// Se muestra barra de progreso mientras se establece conección con el servidor.
-				final ProgressDialog dialog = ProgressDialog.show(UbicacionRecogidaActivity.this,
+	        	final int oldOrientation = getRequestedOrientation();
+	        	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+	        	final ProgressDialog dialog = ProgressDialog.show(UbicacionRecogidaActivity.this,
 						"",getResources().getString(R.string.nearestPoint_message) , true); 
-				Handler handler = new Handler();
+				dialog.setTitle(R.string.dialog_localizando_punto_recogida);
 				handler.postDelayed(new Runnable() {
 				    public void run() {
 				    	findAndMarkCollectionPoint(Zone.convertLagIntToLocation(point));
-				                dialog.dismiss();
+				        dialog.dismiss();
+				        setRequestedOrientation(oldOrientation);
 				    }   
 				}, 5000);  // 5000 milliseconds
 				Log.i("UbicacionRecogidaActivity","On click in point "
@@ -411,7 +415,7 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 		this.btnNextStep.setEnabled(true);
 		this.map.addMarker(new MarkerOptions()
         	.position(localizacion)
-        	.title("Ubicaci??n")
+        	.title(getString(R.string.punto_de_recogida))
         	.icon(BitmapDescriptorFactory.defaultMarker(
         		BitmapDescriptorFactory.HUE_GREEN)));
 	}

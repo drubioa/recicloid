@@ -445,38 +445,33 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 			Log.i("ConfirmarFechaActivity.confirmAppointment",
 					"confirmed request");
 			mProvisionalAppointment.remove(p);
-			Log.i("ConfirmarFechaActivity.confirmAppointment",
-					"removing provisional request");
-			if(Furniture.countFurnituresArray(furnitures) ==
-					Furniture.countFurnituresArray(mTotalFurnituresToCollect)){
-				Log.w("confirmAppointment",
-						"furnitures selected are equal than mTotalFurnituresToCollect");
-			}
-			Log.i("confirmAppointment","Before: "+
-					Furniture.countFurnituresArray(mTotalFurnituresToCollect));
 			for(Furniture f : furnitures){
-				Log.i("ConfirmarFechaActivity.confirmAppointment",
-						"Debe decrementar "+f.getName()
-					+" en "+f.getCantidad());
 				mTotalFurnituresToCollect = (ArrayList<Furniture>) 
 						Furniture.decrementFurniture(f, mTotalFurnituresToCollect);
-			}
-			Log.i("ConfirmarFechaActivity.confirmAppointment","Removes "+Furniture.countFurnituresArray(furnitures)
-					+" to furniture list.");
-			Log.i("confirmAppointment","After: "+
-					Furniture.countFurnituresArray(mTotalFurnituresToCollect));
-			if(Furniture.countFurnituresArray(mTotalFurnituresToCollect) == 0){
-				mBtn_continuar.setEnabled(true);
-				mIsBtnContinuarActive = true;
-				Log.i("ConfirmarFechaActivity.confirmAppointment","Active button to continue");
 			}
 			// Change the color of the date.
 			caldroidFragment.setBackgroundResourceForDate(CONFIRMED_COLOR,
 					appointmentDate.toDate());
+			if(mProvisionalAppointment.size() == 1){
+				// Si solo queda una solicitud se confirma
+				Log.i("confirmAppointment","Se confirma la ultima solicitud de recogida");
+				req = new CollectionRequest(mProvisionalAppointment.get(0),furnitures);
+				mConfirmedRquest.add(req);
+				mProvisionalAppointment.remove(mProvisionalAppointment.get(0));
+				mTotalFurnituresToCollect.clear();
+				caldroidFragment.setBackgroundResourceForDate(CONFIRMED_COLOR,
+						req.getFch_collection().toDate());
+			}
 			t = getSupportFragmentManager().beginTransaction();
 			t.detach(caldroidFragment);
 			t.attach(caldroidFragment);
 			t.commit();
+			if(Furniture.countFurnituresArray(mTotalFurnituresToCollect) == 0){
+				mBtn_continuar.setEnabled(true);
+				mIsBtnContinuarActive = true;
+				Log.i("ConfirmarFechaActivity.confirmAppointment",
+						"Active button to continue");
+			}
 			Log.i("ConfirmarFechaActivity.confirmAppointment",
 					"Changes the colour of the appointment confirmed date");
 		} 

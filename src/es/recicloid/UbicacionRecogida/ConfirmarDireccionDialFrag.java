@@ -37,7 +37,7 @@ public class ConfirmarDireccionDialFrag extends DialogFragment{
 	
 	 @Override
 	 public Dialog onCreateDialog(Bundle savedInstanceState){
-		 setRetainInstance(true);
+		 setRetainInstance(true); 
 		 Bundle bundle = getArguments();
 		 if(bundle != null){
 			 mCollectionPoint = bundle.getParcelable("mCollectionPoint");
@@ -80,9 +80,10 @@ public class ConfirmarDireccionDialFrag extends DialogFragment{
 
 	 @Override
 	 public void onDestroyView() {
-	   if (getDialog() != null && getRetainInstance())
-	     getDialog().setDismissMessage(null);
-	   super.onDestroyView();
+	     if (getDialog() != null && getRetainInstance()) {
+	         getDialog().setDismissMessage(null);
+	     }
+	     super.onDestroyView();
 	 }
-	 
+
 }
