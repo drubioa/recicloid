@@ -114,7 +114,7 @@
         última versión para poder utilizar esta aplicación.</string>
     <string name="nearestPoint_message">Buscando punto de recogida mas cercano</string>
     <string name="dialog_err_dir_conection_descr">No se pudo establecer la conexión con el servidor, prueba si tiene habilitado 3g en su móvil o conexión WIFI.Si el error persiste, por favor intentelo mas tarde. </string>
-    <string name="dialog_err_location_error_not_exist_nearest">        No hay ningun punto de recogida cerca de tu localización, por favor intentalo de nuevo. Si el error se repite contacte con nuestro teléfono de contacto.</string>
+    <string name="dialog_err_location_error_not_exist_nearest">No hay ningun punto de recogida cerca de tu localización, por favor intentalo de nuevo. Si el error se repite contacte con nuestro teléfono de contacto.</string>
     <string name="dialog_confirmar_aceptar">Confirmar</string>
     <string name="dialog_confirmar_furnitures">Recogida de </string>
     <string name="dialog_confirmar_furnitures2"> enseres. </string>

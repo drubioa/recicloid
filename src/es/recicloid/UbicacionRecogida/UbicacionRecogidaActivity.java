@@ -249,16 +249,7 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 					Log.w("UbicacionRecogidaActivity.markCollectionPoint",
 							"No se ha obtenido ningun punto de recogida " +e.toString());
 				}
-				if(nearestPoint == null){
-					// Si no se ha localizado se muestra un mensaje de error.
-					Log.w("markCollectionPoint","no hay ningun punto de recogida " +
-							"cercano");
-					removeMarkToPosition();
-					showDialogAlert(R.string.dialog_title_location_not_valid,
-							R.string.dialog_descr_location_not_valid,
-							"tagAvisoLocNotValid");			
-				}
-				else{
+				if(nearestPoint != null){
 					mLatitud = nearestPoint.getLat();
 					mLongitud = nearestPoint.getLng();
 					mCollectionPointId = nearestPoint.getId();
