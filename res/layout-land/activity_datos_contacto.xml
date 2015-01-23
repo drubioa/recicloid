@@ -1,0 +1,74 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".DatosContactoActivity" >
+
+    <WebView
+        android:id="@+id/webViewDatosContacto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3" />
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="5.5"
+        android:orientation="horizontal" >
+    
+	     <TextView
+	        android:id="@+id/textViewDtitleTelephone"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/menu_datos_contacto_telefono"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+	
+	    <EditText
+	        android:id="@+id/editTextPhone"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:maxLength="9"
+	        android:ems="10"
+	        android:inputType="phone" >   </EditText> <requestFocus />
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="5.5"
+        android:orientation="horizontal" >
+	
+    	<TextView
+	        android:id="@+id/textViewNameOfContact"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/menu_datos_nombre"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+        
+        <EditText
+        	android:id="@+id/editTextNameOfContact"
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:maxLength="20"
+       		android:ems="10"
+       		android:inputType="text"> </EditText> <requestFocus />	      
+    	     
+        
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:enabled="false"
+        android:text="@string/title_solicitud" />
+    
+</LinearLayout>

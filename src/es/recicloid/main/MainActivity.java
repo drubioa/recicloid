@@ -8,7 +8,7 @@ import roboguice.inject.InjectView;
 
 
 import es.recicloid.Historial.HistorialActivity;
-import es.recicloid.SolicitudEnseres.SolicitudEnseresActivity;
+import es.recicloid.SolicitudRecogida.SolicitudEnseresActivity;
 import es.recicloid.activities.inforeciclaje.InformacionReciclajeActivity;
 import es.recicloid.adapters.ListAdaptor;
 import es.recicloid.adapters.TitleWithImg;

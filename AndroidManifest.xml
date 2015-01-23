@@ -50,23 +50,23 @@
             android:label="@string/title_menu_principal" >
         </activity>
         <activity
-            android:name="es.recicloid.SolicitudEnseres.SolicitudEnseresActivity"
+            android:name="es.recicloid.SolicitudRecogida.SolicitudEnseresActivity"
             android:label="@string/title_activity_solicitud_enseres"
             android:noHistory="true" >
         </activity>
         <activity
-            android:name="es.recicloid.UbicacionRecogida.UbicacionRecogidaActivity"
+            android:name="es.recicloid.SolicitudRecogida.UbicacionRecogidaActivity"
             android:label="@string/title_activity_ubicacion_recogida"
             android:noHistory="true" >
         </activity>
         <activity
-            android:name="es.recicloid.DatosContacto.DatosContactoActivity"
+            android:name="es.recicloid.SolicitudRecogida.DatosContactoActivity"
             android:label="@string/title_activity_datos_contacto"
             android:windowSoftInputMode="adjustNothing"
             android:noHistory="true" >
         </activity>
         <activity
-            android:name="es.recicloid.ConfirmarFecha.ConfirmarFechaActivity"
+            android:name="es.recicloid.SolicitudRecogida.ConfirmarFechaActivity"
             android:label="@string/title_activity_confirmar_fechas"
             android:noHistory="true"
             android:screenOrientation="portrait" >
@@ -88,7 +88,7 @@
             android:noHistory="true">
         </activity>
         <activity
-            android:name="es.recicloid.ConfirmarFecha.FinalizeActivity"
+            android:name="es.recicloid.SolicitudRecogida.FinalizeActivity"
             android:label="@string/title_activity_finalize" 
             android:noHistory="true" >
         </activity>

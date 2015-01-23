@@ -1,6 +1,6 @@
 package es.recicloid.dialogs;
 
-import es.recicloid.SolicitudEnseres.SolicitudEnseresActivity;
+import es.recicloid.SolicitudRecogida.SolicitudEnseresActivity;
 import es.uca.recicloid.R;	
 import android.app.AlertDialog;
 import android.app.Dialog;

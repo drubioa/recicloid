@@ -13,7 +13,7 @@ import com.roomorama.caldroid.CaldroidListener;
 import roboguice.activity.RoboFragmentActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
-import es.recicloid.ConfirmarFecha.InfoCollectionDateFragment;
+import es.recicloid.SolicitudRecogida.InfoCollectionDateFragment;
 import es.recicloid.main.MainActivity;
 import es.recicloid.models.CollectionRequest;
 import es.recicloid.utils.conections.ConectorToDeletePendingRequests;
