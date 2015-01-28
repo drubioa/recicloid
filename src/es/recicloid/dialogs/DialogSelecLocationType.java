@@ -1,6 +1,6 @@
 package es.recicloid.dialogs;
 
-import es.recicloid.SolicitudRecogida.UbicacionRecogidaActivity;
+import es.recicloid.activities.SolicitudRecogida.UbicacionRecogidaActivity;
 import es.uca.recicloid.R;
 import android.app.AlertDialog;
 import android.app.Dialog;
