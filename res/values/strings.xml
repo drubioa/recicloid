@@ -51,7 +51,7 @@
     <string name="item_fridge">frigorífico</string>
     <string name="item_kitchen_self">estantería de cocina</string>
     <string name="item_oven">horno</string>
-    <string name="item_microwave">microndas</string>
+    <string name="item_microwave">microondas</string>
     <string name="item_dishwasher">lavavajillas</string>
     <string name="item_kitchen_closet">armario de cocina</string>
     <string name="item_kitchen_fire">placa</string>
@@ -71,17 +71,17 @@
     <string name="item_garden_chair">silla de jardín</string>
 
     <!-- Salon -->
-    <string name="item_sofa">sofa</string>
+    <string name="item_sofa">sofá</string>
     <string name="item_living_chair">silla</string>
     <string name="item_living_table">mesa</string>
     <string name="item_armchair">butaca</string>
     <string name="item_living_furniture">mueble de salón</string>
-    <string name="item_living_shelf">estanteria</string>
+    <string name="item_living_shelf">estantería</string>
 
     <!-- General -->
     <string name="item_desk">esctitorio</string>
     <string name="item_door">puerta</string>
-    <string name="item_heater">calefactor</string>
+    <string name="item_heater">estufa</string>
     <string name="title_activity_ubicacion_recogida">Establece tu ubicación</string>
 
     <!-- DIÁLOGOS -->

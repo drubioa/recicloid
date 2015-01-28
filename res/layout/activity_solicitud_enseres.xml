@@ -11,9 +11,10 @@
      -->
 
     <Spinner
-        android:id="@+id/spinner_items"
-        android:layout_width="match_parent"
-        android:layout_height="80dp" />
+       android:id="@+id/spinner_items"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android1:layout_weight="6"/>
 
      <!-- 
      	GridViewo con los items seleccionables
@@ -22,10 +23,11 @@
     <GridView
         android:id="@+id/GridView_items"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android1:layout_weight="15" 
+        android:layout_height="368dp"
+        android1:layout_gravity="center_horizontal"
         android:horizontalSpacing="5dp"
         android:numColumns="2"
+        android:stretchMode="columnWidth"
         android:verticalSpacing="5dp" >
 
 </GridView>
@@ -35,11 +37,10 @@
     -->
 	<Button
 	    android:id="@+id/buttonContinuar"
-	   	android:layout_width="wrap_content" 
-	    android:layout_height="wrap_content" 
-	    android:padding="20dip"
-	    android:gravity="center"
-	    android:layout_gravity="center_horizontal"    	
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android1:layout_weight="7"
+	    android:layout_gravity="center_horizontal|right"    	
 	    android:text="@string/title_solicitud"/>
 
 </LinearLayout>

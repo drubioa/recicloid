@@ -11,6 +11,7 @@ public class InformacionReciclajeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_informacion_reciclaje);
 		WebView webview = new WebView(this);
+		webview.getSettings().setJavaScriptEnabled(true);
 		webview.loadUrl("file:///android_asset/web-recic/index.html");
 		setContentView(webview);
 	}

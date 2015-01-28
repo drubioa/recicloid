@@ -12,6 +12,35 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 <link href="css/style.css" media="all" rel="stylesheet" type="text/css" />
+
+<script
+src="http://maps.googleapis.com/maps/api/js">
+</script>
+
+<script>
+	function initialize() {
+	  var myLatlng = new google.maps.LatLng(36.52243,-6.16555);
+	
+	  var mapProp = {
+	    center:new google.maps.LatLng(36.52243,-6.16555),
+	    zoom:16,
+	    mapTypeId:google.maps.MapTypeId.ROADMAP
+	  };
+	  var map=new google.maps.Map(document.getElementById("googleMap"), mapProp);
+	  
+	  var marker = new google.maps.Marker({
+	      position: myLatlng,
+	      map: map,
+	      title: 'Punto de Recogida'
+	  });
+
+	}
+	
+	google.maps.event.addDomListener(window, 'load', initialize);
+	
+	
+</script>
+
 </head>
 <body>
 	<!-- Header Part Starts Here -->
@@ -180,53 +209,28 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<!-- Blog Ends Here -->
 	<!-- Map Starts Here -->
 	<!-- Map Ends Here -->
-	<!-- Contact Form Starts Here -->
-	<div class="contact" id="contact">
-		<div class="container">
-			<h3 class="heding"><span>Contacta </span>con nosotros</h3>
-			<p>Si desea incluir alguna sugerencia de mejora, puede contactar con nosotros.</p>
-			<div class="contact-box">
-				<p>Nombre</p>
-				<input type="text" />
-				<p>Email</p>
-				<input type="text"/>
-				<p>Asunto</p>
-				<input type="text"/>
-			</div>
-			<div class="contact-box">
-				<p>Mensaje</p>
-				<textarea></textarea>
-			</div>
-			<div class="clearfix"></div>
-			<div class="text">
-				<input type="submit" value="Enviar Correo" />
-			</div>
-		</div>
-	</div>
-	<!-- Contact Form Ends Here -->
+
 <div class="navigation" id="navig">
 	<ul class="navig">
 		<li><a href="#" class="active">Home</a></li>
 		<li><a href="#about" class="scroll">Tipos de contenedores</a></li>
 		<li><a href="#service" class="scroll">Solicitud de Recogida</a></li>
 		<li><a href="#historial" class="scroll">Historial</a></li>
-		<li><a href="#contact" class="scroll">Datos de contacto</a></li>
 	</ul>
 </div>
 	<!-- Footer Starts Here -->
 	<div class="footer  wow fadeInUp" data-wow-delay="0.4s">
 		<div class="container">
-			<i class="locater"></i>
+			<p>Punto Limpio</p>
+			<div id="googleMap" style="display inline;width:95%;height:200px;"></div>
 			<p>Plaza Jesús, s/n, 11510 Puerto Real, Cádiz</p>
-			<i class="locater"></i>
-			<p>Tel : 956-47 00 00</p>
 			<ul class="footer-list">
 				<li><i class="fa"></i></li>
 				<li><i class="fb"></i></li>
 				<li><i class="fc"></i></li>
 				<li><i class="fd"></i></li>
 			</ul>
-			<p>Email :<a href="mailto:example@email.com"> info@agco.com</a></p>
+			<p>Email :<a href="mailto:example@email.com"> dbiosag@gmail.com</a></p>
 		</div>
 	</div>
 </body>
