@@ -37,7 +37,7 @@
             android:value="AIzaSyDahyMelTNmeppxFt8LWe3Z8r6FEJUCmfA" />
         
         <activity
-            android:name="es.recicloid.main.SplashScreenActivity"
+            android:name="es.recicloid.activities.main.SplashScreenActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,33 +45,33 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="es.recicloid.main.MainActivity"
+            android:name="es.recicloid.activities.main.MainActivity"
             android:label="@string/title_menu_principal" >
         </activity>
         <activity
-            android:name="es.recicloid.SolicitudRecogida.SolicitudEnseresActivity"
+            android:name="es.recicloid.activities.SolicitudRecogida.SolicitudEnseresActivity"
             android:label="@string/title_activity_solicitud_enseres"
             android:noHistory="true" >
         </activity>
         <activity
-            android:name="es.recicloid.SolicitudRecogida.UbicacionRecogidaActivity"
+            android:name="es.recicloid.activities.SolicitudRecogida.UbicacionRecogidaActivity"
             android:label="@string/title_activity_ubicacion_recogida"
             android:noHistory="true" >
         </activity>
         <activity
-            android:name="es.recicloid.SolicitudRecogida.DatosContactoActivity"
+            android:name="es.recicloid.activities.SolicitudRecogida.DatosContactoActivity"
             android:label="@string/title_activity_datos_contacto"
-            android:windowSoftInputMode="adjustNothing"
+            android:windowSoftInputMode="adjustPan"
             android:noHistory="true" >
         </activity>
         <activity
-            android:name="es.recicloid.SolicitudRecogida.ConfirmarFechaActivity"
+            android:name="es.recicloid.activities.SolicitudRecogida.ConfirmarFechaActivity"
             android:label="@string/title_activity_confirmar_fechas"
             android:noHistory="true"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="es.recicloid.CondicionesUso.CondicionesUsoActivity"
+            android:name="es.recicloid.activities.SolicitudRecogida.CondicionesUsoActivity"
             android:label="@string/title_activity_condiciones_uso"
             android:noHistory="true" >
         </activity>
@@ -80,14 +80,14 @@
             android:label="@string/title_activity_informacion_reciclaje">
         </activity>
         <activity
-            android:name="es.recicloid.Historial.HistorialActivity"
+            android:name="es.recicloid.activities.Historial.HistorialActivity"
             android:label="@string/title_activity_historial"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="es.recicloid.SolicitudRecogida.FinalizeActivity"
-            android:label="@string/title_activity_finalize" 
-            android:noHistory="true" >
+            android:name="es.recicloid.activities.SolicitudRecogida.FinalizeActivity"
+            android:label="@string/title_activity_finalize"
+            android:noHistory="true">
         </activity>
     </application>
 

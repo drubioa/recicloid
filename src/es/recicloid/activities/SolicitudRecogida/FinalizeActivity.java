@@ -3,9 +3,7 @@ package es.recicloid.activities.SolicitudRecogida;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
-import es.recicloid.activities.main.MainActivity;
 import es.uca.recicloid.R;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
@@ -24,9 +22,7 @@ public class FinalizeActivity extends RoboActivity {
 		btn_end.setOnClickListener(new View.OnClickListener() {
             
 			public void onClick(View v) {
-				Intent intent = new Intent(FinalizeActivity.this,
-						MainActivity.class);
-				startActivity(intent);   
+				finish();  
             }
         });
 	}

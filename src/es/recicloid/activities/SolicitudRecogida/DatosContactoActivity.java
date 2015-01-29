@@ -45,7 +45,7 @@ public class DatosContactoActivity extends RoboFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		textDatosContacto.loadData(getString(R.string.condiciones_uso),"text/html", "utf-8");
+		textDatosContacto.loadData(getString(R.string.info_datos_contacto),"text/html", "utf-8");
 		conector = new ConectionToPostNewUser(this);
 		jsonToFile = new JsonToFileManagement(this,FILENAME); 
 		if(savedInstanceState == null){

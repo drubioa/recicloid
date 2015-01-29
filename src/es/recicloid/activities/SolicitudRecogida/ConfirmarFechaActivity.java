@@ -453,9 +453,10 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 			caldroidFragment.setBackgroundResourceForDate(CONFIRMED_COLOR,
 					appointmentDate.toDate());
 			if(mProvisionalAppointment.size() == 1){
-				// Si solo queda una solicitud se confirma
-				Log.i("confirmAppointment","Se confirma la ultima solicitud de recogida");
-				req = new CollectionRequest(mProvisionalAppointment.get(0),furnitures);
+				// Si solo queda una solicitud se confirma con los muebles que queden.
+				Log.i("confirmAppointment","Se confirma la ultima solicitud de recogida con "+
+						Furniture.countFurnituresArray(mTotalFurnituresToCollect)+" enseres");
+				req = new CollectionRequest(mProvisionalAppointment.get(0),(ArrayList<Furniture>)mTotalFurnituresToCollect.clone());
 				mConfirmedRquest.add(req);
 				mProvisionalAppointment.remove(mProvisionalAppointment.get(0));
 				mTotalFurnituresToCollect.clear();

@@ -1,13 +1,8 @@
 eclipse.preferences.version=1
-encoding//src/es/recicloid/SolicitudRecogida/DatosContactoActivity.java=UTF-8
-encoding//src/es/recicloid/SolicitudRecogida/InfoCollectionDateFragment.java=UTF-8
-encoding//src/es/recicloid/SolicitudRecogida/SolicitudEnseresActivity.java=UTF-8
-encoding//src/es/recicloid/SolicitudRecogida/UbicacionRecogidaActivity.java=UTF-8
 encoding//src/es/recicloid/adapters/ListAdaptor.java=UTF-8
 encoding//src/es/recicloid/dialogs/DialogAlert.java=UTF-8
 encoding//src/es/recicloid/dialogs/DialogMultiplesFurnitures.java=UTF-8
 encoding//src/es/recicloid/dialogs/DialogSelecLocationType.java=UTF-8
-encoding//src/es/recicloid/main/MainActivity.java=UTF-8
 encoding//src/es/recicloid/models/Request.java=UTF-8
 encoding//src/es/recicloid/models/Zone.java=UTF-8
 encoding//src/es/recicloid/utils/map/AddressGetter.java=UTF-8

@@ -171,6 +171,7 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 				        setRequestedOrientation(oldOrientation);
 				    }   
 				}, 5000);  // 5000 milliseconds
+				
 				Log.i("UbicacionRecogidaActivity","On click in point "
 	        			+point.toString());
 	        }

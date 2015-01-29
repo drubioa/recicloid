@@ -26,6 +26,7 @@ public class FurnitureSelectorDialFrag extends DialogFragment{
 	private int mNumPerDate;
 	private List<Integer> mSelectedItems;
 	private int cont = 0;
+	private boolean[] mSelectedType;
 	
 	public FurnitureSelectorDialFrag(){
 		mFurnitureToRequest = new  ArrayList<Furniture>();
@@ -81,23 +82,32 @@ public class FurnitureSelectorDialFrag extends DialogFragment{
 			 mNumPerDate = bundle.getInt("numPerDate");
 		 }
 		 mSelectedItems = new ArrayList<Integer>();
-		 final boolean[] selectedTypes = new boolean[Furniture.countFurnituresArray(mAllFurnitures)];
+		 mSelectedType = new boolean[Furniture.countFurnituresArray(mAllFurnitures)];
 		 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		 builder.setTitle(getResources().getString(R.string.dialog_confirmar_furnitures)
 				 +" "+mNumPerDate+" "+getResources().getString(R.string.dialog_confirmar_furnitures2));
 		 Log.i("FurnitureSelectorDialFrag","Se crea el titulo del dialogo");
-		 builder.setMultiChoiceItems(getFurnituresNames(), selectedTypes,
+		 builder.setMultiChoiceItems(getFurnituresNames(), mSelectedType,
 				 new DialogInterface.OnMultiChoiceClickListener() { 
 		
 			 
 			 @Override
 		     public void onClick(DialogInterface dialog, int which,
 		         boolean isChecked) {
+				 
 				 	if(isChecked){
-				 		Log.i("FurnitureSelectorDialFrag.onclick",
-				 				"Add "+which+" was clicked, add to the selected items array.");
-				 		mSelectedItems.add(which);
-				 		cont++;
+				 		if(cont >= mNumPerDate){
+				 			Log.w("FurnitureSelectorDialFrag.onclick",
+					 				"There are "+cont+" furnitures selected, but the max are "+mNumPerDate);
+				 			mSelectedType[which] = false;	
+				 			((AlertDialog) dialog).getListView().setItemChecked(which, false);
+				 		}
+				 		else{
+					 		Log.i("FurnitureSelectorDialFrag.onclick",
+					 				"Add "+which+" was clicked, add to the selected items array.");
+					 		mSelectedItems.add(which);
+					 		cont++;
+				 		}
 					 }
 				 	 else if (mSelectedItems.contains(which)) {
 					 	Log.i("FurnitureSelectorDialFrag.onclick",
