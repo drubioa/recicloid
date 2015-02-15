@@ -20,6 +20,8 @@
     <!-- Solicitud de recogida de enseres -->
     <string name="title_menu_enseres">Tipos de muebles y enseres</string>
     <string name="dialog_info_solicitud_enseres">Añadir muebles y enseres para su recogida.</string>
+        <string name="dialog_info_solicitud_enseres_descr">Solicitud de recogida para el día </string>
+    
     <string name="dialog_descr_info_solicitud_enseres">Seleccione uno o mas muebles y enseres que desea que sean recogidos para su posterior reciclaje por parte del servicio municipal. Si el enser que desea que recojamos no está entre los mostrados en la aplicación por favor pongase en contacto con nosotros.</string>
 	<string name="punto_de_recogida">Punto de Recogida</string>
     
@@ -169,7 +171,7 @@
     <string name="menu_confirmar_fecha_title">Confirmar fecha de recogida</string>
     <string name="title_activity_condiciones_uso">Condiciones de Uso</string>
     <string name="btn_siguiente">Siguiente</string>
-    <string name="cofirmation">Confirmar Recogida.</string>
+    <string name="cofirmation">Confirmar Recogida</string>
     <string name="intro_message_confirm_1">Se recogeran </string>
     <string name="intro_message_confirm_2"> enseres para la fecha </string>
     <string name="message_finalize">Confirmada solicitud de recogida</string>

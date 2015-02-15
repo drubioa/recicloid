@@ -46,7 +46,7 @@ public class SolicitudEnseresActivity extends RoboFragmentActivity {
 	private static final int CAT_LIVING = 4;
 	private static final int CAT_GENERAL = 5;
 	private static final int MAX_PER_USER = 10;
-
+	private static final int MAX_FURNITURES_PER_DAY = 4;
     @InjectView(R.id.GridView_items) private GridView mGridViewCategorY;
     @InjectView(R.id.buttonContinuar) public Button btn_continue;
     private Spinner mSpinnerCategories;
@@ -126,25 +126,9 @@ public class SolicitudEnseresActivity extends RoboFragmentActivity {
 								item.getName());
 					    newFragment.show(getSupportFragmentManager(), "addMoreItems");
 					}
-					if(Furniture.countFurnituresArray(furnituresToRecic) == 5 && !mensaje4items){
-						showMessage4Items();
-					}
 				}
 			}
 			
-			/**
-			 * If 4 items were chosen, the App must show a message informing
-			 *  the user of the use  conditions.
-			 */
-			private void showMessage4Items() {
-				FragmentManager fm = getSupportFragmentManager();
-				Bundle args = new Bundle();
-				args.putInt("title", R.string.dialog_title_4items);
-				args.putInt("description",R.string.dialog_descr_4items);
-				DialogAlert newFragment = DialogAlert.newInstance(args);
-				newFragment.show(fm, "tagAviso4Items");
-		        mensaje4items = true;
-			}			        
 		});
 	
 		// Listener que atiende cada uno de los onClicks del Spinner
@@ -326,6 +310,11 @@ public class SolicitudEnseresActivity extends RoboFragmentActivity {
 			btn_continue.setEnabled(true);
 			botonActivo = true;					
 		}
+		if(!mensaje4items && 
+				Furniture.countFurnituresArray(furnituresToRecic) 
+				> MAX_FURNITURES_PER_DAY){
+			showMessage4Items();
+		}
 		mGridViewCategorY.invalidateViews();
 	}
 	
@@ -347,6 +336,20 @@ public class SolicitudEnseresActivity extends RoboFragmentActivity {
 			botonActivo = false;					
 		}
 	}
+	
+	/**
+	 * If 4 items were chosen, the App must show a message informing
+	 *  the user of the use  conditions.
+	 */
+	private void showMessage4Items() {
+		FragmentManager fm = getSupportFragmentManager();
+		Bundle args = new Bundle();
+		args.putInt("title", R.string.dialog_title_4items);
+		args.putInt("description",R.string.dialog_descr_4items);
+		DialogAlert newFragment = DialogAlert.newInstance(args);
+		newFragment.show(fm, "tagAviso4Items");
+        mensaje4items = true;
+	}			        
 	
 	@Override
     protected void onSaveInstanceState(Bundle outState) {

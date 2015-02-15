@@ -97,9 +97,7 @@ public class HistorialActivity extends RoboFragmentActivity {
 					Toast.makeText(HistorialActivity.this, 
 							getResources().getString(R.string.dialog_canceling_ok), 
 							Toast.LENGTH_LONG).show();
-					Intent intent = new Intent(HistorialActivity
-							.this,MainActivity.class);
-					startActivity(intent);
+					finish();
 	        	   } catch (Exception e) {
 	        		   
 					Toast.makeText(HistorialActivity.this, 

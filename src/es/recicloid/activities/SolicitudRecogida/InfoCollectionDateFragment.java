@@ -16,27 +16,22 @@ import android.support.v4.app.DialogFragment;
 import android.util.Log;
 
 public class InfoCollectionDateFragment extends DialogFragment{
-	private String mTitle;
 	private List<String> mFurnitures;
-	
-	public void setTitle(String title){
-		mTitle = title;
-	}
+	private LocalDate mFecha;
 	
 	public void setFurnitures(ArrayList<String> f){
 		mFurnitures = f;
+	}
+	
+	public void setCollectionRequest(LocalDate fecha){
+		mFecha = fecha;
 	}
 
 	 public static  InfoCollectionDateFragment newInstance(CollectionRequest req) {
 		 InfoCollectionDateFragment f = new InfoCollectionDateFragment();
 
 	     Bundle args = new Bundle();
-	     LocalDate fecha = req.getFch_collection();
-	     String title = new String("Solicitud de recogida para el d??a "+
-	    		 fecha.getDayOfMonth()+
-	    		 "/"+fecha.getMonthOfYear()+"/"+fecha.getYear());
-	     f.setTitle(title);
-	     args.putString("title", title);
+	     f.setCollectionRequest(req.getFch_collection());
 	     ArrayList<String> funritures = new ArrayList<String>();
 	     for(Furniture furniture : req.getFurnitures()){
 	    	 for(int i = 0 ; i < furniture.getCantidad();i++){
@@ -44,6 +39,9 @@ public class InfoCollectionDateFragment extends DialogFragment{
 	    	 }
 	     }
 	     args.putStringArrayList("furnitures", funritures);
+	     args.putInt("mDay", req.getFch_collection().getDayOfMonth());
+	     args.putInt("mMonth", req.getFch_collection().getMonthOfYear());
+	     args.putInt("mYear", req.getFch_collection().getYear());
 	     f.setFurnitures(funritures);
 	     f.setArguments(args);
 	     
@@ -54,12 +52,15 @@ public class InfoCollectionDateFragment extends DialogFragment{
 	    public Dialog onCreateDialog(Bundle savedInstanceState){
 		 Bundle bundle = getArguments();
 		 if(bundle != null){
-			 mTitle = bundle.getString("title");
 			 mFurnitures = bundle.getStringArrayList("furnitures");
+			 mFecha = new LocalDate(bundle.getInt("mYear"),bundle.getInt("mMonth"),
+					 bundle.getInt("mDay"));
 		 }
 		 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		 
-		 builder.setTitle(mTitle);
+	     String title = new String(getResources().getString(R.string.dialog_info_solicitud_enseres_descr)+
+	    		 " "+mFecha.getDayOfMonth()+
+	    		 "/"+mFecha.getMonthOfYear()+"/"+mFecha.getYear());
+		 builder.setTitle(title);
 		 builder.setItems(getFurnituresNames(),
 				 new DialogInterface.OnClickListener() {
              public void onClick(DialogInterface dialog, int which) {

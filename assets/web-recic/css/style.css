@@ -28,7 +28,8 @@ nav.vertical ul li{	display:block;}/* vertical menu */
 nav.horizontal ul li{	display: inline-block;}/* horizontal menu */
 img{max-width:100%;}
 html, body{
-	font-family:Tahoma;
+	font-family:'Roboto',Tahoma;
+	text-align: justify;
 	font-size: 100%;
 	background:#fff;
 	padding:0 0px;
@@ -66,19 +67,23 @@ ul.navig li a{
 	font-weight: 400;
 	padding:10px 0;
 }
-ul.navig li a.active{
-	color:#ffffff;
+
+.navig a:hover{
+	font-size: large;
+	color: white;
 }
 span.menu{
-		width:32px;
-		height:32px;
-		background:url(../images/nav.png)no-repeat;
+		width:30px;
+		height:30px;
+		background:url(../images/nav.png) no-repeat;
 		display:inline-block;
 		cursor: pointer;
-		margin-left:10px;
-		margin-top: 10px;
+		margin-left:5px;
+		margin-top: 5px;
+		position: fixed;
 	}
 .navigation{
+
 }
 ul.navig{
 	color:#fcff00;
@@ -87,14 +92,14 @@ ul.navig li{
 	display: block;
 }
 .logo{
-	margin-top:5%;
+	padding-top: 50px;
 }
+
 .logo p{
 	font-size:0.8em;
 	font-weight:400;
 	color:#fff;
-	padding:0 5px;
-	margin:0.5em 0;
+	padding-left: 40px;
 }
 
 .header-row{
@@ -132,6 +137,7 @@ ul.navig li{
 }
 .what-we-column{}
 h3.heding{
+	padding-top: 35px;
 	color:#8fbf2d;
 	text-transform: uppercase;
 	font-weight:400;
@@ -222,13 +228,15 @@ h3.heding span{
 	margin:1em 0;
 	padding:0;
 }
-.team-column{
-	padding:0;
-	width:48%;
-	float:left;
-	margin-right:2%;
-	position:relative;
-	margin-bottom:1.5em;
+.team-column {
+    width: 45%;
+    float: left;
+    margin-right: 1%;
+    padding: 0px;
+    position: relative;
+    margin-bottom: 1.5em;
+    margin-left: 2%;
+    text-align: left;
 }
 .team-column img{
 	width:150px;
@@ -573,4 +581,22 @@ p.copyright a{
 p.copyright a:hover{
 	color:#808080;
 }
+
+#puntolimpio{
+	text-align: center;
+	text-transform: uppercase;
+	color: white;
+}
+footer{
+	background: none repeat scroll 0% 0% #1C1F26;
+	text-align: center;
+}
+
+footer a{
+	padding-top: 20px;
+	color: gray;
+	font-size: smaller;
+	text-transform: uppercase;	
+}
 /*-- Footer Part Ends Here --*/
+

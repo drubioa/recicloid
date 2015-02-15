@@ -33,7 +33,6 @@ import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -456,7 +455,8 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 				// Si solo queda una solicitud se confirma con los muebles que queden.
 				Log.i("confirmAppointment","Se confirma la ultima solicitud de recogida con "+
 						Furniture.countFurnituresArray(mTotalFurnituresToCollect)+" enseres");
-				req = new CollectionRequest(mProvisionalAppointment.get(0),(ArrayList<Furniture>)mTotalFurnituresToCollect.clone());
+				req = new CollectionRequest(mProvisionalAppointment.get(0),
+						(ArrayList<Furniture>) mTotalFurnituresToCollect.clone());
 				mConfirmedRquest.add(req);
 				mProvisionalAppointment.remove(mProvisionalAppointment.get(0));
 				mTotalFurnituresToCollect.clear();
@@ -493,12 +493,6 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 				+appointmentDate+" in exsitent days: "+existentDays);
 		throw new IllegalArgumentException("ProvisionalAppointment to "
 				+appointmentDate+" not found.");
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.confirmar_fechas, menu);
-		return true;
 	}
 	
 	@Override

@@ -45,25 +45,22 @@ public class MainActivity extends RoboActivity implements MainView{
 					int posicion, long id) {
 				TitleWithImg elegido = (TitleWithImg) 
 						pariente.getItemAtPosition(posicion); 
-				
+				Intent intent = null;
 				if(elegido.getTitulo().equals(getResources()
 						.getString(R.string.title_solicitud))){
-					Intent intent = new Intent(MainActivity
+					intent = new Intent(MainActivity
 							.this,SolicitudEnseresActivity.class);
-					startActivity(intent);
-				}
-				else if(elegido.getTitulo().equals(getResources()
-						.getString(R.string.title_info_reciclaje))){
-					Intent intent = new Intent(MainActivity
-							.this,InformacionReciclajeActivity.class);
-					startActivity(intent);					
 				}
 				else if(elegido.getTitulo().equals(getResources()
 						.getString(R.string.title_historial))){
-					Intent intent = new Intent(MainActivity
+					intent = new Intent(MainActivity
 							.this,HistorialActivity.class);
-					startActivity(intent);	
 				}
+				else{
+					intent = new Intent(MainActivity
+							.this,InformacionReciclajeActivity.class);				
+				}
+				startActivity(intent);
 			}
         });
 	}

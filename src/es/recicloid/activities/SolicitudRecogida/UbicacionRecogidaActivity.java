@@ -39,10 +39,8 @@ import android.os.Handler;
 import android.os.StrictMode;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -159,8 +157,6 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 	         */
 	        public void onMapClick(final LatLng point) {
 				// Se muestra barra de progreso mientras se establece conecci??n con el servidor.
-	        	final int oldOrientation = getRequestedOrientation();
-	        	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 	        	final ProgressDialog dialog = ProgressDialog.show(UbicacionRecogidaActivity.this,
 						"",getResources().getString(R.string.nearestPoint_message) , true); 
 				dialog.setTitle(R.string.dialog_localizando_punto_recogida);
@@ -168,7 +164,6 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 				    public void run() {
 				    	findAndMarkCollectionPoint(Zone.convertLagIntToLocation(point));
 				        dialog.dismiss();
-				        setRequestedOrientation(oldOrientation);
 				    }   
 				}, 5000);  // 5000 milliseconds
 				
@@ -204,12 +199,6 @@ public class UbicacionRecogidaActivity extends RoboFragmentActivity {
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		DialogSelecLocationType dialog = new DialogSelecLocationType();
 		dialog.show(fragmentManager, "tagLocalizManOrAut");		
-	}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.ubicacion_recogida, menu);
-		return true;
 	}
 
 	public void checkLocation(LatLng point){
