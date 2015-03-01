@@ -16,7 +16,9 @@
     <string name="descr_info_reciclaje">Consulta información sobre reciclaje y tratamiento de residuos.</string>
     <string name="title_historial">Historial de Solicitudes</string>
     <string name="descr_historial">Consultar historial de peticiones de recogida realizadas.</string>
-
+	<string name="title_contact">Contacte con nosotros</string>
+    <string name="descr_contact">Teléfono contacto de lunes a viernes de 10:00 a 21:00.</string>
+	
     <!-- Solicitud de recogida de enseres -->
     <string name="title_menu_enseres">Tipos de muebles y enseres</string>
     <string name="dialog_info_solicitud_enseres">Añadir muebles y enseres para su recogida.</string>

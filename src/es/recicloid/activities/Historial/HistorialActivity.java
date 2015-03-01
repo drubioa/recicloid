@@ -1,5 +1,7 @@
 package es.recicloid.activities.Historial;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,8 +18,10 @@ import roboguice.inject.InjectView;
 import es.recicloid.activities.SolicitudRecogida.InfoCollectionDateFragment;
 import es.recicloid.activities.main.MainActivity;
 import es.recicloid.models.CollectionRequest;
+import es.recicloid.models.User;
 import es.recicloid.utils.conections.ConectorToDeletePendingRequests;
 import es.recicloid.utils.conections.ConectorToGetCollectionReq;
+import es.recicloid.utils.json.JsonToFileManagement;
 import es.uca.recicloid.R;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -65,7 +69,21 @@ public class HistorialActivity extends RoboFragmentActivity {
 		}
 		else{
 			FragmentManager fm = getSupportFragmentManager();
-			TelephoneDialFrag dialog = TelephoneDialFrag.newInstance();
+			JsonToFileManagement jsonFile = new JsonToFileManagement(this);
+			jsonFile.changeFileName("user.json");
+			TelephoneDialFrag dialog;
+			try {
+				// Se carga telefono de solicitud previa
+				User user = jsonFile.loadUserForJsonFile();
+				dialog = TelephoneDialFrag.newInstance(user.getPhone());
+			} catch (FileNotFoundException e) {
+				// Sino se localiza se solicita al usuario el telefono
+				Log.w("HistorialActivity","cannot find previous contact data file");
+				dialog = TelephoneDialFrag.newInstance();
+			} catch (IOException e) {
+				Log.e("HistorialActivity",e.toString());
+				throw new RuntimeException(e);
+			}
 			dialog.show(fm, "telephoneDialog");
 			Log.i("HistorialActivity","show dialog and ask telephone number.");
 		}

@@ -1,6 +1,7 @@
 package es.recicloid.utils.json;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -66,9 +67,9 @@ public class JsonToFileManagement {
 	/**
 	 * Load User from internal json file.
 	 * @return User
-	 * @throws IOException
+	 * @throws IOException FileNotFoundException
 	 */
-	public User loadUserForJsonFile() throws IOException{
+	public User loadUserForJsonFile() throws IOException,FileNotFoundException{
 		FileInputStream fin = context.openFileInput(FILENAME);
 		int c;
 		String temp="";

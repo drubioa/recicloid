@@ -26,9 +26,17 @@ public class TelephoneDialFrag extends RoboDialogFragment{
 		mValidPhone = false;
 	}
 	
+	TelephoneDialFrag(String phone){
+		mPhoneNumber = phone;
+		mValidPhone = true;
+	}
+	
 	static TelephoneDialFrag newInstance(){
 		return new TelephoneDialFrag();
-		
+	}
+	
+	static TelephoneDialFrag newInstance(String phone_number){
+		return new TelephoneDialFrag(phone_number);
 	}
 	
 	@Override
@@ -36,6 +44,7 @@ public class TelephoneDialFrag extends RoboDialogFragment{
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		telephone = new EditText(getActivity());
 		telephone.setInputType(InputType.TYPE_CLASS_PHONE);
+		telephone.setText(mPhoneNumber);
 		InputFilter[] filterArray = new InputFilter[1];
 		filterArray[0] = new InputFilter.LengthFilter(9);
 		telephone.setFilters(filterArray);

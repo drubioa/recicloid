@@ -266,10 +266,10 @@ public final class R {
 		public static final int cell_bg = 0x7f020061;
 		public static final int disable_cell = 0x7f02007e;
 		public static final int ic_launcher = 0x7f020085;
-		public static final int left_arrow = 0x7f02008c;
-		public static final int red_border = 0x7f020092;
-		public static final int red_border_gray_bg = 0x7f020093;
-		public static final int right_arrow = 0x7f020094;
+		public static final int left_arrow = 0x7f02008d;
+		public static final int red_border = 0x7f020093;
+		public static final int red_border_gray_bg = 0x7f020094;
+		public static final int right_arrow = 0x7f020095;
 	}
 	public static final class id {
 		public static final int action_bar = 0x7f05002e;

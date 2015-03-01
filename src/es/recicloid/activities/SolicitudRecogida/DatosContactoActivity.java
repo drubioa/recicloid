@@ -1,5 +1,8 @@
 package es.recicloid.activities.SolicitudRecogida;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import roboguice.activity.RoboFragmentActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
@@ -39,6 +42,7 @@ public class DatosContactoActivity extends RoboFragmentActivity {
 	private boolean mEditTextNameValid;
 	private boolean mEditTextTelValid;
 	private ConectionToPostNewUser conector; 
+	private String mName,mPhone;
 	private final String FILENAME = "user.json";
 	private JsonToFileManagement jsonToFile;
 	
@@ -49,19 +53,38 @@ public class DatosContactoActivity extends RoboFragmentActivity {
 		conector = new ConectionToPostNewUser(this);
 		jsonToFile = new JsonToFileManagement(this,FILENAME); 
 		if(savedInstanceState == null){
-			mEditTextNameValid = false;
-			mEditTextTelValid = false;
+			// Load previous saved name and phone number.
+			try{
+				JsonToFileManagement jsonFile = new JsonToFileManagement(this);
+				jsonFile.changeFileName("user.json");
+				User user = jsonFile.loadUserForJsonFile();
+				Log.i("DatosContactoActivity",
+						"Load contact info from json file ");
+				this.editTextName.setText(user.getName());
+				this.editTextPhone.setText(user.getPhone());
+				mEditTextNameValid = true;
+				mEditTextTelValid = true;
+			}catch(FileNotFoundException e){
+				Log.w("DatosContactoActivity",
+						"FileNotFoundException "+e.toString());
+				mEditTextNameValid = false;
+				mEditTextTelValid = false;	
+			}catch (IOException e) {
+				Log.e("DatosContactoActivity",
+						"Cannot load json file because "+e.toString());
+			}
 		}
 		else{
 			mEditTextNameValid = savedInstanceState.getBoolean("editTextNameValid");
 			mEditTextTelValid = savedInstanceState.getBoolean("editTextTelValid");
+			mName = savedInstanceState.getString("mName");
+			mPhone = savedInstanceState.getString("mPhone");
 		}
 		
 		addListenerToBtnContinue(btn_continue);
 		isValidTextActiveBtn();
 		addListenerToEditTextName(editTextName);
-		addListenerToEditTextPhone(editTextPhone);
-		
+		addListenerToEditTextPhone(editTextPhone);	
 	}
 
 	public void addListenerToBtnContinue(Button btn_continue){
@@ -210,6 +233,8 @@ public class DatosContactoActivity extends RoboFragmentActivity {
     protected void onSaveInstanceState(Bundle outState) {
 	   outState.putBoolean("editTextNameValid", mEditTextNameValid);
 	   outState.putBoolean("editTextTelValid", mEditTextTelValid);
+	   outState.putString("mName", mName);
+	   outState.putString("mPhone", mPhone);
        super.onSaveInstanceState(outState);
 	}	
 }

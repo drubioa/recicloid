@@ -14,6 +14,7 @@ import es.recicloid.adapters.ListAdaptor;
 import es.recicloid.adapters.TitleWithImg;
 import es.uca.recicloid.R;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
@@ -55,6 +56,11 @@ public class MainActivity extends RoboActivity implements MainView{
 						.getString(R.string.title_historial))){
 					intent = new Intent(MainActivity
 							.this,HistorialActivity.class);
+				}
+				else if(elegido.getTitulo().equals(getResources()
+						.getString(R.string.title_contact))){
+					intent = new Intent(Intent.ACTION_CALL);
+					intent.setData(Uri.parse("tel:956474448"));
 				}
 				else{
 					intent = new Intent(MainActivity
@@ -107,7 +113,12 @@ public class MainActivity extends RoboActivity implements MainView{
 		options.add(new TitleWithImg(R.drawable.ic_historial,getResources()
 				.getString(R.string.title_historial),getResources()
 				.getString(R.string.descr_historial)));
+		// Concact with us.
+		options.add(new TitleWithImg(R.drawable.ic_telephone,getResources()
+				.getString(R.string.title_contact),getResources()
+				.getString(R.string.descr_contact)));
 		return options;
 	}
+
 
 }
