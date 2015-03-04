@@ -1,8 +1,11 @@
 package es.recicloid.models;
 import org.joda.time.LocalDate;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public abstract class Request {
+
+public abstract class Request implements Parcelable{
 	protected String mTelephone;
 	protected int mCollectionPointId;
 	protected int collectionDay,collectionMonth,collectionYear;
@@ -26,7 +29,45 @@ public abstract class Request {
 		mCollectionPointId = collectionPointId;
 		mNum_furnitures = numFurnitures;
 	}
+	
+	public Request(Parcel in){
+		readFromParcel(in);
+	}
 
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+	    dest.writeString(mTelephone);
+	    dest.writeInt(mCollectionPointId);
+	    dest.writeInt(collectionDay);
+	    dest.writeInt(collectionMonth);
+	    dest.writeInt(collectionYear);
+	    dest.writeInt(requestDay);
+	    dest.writeInt(requestMonth);
+	    dest.writeInt(requestYear);
+	    dest.writeSerializable(mFch_collection);
+	    dest.writeSerializable(mFch_request);
+	    dest.writeInt(mNum_furnitures);
+	}
+	
+	public void readFromParcel(Parcel in) {
+		mTelephone = in.readString();
+		mCollectionPointId = in.readInt();
+		collectionDay = in.readInt();
+		collectionMonth = in.readInt();
+		collectionYear = in.readInt();
+		requestDay = in.readInt();
+		requestMonth = in.readInt();
+		requestYear = in.readInt();
+		mFch_collection = (LocalDate) in.readSerializable();
+		mFch_request = (LocalDate) in.readSerializable();
+		mNum_furnitures = in.readInt();
+	}
+	
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+	
 	private void checkDateTimes (LocalDate fch_collection,
 	LocalDate fch_request) {
 		final LocalDate today = new LocalDate();
@@ -140,5 +181,4 @@ public abstract class Request {
 	public void setCollectionPointId(int collectionPointId) {
 		this.mCollectionPointId = collectionPointId;
 	}
-	
 }

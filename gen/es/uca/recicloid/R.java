@@ -1547,7 +1547,6 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f050016;
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_close_button=0x7f050036;
-        public static final int action_settings=0x7f05007d;
         public static final int activity_chooser_view_content=0x7f050037;
         public static final int always=0x7f05000b;
         public static final int beginning=0x7f050011;
@@ -1566,6 +1565,7 @@ containing a value of this type.
         public static final int buy_with_google=0x7f050026;
         public static final int calendar1=0x7f050051;
         public static final int calendarRequests=0x7f050062;
+        public static final int calendar_date=0x7f05007d;
         public static final int calendar_gridview=0x7f050070;
         public static final int calendar_left_arrow=0x7f05006a;
         public static final int calendar_month_year_textview=0x7f05006b;
@@ -1733,16 +1733,7 @@ containing a value of this type.
         public static final int support_simple_spinner_dropdown_item=0x7f03002a;
     }
     public static final class menu {
-        public static final int condiciones_uso=0x7f0d0000;
-        public static final int confirmar_fechas=0x7f0d0001;
-        public static final int datos_contacto=0x7f0d0002;
-        public static final int historial=0x7f0d0003;
-        public static final int informacion_reciclaje=0x7f0d0004;
-        public static final int main=0x7f0d0005;
-        public static final int reciclopedia=0x7f0d0006;
-        public static final int solicitud_enseres=0x7f0d0007;
-        public static final int splash_screen=0x7f0d0008;
-        public static final int ubicacion_recogida=0x7f0d0009;
+        public static final int finalize=0x7f0d0000;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1792,8 +1783,9 @@ containing a value of this type.
         public static final int app_name=0x7f0a000d;
         public static final int back_main_menu=0x7f0a00a8;
         public static final int btn_siguiente=0x7f0a00a0;
+        public static final int calendar_date=0x7f0a00a9;
         public static final int cancel=0x7f0a0084;
-        public static final int cancel_requests=0x7f0a00aa;
+        public static final int cancel_requests=0x7f0a00ab;
         public static final int cofirmation=0x7f0a00a1;
         /**   Text for notification shown when the Android Wear apps needs to be updated. Only shown on the wearable. [CHAR LIMIT=NONE] 
          */
@@ -2025,23 +2017,23 @@ containing a value of this type.
         public static final int message_finalize=0x7f0a00a4;
         /**  HISTORIAL 
          */
-        public static final int message_no_valid_phone=0x7f0a00a9;
+        public static final int message_no_valid_phone=0x7f0a00aa;
         public static final int message_obtainsProvisionalAppointment_descr=0x7f0a0097;
         public static final int message_registrer_user=0x7f0a0095;
         public static final int nearestPoint_message=0x7f0a007b;
-        public static final int not_exist_prev_req=0x7f0a00ab;
+        public static final int not_exist_prev_req=0x7f0a00ac;
         public static final int punto_de_recogida=0x7f0a0043;
         public static final int store_picture_message=0x7f0a000f;
         public static final int store_picture_title=0x7f0a000e;
-        public static final int subtitle_splash=0x7f0a00ad;
+        public static final int subtitle_splash=0x7f0a00ae;
         public static final int title_activity_condiciones_uso=0x7f0a009f;
         public static final int title_activity_confirmar_fechas=0x7f0a0094;
         public static final int title_activity_datos_contacto=0x7f0a008c;
-        public static final int title_activity_finalize=0x7f0a00b1;
-        public static final int title_activity_historial=0x7f0a00b0;
-        public static final int title_activity_informacion_reciclaje=0x7f0a00af;
+        public static final int title_activity_finalize=0x7f0a00b2;
+        public static final int title_activity_historial=0x7f0a00b1;
+        public static final int title_activity_informacion_reciclaje=0x7f0a00b0;
         public static final int title_activity_solicitud_enseres=0x7f0a0036;
-        public static final int title_activity_splash_screen=0x7f0a00ae;
+        public static final int title_activity_splash_screen=0x7f0a00af;
         public static final int title_activity_ubicacion_recogida=0x7f0a0069;
         /**  MENSAJE DE CONFIRMACION 
          */
@@ -2059,7 +2051,7 @@ containing a value of this type.
         public static final int title_solicitud=0x7f0a0037;
         /**  Splash menu con el logo del ayuntamiento 
          */
-        public static final int title_splash=0x7f0a00ac;
+        public static final int title_splash=0x7f0a00ad;
         /**  Text on a placeholder buy button when Google Play services is not
          available or up-to-date 
          */

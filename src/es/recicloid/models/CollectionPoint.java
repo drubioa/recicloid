@@ -18,6 +18,30 @@ public class CollectionPoint implements Parcelable,Serializable{
 		mLat = lat;
 	}
 	
+	public CollectionPoint(Parcel in){
+		readFromParcel(in);
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeDouble(mLng);
+		dest.writeDouble(mLat);
+		dest.writeInt(pointId);
+		dest.writeString(mDirection);
+	}
+	
+	public void readFromParcel(Parcel in) {
+		mLng = in.readDouble();
+		mLat = in.readDouble();
+		pointId = in.readInt();
+		mDirection = in.readString();
+	}
+
 	public void setLatitude(double lat){
 		mLat = lat;
 	}
@@ -42,19 +66,6 @@ public class CollectionPoint implements Parcelable,Serializable{
 		return pointId;
 	}
 	
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeDouble(mLng);
-		dest.writeDouble(mLat);
-		dest.writeInt(pointId);
-		dest.writeString(mDirection);
-	}
-
 	public String getDirection() {
 		return mDirection;
 	}
@@ -66,4 +77,15 @@ public class CollectionPoint implements Parcelable,Serializable{
 	public boolean equals(CollectionPoint obj){
 		return obj.getId() == this.pointId;
 	}
+	
+	public static final Parcelable.Creator<CollectionPoint> 
+	CREATOR = new Parcelable.Creator<CollectionPoint>() {
+		public CollectionPoint createFromParcel(Parcel in) {
+			return new CollectionPoint(in);
+		}
+
+		public CollectionPoint[] newArray(int size) {
+			return new CollectionPoint[size];
+		}
+	};
 }

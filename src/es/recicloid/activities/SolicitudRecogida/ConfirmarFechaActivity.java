@@ -1,4 +1,4 @@
-	package es.recicloid.activities.SolicitudRecogida;
+package es.recicloid.activities.SolicitudRecogida;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -240,6 +240,10 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 							        dialog.dismiss();
 							        Intent intent = new Intent(ConfirmarFechaActivity
 										.this,FinalizeActivity.class);
+							        // Se pasan las solicitudes de recogida por si el usuario desea 
+							        //almacenarlas en el Google Calendar.
+							        intent.putExtra("collectionRequests",
+							        		mConfirmedRquest );
 									startActivity(intent);
 							    }   
 							}, 5000);  // 5000 milliseconds							
@@ -346,7 +350,8 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 					new ConectorToGetProvisAppointment(this);
 			InfoToGetProvAppointments info = new 
 					InfoToGetProvAppointments(user.getPhone(), 
-							Furniture.countFurnituresArray(mTotalFurnituresToCollect),collectionPoint.getId());
+							Furniture.countFurnituresArray(mTotalFurnituresToCollect),
+							collectionPoint.getId());
 			conector.execute(info);
 			provisionalAppointment = conector.get();
 			if(provisionalAppointment == null){
@@ -368,6 +373,7 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 						getResources().getString(R.string.dialog_title_prev_request), 
 						Toast.LENGTH_LONG).show();
 				Intent i = new Intent(this,MainActivity.class);
+				i.putParcelableArrayListExtra("collRequests", mConfirmedRquest);
 				startActivity(i);
 			}
 			else{
@@ -508,4 +514,6 @@ public class ConfirmarFechaActivity extends RoboFragmentActivity{
 		outState.putParcelableArrayList("mProvisionalAppointment", mProvisionalAppointment);
 		outState.putParcelableArrayList("mConfirmedRquest", mConfirmedRquest);	
 	}
+	
+	
 }

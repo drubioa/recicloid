@@ -25,30 +25,29 @@ public class Furniture implements Parcelable,Serializable,Cloneable{
 	
 	public Furniture(int id ,String name,int category,String idText2,String idImg2){
 		this.mId = id;
-		this.mName = name;
-		this.category = category;
 		this.setIdImg(idImg2);
 		this.setIdText(idText2);
+		this.category = category;
+		this.mName = name;
 		this.cantidad = 0;
 	}
 
 	public Furniture(Parcel in){
-		idImg = in.readString();	
-		idText = in.readString();
-		cantidad = in.readInt();
-		mName = in.readString();
-		category = in.readInt();
-		
 		readFromParcel(in);
 	}	
 	
 	private void readFromParcel(Parcel in) {
-		// TODO Auto-generated method stub
-		
+		mId = in.readInt();
+		idImg = in.readString();	
+		idText = in.readString();
+		cantidad = in.readInt();
+		mName = in.readString();
+		category = in.readInt();	
 	}
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(mId);
 		dest.writeString(idImg);
 		dest.writeString(idText);
 		dest.writeInt(cantidad);
@@ -237,6 +236,7 @@ public class Furniture implements Parcelable,Serializable,Cloneable{
 		return list;
 	}
 
+	
 	
 	public static final Parcelable.Creator<Furniture> 
 		CREATOR = new Parcelable.Creator<Furniture>() {

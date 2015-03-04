@@ -183,6 +183,7 @@
     <string name="title_confirmaton">Finalizado</string>
     <string name="descrip_confirmaton"><![CDATA[<html><head></head><body style="text-align:justify>Se ha finalizado la solicitud de recogida. Por favor deposite los enseres indicados a primera hora de la ma&ntilde;ana y nuestro servicio de recogida acudir&aacute; a recogerlo. Si hubiese alguna dificultad a la hora de localizar los enseres, nos pondremos en contacto a su tel&eacute;fono de contacto. Dispone de nuestro tel&eacute;fono de contacto y de nuestra guia de reciclaje para mas informaci&oacute;n.</body></html>]]></string>
     <string name="back_main_menu">Volver al Menu Principal</string>
+    <string name="calendar_date">Guardar en Google Calendar</string>
     
     <!-- HISTORIAL -->
     <string name="message_no_valid_phone">Número de teléfono no válido</string>
