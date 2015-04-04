@@ -21,11 +21,11 @@ public class ItemsGridViewAdapter extends ArrayAdapter<Furniture>{
 	private List<Furniture> data = new ArrayList<Furniture>();
 	
 	public ItemsGridViewAdapter(Context context,int layoutResourceId, 
-			List<Furniture> mCategory_bath) {
-		super(context, layoutResourceId, mCategory_bath);
+			List<Furniture> categories) {
+		super(context, layoutResourceId, categories);
 		this.layoutResourceId = layoutResourceId;
 		this.context = context;
-		this.data = mCategory_bath;
+		this.data = categories;
 	}
 	
 	public View getView(int position, View convertView, ViewGroup parent){

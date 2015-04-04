@@ -45,7 +45,7 @@ public class JsonToFileManagement {
 		FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
 		Gson gson = new Gson();
 		String json = gson.toJson(obj);
-		OutputStreamWriter os = new OutputStreamWriter(fos);
+		OutputStreamWriter os = new OutputStreamWriter(fos,"UTF8");
 		os.write(json);
 		os.close();		
 	}
@@ -59,7 +59,7 @@ public class JsonToFileManagement {
 		FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
 		Gson gson = new Gson();
 		String json = gson.toJson(obj);
-		OutputStreamWriter os = new OutputStreamWriter(fos);
+		OutputStreamWriter os = new OutputStreamWriter(fos,"UTF8");
 		os.write(json);
 		os.close();		
 	}
